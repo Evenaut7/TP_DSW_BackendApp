@@ -7,7 +7,7 @@ import { RequestContext } from '@mikro-orm/core'
 const app = express()
 app.use(express.json())
 
-//after 
+//After 
 app.use((req, res, next) => {
   RequestContext.create(orm.em, next)
 })

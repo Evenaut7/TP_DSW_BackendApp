@@ -2,15 +2,15 @@ import { Entity, PrimaryKey, Property, Cascade } from "@mikro-orm/core"
 import { BaseEntity } from "../shared/db/baseEntity.entity.js"
 
 @Entity()
-export class tag extends BaseEntity {
+export class Tag extends BaseEntity {
   
   @Property({nullable: false, unique: true})
   nombre!: string
   
-  @Property()
+  @Property({unique: false})
   descripcion!: string
   
-  @Property({unique: true})
+  @Property({unique: false})
   tipo!: string
   
   //tags: Tag[]
