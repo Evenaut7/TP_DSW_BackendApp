@@ -11,9 +11,9 @@ POST http://localhost:3000/api/tags
 Content-Type: application/json
 
 {
-  "nombre" : "Literatura",
-  "descripcion" : "Lugar donde se puede leer libros",
-  "tipo" : "Entretenimiento"
+  "nombre" : "Gimnasio",
+  "descripcion" : "Lugar para hacer Ejercicio",
+  "tipo" : "Ejercicio"
 }
 
 

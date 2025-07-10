@@ -27,7 +27,7 @@ export class PuntoDeInteres extends BaseEntity {
   @ManyToMany( () => Tag, (tag) => tag.puntosDeInteres, { nullable: true, owner: true, cascade: [Cascade.ALL]})
   tags = new Collection<Tag>(this)
 
-  @OneToMany( () => Evento, (evento) => evento.puntoDeInteres, { nullable: true, cascade: [Cascade.ALL]})
+  @OneToMany( () => Evento, (evento) => evento.puntoDeInteres, { nullable: true, cascade: [Cascade.REMOVE]})
   eventos = new Collection<Evento>(this)
 
 }

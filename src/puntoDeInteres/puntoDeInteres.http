@@ -1,0 +1,38 @@
+### Find All
+GET http://localhost:3000/api/puntosDeInteres
+
+### Find One
+GET http://localhost:3000/api/puntosDeInteres/1
+
+### Add
+POST http://localhost:3000/api/puntosDeInteres
+Content-Type: application/json
+
+{
+  "nombre" : "Alto Rosario",
+  "descripcion" : "Shopping Alto Rosario",
+  "imagen" : "shopping.png",
+  "calle" : "Junín",
+  "altura" : 5001,
+  "privado" : true,
+  "tags" : [4],
+  "eventos" : []
+}
+
+### Delete
+DELETE http://localhost:3000/api/puntosDeInteres/1
+
+### Update
+PUT http://localhost:3000/api/puntosDeInteres/4
+Content-Type: application/json
+
+{
+  "nombre" : "Alto Rosario 2",
+  "descripcion" : "Shopping Alto Rosario Editado",
+  "imagen" : "shopping.png",
+  "calle" : "Junín",
+  "altura" : 5001,
+  "privado" : true,
+  "tags" : [4,6],
+  "eventos" : []
+}
