@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import {findAll, findOne, add, update, remove} from "./puntoDeInteres.controler.js"
+import {findAll, findOne, add, update, remove} from './puntoDeInteres.controler.js'
 
 export const puntoDeInteresRouter = Router()
 

@@ -1,0 +1,36 @@
+### Find All
+GET http://localhost:3000/api/evento
+
+### Find One
+GET http://localhost:3000/api/evento/1
+
+### Add
+POST http://localhost:3000/api/evento
+Content-Type: application/json
+
+{
+  "titulo" : "Recital",
+  "descripcion" : "Recital al aire libre de las bandas A B y C",
+  "horaDesde" : "1995-12-17T03:24:00" ,
+  "horaHasta" : "1995-12-18T03:24:00" ,
+  "estado" : "activo" ,
+  "tags" : [],
+  "puntoDeInteres" : 4
+}
+
+### Delete
+DELETE http://localhost:3000/api/evento/1
+
+### Update
+PUT http://localhost:3000/api/evento/2
+Content-Type: application/json
+
+{
+  "titulo" : "Recital",
+  "descripcion" : "Recital al aire libre de las bandas A B y C",
+  "horaDesde" : "1995-12-17T03:24:00" ,
+  "horaHasta" : "1995-12-18T03:24:00" ,
+  "estado" : "activo" ,
+  "tags" : [4,6],
+  "puntoDeInteres" : 4
+}
