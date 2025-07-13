@@ -18,7 +18,7 @@ export class Evento extends BaseEntity {
   @Property({nullable: false, unique: false})
   horaHasta!: Date
 
-  @Property({nullable: false, unique: true})
+  @Property({nullable: false, unique: false})
   estado!: string
 
   @ManyToMany( () => Tag, (tag) => tag.eventos, { nullable: true, owner: true, cascade: [Cascade.ALL]})

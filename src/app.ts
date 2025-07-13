@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 import express, { NextFunction, Request, Response } from 'express'
+import cors from 'cors'
 import { tagRouter } from './tag/tag.routes.js'
 import { puntoDeInteresRouter } from './puntoDeInteres/puntoDeInteres.routes.js'
 import { orm, syncSchema } from './shared/db/orm.js'
@@ -8,6 +9,12 @@ import { eventoRouter } from './evento/evento.routes.js'
 
 const app = express()
 app.use(express.json())
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 //After 
 app.use((req, res, next) => {

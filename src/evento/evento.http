@@ -9,13 +9,13 @@ POST http://localhost:3000/api/evento
 Content-Type: application/json
 
 {
-  "titulo" : "Recital",
-  "descripcion" : "Recital al aire libre de las bandas A B y C",
+  "titulo" : "Triatlon",
+  "descripcion" : "Triatlon al aire libre",
   "horaDesde" : "1995-12-17T03:24:00" ,
   "horaHasta" : "1995-12-18T03:24:00" ,
   "estado" : "activo" ,
   "tags" : [],
-  "puntoDeInteres" : 4
+  "puntoDeInteres" : 1
 }
 
 ### Delete

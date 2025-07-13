@@ -13,6 +13,7 @@
   "license": "ISC",
   "packageManager": "pnpm@10.11.0",
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "5.0.2",
     "@types/node": "22.15.19",
     "tsc-watch": "6.0.4",
@@ -22,6 +23,7 @@
     "@mikro-orm/core": "5.9.8",
     "@mikro-orm/mysql": "~5.9.8",
     "@mikro-orm/sql-highlighter": "1.0.1",
+    "cors": "^2.8.5",
     "express": "4.21.2",
     "reflect-metadata": "0.2.2"
   }
