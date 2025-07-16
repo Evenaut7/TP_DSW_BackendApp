@@ -2,7 +2,7 @@
 GET http://localhost:3000/api/puntosDeInteres
 
 ### Find One
-GET http://localhost:3000/api/puntosDeInteres/1
+GET http://localhost:3000/api/puntosDeInteres/4
 
 ### Add
 POST http://localhost:3000/api/puntosDeInteres

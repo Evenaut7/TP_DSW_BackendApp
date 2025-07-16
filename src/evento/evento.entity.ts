@@ -26,4 +26,6 @@ export class Evento extends BaseEntity {
 
   @ManyToOne( () => PuntoDeInteres, {nullable: false, unique: false})
   puntoDeInteres!: String
+
+  //Agregar agenda de usuario
 }

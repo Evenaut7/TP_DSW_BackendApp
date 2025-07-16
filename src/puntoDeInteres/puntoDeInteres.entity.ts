@@ -2,6 +2,7 @@ import { Entity, PrimaryKey, Property, Cascade, DecimalType, ManyToMany, OneToMa
 import { BaseEntity } from "../shared/db/baseEntity.entity.js"
 import { Evento } from "../evento/evento.entity.js"
 import { Tag } from "../tag/tag.entity.js"
+import { Valoracion } from "../valoracion/valoracion.entity.js"
 
 @Entity()
 export class PuntoDeInteres extends BaseEntity {
@@ -30,4 +31,12 @@ export class PuntoDeInteres extends BaseEntity {
   @OneToMany( () => Evento, (evento) => evento.puntoDeInteres, { nullable: true, cascade: [Cascade.REMOVE]})
   eventos = new Collection<Evento>(this)
 
+  @OneToMany( () => Valoracion, (valoracion) => valoracion.puntoDeInteres, { nullable: true, cascade: [Cascade.REMOVE]})
+  valoraciones = new Collection<Valoracion>(this)
+
+  // Agregar Usuario
+
+  // Agregar Localidad
+
+  // Agregar Historias
 }

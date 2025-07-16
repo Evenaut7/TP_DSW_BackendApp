@@ -15,7 +15,7 @@ Content-Type: application/json
   "horaHasta" : "1995-12-18T03:24:00" ,
   "estado" : "activo" ,
   "tags" : [],
-  "puntoDeInteres" : 1
+  "puntoDeInteres" : 4
 }
 
 ### Delete
