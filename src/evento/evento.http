@@ -1,11 +1,11 @@
 ### Find All
-GET http://localhost:3000/api/evento
+GET http://localhost:3000/api/eventos
 
 ### Find One
-GET http://localhost:3000/api/evento/1
+GET http://localhost:3000/api/eventos/1
 
 ### Add
-POST http://localhost:3000/api/evento
+POST http://localhost:3000/api/eventos
 Content-Type: application/json
 
 {
@@ -19,10 +19,10 @@ Content-Type: application/json
 }
 
 ### Delete
-DELETE http://localhost:3000/api/evento/1
+DELETE http://localhost:3000/api/eventos/1
 
 ### Update
-PUT http://localhost:3000/api/evento/2
+PUT http://localhost:3000/api/eventos/2
 Content-Type: application/json
 
 {

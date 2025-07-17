@@ -1,8 +1,9 @@
-import { Entity, PrimaryKey, Property, Cascade, DecimalType, ManyToMany, OneToMany, Collection } from "@mikro-orm/core"
+import { Entity, PrimaryKey, Property, Cascade, DecimalType, ManyToMany, OneToMany, Collection, ManyToOne , Rel} from "@mikro-orm/core"
 import { BaseEntity } from "../shared/db/baseEntity.entity.js"
 import { Evento } from "../evento/evento.entity.js"
 import { Tag } from "../tag/tag.entity.js"
 import { Valoracion } from "../valoracion/valoracion.entity.js"
+import { Localidad } from "../localidad/localidad.entity.js"
 
 @Entity()
 export class PuntoDeInteres extends BaseEntity {
@@ -16,10 +17,10 @@ export class PuntoDeInteres extends BaseEntity {
   @Property({nullable: false, unique: true})
   imagen!: string
 
-  @Property({nullable: false, unique: true})
+  @Property({nullable: false, unique: false})
   calle!: string
 
-  @Property({nullable: false, unique: true})
+  @Property({nullable: false, unique: false})
   altura!: Number
 
   @Property({nullable: false, unique: false})
@@ -28,15 +29,16 @@ export class PuntoDeInteres extends BaseEntity {
   @ManyToMany( () => Tag, (tag) => tag.puntosDeInteres, { nullable: true, owner: true, cascade: [Cascade.ALL]})
   tags = new Collection<Tag>(this)
 
-  @OneToMany( () => Evento, (evento) => evento.puntoDeInteres, { nullable: true, cascade: [Cascade.REMOVE]})
+  @OneToMany( () => Evento, (evento) => evento.puntoDeInteres, { nullable: true, cascade: [Cascade.ALL]})
   eventos = new Collection<Evento>(this)
 
-  @OneToMany( () => Valoracion, (valoracion) => valoracion.puntoDeInteres, { nullable: true, cascade: [Cascade.REMOVE]})
+  @OneToMany( () => Valoracion, (valoracion) => valoracion.puntoDeInteres, { nullable: true, cascade: [Cascade.ALL]})
   valoraciones = new Collection<Valoracion>(this)
 
   // Agregar Usuario
 
-  // Agregar Localidad
+  @ManyToOne( () => Localidad, { nullable: false, cascade: [Cascade.ALL] })
+  localidad!: Rel<Localidad>;
 
   // Agregar Historias
 }

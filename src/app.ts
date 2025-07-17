@@ -6,6 +6,8 @@ import { puntoDeInteresRouter } from './puntoDeInteres/puntoDeInteres.routes.js'
 import { orm, syncSchema } from './shared/db/orm.js'
 import { RequestContext } from '@mikro-orm/core'
 import { eventoRouter } from './evento/evento.routes.js'
+import { provinciaRouter } from './provincia/provincia.routes.js'
+import { localidadRouter } from './localidad/localidad.routes.js'
 
 const app = express()
 app.use(express.json())
@@ -24,7 +26,9 @@ app.use((req, res, next) => {
 //Before
 app.use('/api/tags', tagRouter)
 app.use('/api/puntosDeInteres', puntoDeInteresRouter)
-app.use('/api/evento', eventoRouter)
+app.use('/api/eventos', eventoRouter)
+app.use('/api/provincias', provinciaRouter)
+app.use('/api/localidades', localidadRouter)
 
 app.use((_,res) => {
   res.status(404).send({message: 'Resource not found'});

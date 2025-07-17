@@ -15,8 +15,24 @@ Content-Type: application/json
   "calle" : "Junín",
   "altura" : 5001,
   "privado" : true,
-  "tags" : [4],
-  "eventos" : []
+  "tags" : [],
+  "eventos" : [],
+  "localidad" : 2
+}
+### Add
+POST http://localhost:3000/api/puntosDeInteres
+Content-Type: application/json
+
+{
+  "nombre" : "Showcase",
+  "descripcion" : "CineMax Showcase",
+  "imagen" : "",
+  "calle" : "Junín",
+  "altura" : 5010,
+  "privado" : true,
+  "tags" : [],
+  "eventos" : [],
+  "localidad" : 2
 }
 
 ### Delete

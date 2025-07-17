@@ -1,0 +1,50 @@
+
+### get
+GET http://localhost:3000/api/provincias
+
+### get one
+GET http://localhost:3000/api/provincias/1
+
+### POST
+POST http://localhost:3000/api/provincias
+Content-Type: application/json
+
+{
+    "nombre": "Buenos Aires",
+    "codUta": "BA001"
+}
+### POST
+POST http://localhost:3000/api/provincias
+Content-Type: application/json
+
+{
+    "nombre": "Córdoba",
+    "codUta": "CB002"
+}
+### POST
+POST http://localhost:3000/api/provincias
+Content-Type: application/json
+
+{
+    "nombre": "Mendoza",
+    "codUta": "MZ004"
+}
+### POST
+POST http://localhost:3000/api/provincias
+Content-Type: application/json
+
+{
+    "nombre": "Santa Fe",
+    "codUta": "SF003"
+}
+
+### PUT
+PUT http://localhost:3000/api/provincias/7
+Content-Type: application/json
+
+{
+    "id": 2
+}
+
+### DELETE
+DELETE http://localhost:3000/api/provincias/6
