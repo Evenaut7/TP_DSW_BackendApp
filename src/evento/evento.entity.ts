@@ -2,6 +2,7 @@ import { Entity, PrimaryKey, Property, Cascade, DecimalType, ManyToMany, ManyToO
 import { BaseEntity } from "../shared/db/baseEntity.entity.js"
 import { PuntoDeInteres } from "../puntoDeInteres/puntoDeInteres.entity.js"
 import { Tag } from "../tag/tag.entity.js"
+import { Usuario } from "../usuario/usuario.entity.js"
 
 @Entity()
 export class Evento extends BaseEntity {
@@ -25,7 +26,8 @@ export class Evento extends BaseEntity {
   tags!: Tag[]
 
   @ManyToOne( () => PuntoDeInteres, {nullable: false, unique: false})
-  puntoDeInteres!: String
+  puntoDeInteres!: string
 
-  //Agregar agenda de usuario
+  @ManyToOne(() => Usuario,  { nullable: false, unique: false})
+  usuario!: string
 }

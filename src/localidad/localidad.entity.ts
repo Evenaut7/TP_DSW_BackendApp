@@ -2,6 +2,7 @@ import { Entity, Property, ManyToOne, Rel, Cascade, OneToMany, Collection } from
 import { Provincia } from "../provincia/provincia.entity.js";
 import { BaseEntity } from "../shared/db/baseEntity.entity.js";
 import { PuntoDeInteres } from "../puntoDeInteres/puntoDeInteres.entity.js";
+import { Usuario } from "../usuario/usuario.entity.js";
 
 
 @Entity()
@@ -23,4 +24,7 @@ export class Localidad extends BaseEntity {
 
     @OneToMany(() => PuntoDeInteres, (PuntoDeInteres) => PuntoDeInteres.localidad, { nullable: true, cascade: [Cascade.ALL] })
     puntosDeInteres = new Collection<PuntoDeInteres>(this);
+
+    @OneToMany(()=> Usuario, (usuario) => usuario.localidad, {nullable: true }) //cascade: [Cascade.CANCEL_ORPHAN_REMOVAL] 
+    usuarios = new Collection <Usuario> (this)
 }

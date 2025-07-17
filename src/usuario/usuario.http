@@ -1,0 +1,70 @@
+###GET ALL
+GET http://localhost:3000/api/usuarios
+
+
+###POST
+POST http://localhost:3000/api/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Juan Perez",
+  "gmail": "juanperez@gmail",
+  "tipo": "cliente",
+  "cuit": "20-12345678-9",
+  "localidad": 1,
+  "puntosDeInteres" : [],
+  "agendaPDI" : [],
+  "valoraciones": [],
+  "favoritos": []
+}
+
+
+###POST
+POST http://localhost:3000/api/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Gabi gol",
+  "gmail": "gabigol@gmail",
+  "tipo": "creador",
+  "cuit": "20-12345123-9",
+  "localidad": 2,
+  "puntosDeInteres" : [],
+  "agendaPDI" : [],
+  "valoraciones": [],
+  "favoritos": []
+}
+
+
+###POST
+POST http://localhost:3000/api/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Colo Satur",
+  "gmail": "saturColo@gmail",
+  "tipo": "creador",
+  "cuit": "20-199999-9",
+  "localidad": 3,
+  "puntosDeInteres" : [],
+  "agendaPDI" : [],
+  "valoraciones": [],
+  "favoritos": []
+}
+
+
+###POST
+POST http://localhost:3000/api/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Fideo Di Maria",
+  "gmail": "DimariaGol@gmail",
+  "tipo": "cliente",
+  "cuit": "20-4567823-9",
+  "localidad": 2,
+  "puntosDeInteres" : [],
+  "agendaPDI" : [],
+  "valoraciones": [],
+  "favoritos": []
+}

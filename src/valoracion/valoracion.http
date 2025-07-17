@@ -1,0 +1,29 @@
+###GET
+GET http://localhost:3000/api/valoraciones
+
+###POST
+POST http://localhost:3000/api/valoraciones
+Content-Type: application/json
+
+{
+  "comentario": "Excelente lugar para visitar",
+  "cantEstrellas": 4 ,
+  "fechaHora": "2023-10-01T12:00:00Z",  
+  "puntoDeInteres": 1,
+  "usuario": 1
+}
+
+###POST
+POST http://localhost:3000/api/valoraciones
+Content-Type: application/json
+
+{
+  "comentario": "pesimo lugar para visitar",
+  "cantEstrellas": 5 ,
+  "fechaHora": "2023-10-01T12:00:00Z",  
+  "puntoDeInteres": 1,
+  "usuario": 1
+}
+
+###DELETE
+DELETE http://localhost:3000/api/valoraciones/2

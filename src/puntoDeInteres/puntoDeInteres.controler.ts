@@ -8,7 +8,7 @@ const em = orm.em
 
 async function findAll(req: Request, res: Response) {
   try {
-    const puntosDeInteres = await em.find(PuntoDeInteres, {}, {populate: ['eventos', 'eventos.tags' , 'tags']})
+    const puntosDeInteres = await em.find(PuntoDeInteres, {}, {populate: ['eventos', 'eventos.tags' , 'tags', 'valoraciones']})
     res.status(200).json({message: 'Found all Puntos De Interes', data: puntosDeInteres})
   } 
   catch (error: any) {
@@ -30,7 +30,7 @@ async function add(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const findedPuntoDeInteres = await em.findOneOrFail(PuntoDeInteres, { id }, {populate: ['eventos', 'eventos.tags' , 'tags']})
+    const findedPuntoDeInteres = await em.findOneOrFail(PuntoDeInteres, { id }, {populate: ['eventos', 'eventos.tags' , 'tags', 'valoraciones']})
     res.status(200).json({message: "Punto De Interes finded successfully", data: findedPuntoDeInteres})
   }
   catch (error: any) {
