@@ -5,6 +5,7 @@ import { Tag } from "../tag/tag.entity.js"
 import { Valoracion } from "../valoracion/valoracion.entity.js"
 import { Localidad } from "../localidad/localidad.entity.js"
 import { Usuario } from "../usuario/usuario.entity.js"
+import { Historia } from "../historia/historia.entity.js";
 
 
 @Entity()
@@ -46,7 +47,8 @@ export class PuntoDeInteres extends BaseEntity {
   @ManyToOne( () => Localidad, { nullable: false, cascade: [Cascade.ALL] })
   localidad!: Rel<Localidad>;
 
-  // Agregar Historias
+  @OneToMany(() => Historia, (historia) => historia.puntoDeInteres, { nullable: true, cascade: [Cascade.ALL] })
+  historias = new Collection<Historia>(this);
 
   //Agregar agenda usuario
 }

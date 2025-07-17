@@ -17,9 +17,10 @@ Content-Type: application/json
   "privado" : true,
   "tags" : [],
   "eventos" : [],
-  "localidad" : 4,
+  "localidad" : 1,
   "valoraciones" : [],
-  "usuario" : 2
+  "usuario" : 1, 
+  "historias" : []
 }
 ### Add
 POST http://localhost:3000/api/puntosDeInteres
@@ -36,11 +37,12 @@ Content-Type: application/json
   "eventos" : [],
   "localidad" : 4,
   "valoraciones" : [],
-  "usuario" : 2
+  "usuario" : 2,
+  "historias" : []
 }
 
 ### Delete
-DELETE http://localhost:3000/api/puntosDeInteres/1
+DELETE http://localhost:3000/api/puntosDeInteres/2
 
 ### Update
 PUT http://localhost:3000/api/puntosDeInteres/4

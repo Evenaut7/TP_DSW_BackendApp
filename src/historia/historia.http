@@ -1,0 +1,28 @@
+###GET ALL
+GET http://localhost:3000/api/historias
+
+### ADD
+POST http://localhost:3000/api/historias
+Content-Type: application/json
+
+{
+    "fechaDesde": "2023-01-01T00:00:00.000Z",
+    "fechaHasta": "2023-12-31T23:59:59.999Z",
+    "descripcion": "Historia de prueba",  
+    "imagen": "base64EncodedImageString",
+    "puntoDeInteres": 2
+}
+
+### ADD
+POST http://localhost:3000/api/historias
+Content-Type: application/json
+
+{
+    "fechaDesde": "2023-01-01T00:00:00.000Z",
+    "fechaHasta": "2023-12-31T23:59:59.999Z",
+    "descripcion": "Era un lugar muy bonito, lleno de historia y cultura hasta que un día llegó la guerra y lo destruyó todo.",  
+    "imagen": "base64EncodedImageString",
+    "puntoDeInteres": 2
+}
+### DELETE
+DELETE http://localhost:3000/api/historias/1  

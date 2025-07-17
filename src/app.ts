@@ -10,6 +10,7 @@ import { provinciaRouter } from './provincia/provincia.routes.js'
 import { localidadRouter } from './localidad/localidad.routes.js'
 import { usuarioRouter } from './usuario/usuario.routes.js'
 import { valoracionRouter } from './valoracion/valoracion.routes.js'
+import { historiaRouter } from './historia/historia.routes.js'  
 
 
 const app = express()
@@ -36,6 +37,7 @@ app.use('/api/provincias', provinciaRouter)
 app.use('/api/localidades', localidadRouter)
 app.use('/api/usuarios', usuarioRouter)
 app.use('/api/valoraciones', valoracionRouter)
+app.use('/api/historias', historiaRouter)
 
 
 app.use((_,res) => {
