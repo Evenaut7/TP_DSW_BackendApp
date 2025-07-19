@@ -11,22 +11,22 @@ import { Historia } from "../historia/historia.entity.js";
 @Entity()
 export class PuntoDeInteres extends BaseEntity {
   
-  @Property({nullable: false, unique: true})
+  @Property({nullable: false, unique: true, type: 'string'})
   nombre!: string
 
-  @Property({nullable: false, unique: false})
+  @Property({nullable: false, unique: false, type: 'string'})
   descripcion!: string
 
-  @Property({nullable: false, unique: true})
+  @Property({nullable: false, unique: true, type: 'string'})
   imagen!: string
 
-  @Property({nullable: false, unique: false})
+  @Property({nullable: false, unique: false, type: 'string'})
   calle!: string
 
-  @Property({nullable: false, unique: false})
+  @Property({nullable: false, unique: false, type: 'number'})
   altura!: Number
 
-  @Property({nullable: false, unique: false})
+  @Property({nullable: false, unique: false, type: 'boolean'})
   privado!: boolean
 
   @ManyToMany( () => Tag, (tag) => tag.puntosDeInteres, { nullable: true, owner: true, cascade: [Cascade.ALL]})
@@ -41,7 +41,7 @@ export class PuntoDeInteres extends BaseEntity {
   @ManyToOne(() => Usuario, { nullable: false, cascade: [Cascade.ALL] })
   usuario!: Rel<Usuario>;
 
-  @ManyToMany(() => Usuario, (usuario) => usuario.favoritos , { nullable: false})
+  @ManyToMany(() => Usuario, (usuario) => usuario.favoritos , { nullable: true})
   favoritoDe = new Collection <Usuario> (this);
 
   @ManyToOne( () => Localidad, { nullable: false, cascade: [Cascade.ALL] })

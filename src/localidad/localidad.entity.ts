@@ -7,10 +7,10 @@ import { Usuario } from "../usuario/usuario.entity.js";
 
 @Entity()
 export class Localidad extends BaseEntity {
-    @Property({ nullable: false, unique: true })
+    @Property({ nullable: false, unique: true , type: 'string'})
     nombre!: string
 
-    @Property({ nullable: true, unique: true })
+    @Property({ nullable: true, unique: true , type: 'string'})
     codUta!: string
 
     @Property({ nullable: true, type: 'float' })

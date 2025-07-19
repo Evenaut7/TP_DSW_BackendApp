@@ -6,13 +6,13 @@ import { PuntoDeInteres } from "../puntoDeInteres/puntoDeInteres.entity.js"
 @Entity()
 export class Tag extends BaseEntity {
   
-  @Property({nullable: false, unique: true})
+  @Property({nullable: false, unique: true, type: 'string'})
   nombre!: string
-  
-  @Property({nullable: false, unique: false})
+
+  @Property({nullable: false, unique: false, type: 'string'})
   descripcion!: string
-  
-  @Property({nullable: false, unique: false})
+
+  @Property({nullable: false, unique: false, type: 'string'})
   tipo!: string
   
   @ManyToMany( () => Evento, (evento) => evento.tags )

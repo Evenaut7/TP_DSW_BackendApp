@@ -8,19 +8,19 @@ import { Valoracion } from "../valoracion/valoracion.entity.js"
 @Entity()
 export class Usuario extends BaseEntity{
 
-  @Property({ nullable: false,  unique: true })
+  @Property({ nullable: false,  unique: true , type: 'string'})
   nombre!: string
 
-  @Property({ nullable: false,  unique: false })
+  @Property({ nullable: false,  unique: false, type: 'string' })
   tipo!: string
 
-  @Property({ nullable: false,  unique: true })
+  @Property({ nullable: false,  unique: true, type: 'string' })
   cuit!: string
 
-  @Property({ nullable: false,  unique: true })
+  @Property({ nullable: false,  unique: true, type: 'string' })
   gmail!: string
 
-  @ManyToOne(() => Localidad,  { nullable: true , cascade: [ Cascade.ALL ] })
+  @ManyToOne(() => Localidad,  { nullable: false , cascade: [ Cascade.ALL ] })
   localidad! : Rel<Localidad>
 
   @OneToMany(() => PuntoDeInteres, (puntoDeInteres) => puntoDeInteres.usuario,  { nullable: true , cascade: [ Cascade.ALL ] })
