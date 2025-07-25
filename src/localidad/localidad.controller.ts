@@ -7,7 +7,7 @@ const em = orm.em;
 export class LocalidadController {
     findAll = async (req :Request, res : Response) => {
         try {
-            const localidades = await em.find(Localidad, {});
+            const localidades = await em.find(Localidad, {}, {populate: ['provincia']});
             res.status(200).json({message: 'Localidades found', data: localidades});
         } catch (error: any) {
             res.status(500).json({message: 'Error fetching localidades', error:error.message});
@@ -16,7 +16,7 @@ export class LocalidadController {
     findOne = async (req: Request, res: Response) => {
     try {
             const id = Number.parseInt(req.params.id);
-            const localidad = await orm.em.findOneOrFail(Localidad, id );
+            const localidad = await orm.em.findOneOrFail(Localidad, {id}, {populate: ['provincia']});
             res.status(200).json({message: 'Localidad found', data: localidad});
         }catch (error: any) {
             res.status(500).json({message: 'Error fetching localidades', error:error.message});
