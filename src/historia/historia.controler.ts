@@ -26,8 +26,18 @@ export class HistoriaControler {
 
     add = async (req: Request, res: Response) => {
         try {
-            const newHistoria = em.create(Historia, req.body);
-            await em.flush();
+            const { titulo, fechaDesde, fechaHasta, descripcion, puntoDeInteres } = req.body;
+            const imagen = req.file ? req.file.filename : undefined;
+            const newHistoria = em.create(Historia, {
+            titulo,
+            fechaDesde,
+            fechaHasta,
+            descripcion,
+            imagen,
+            puntoDeInteres
+            });
+
+            await em.persistAndFlush(newHistoria);await em.persistAndFlush(newHistoria)
             res.status(201).json({ message: 'Historia added successfully', data: newHistoria });
         } catch (error: any) {
             res.status(500).json({ message: 'Error adding historia', error: error.message });

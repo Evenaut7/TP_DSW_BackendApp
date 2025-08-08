@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import multer from 'multer'
+import path from 'path';
 import { tagRouter } from './tag/tag.routes.js'
 import { puntoDeInteresRouter } from './puntoDeInteres/puntoDeInteres.routes.js'
 import { orm, syncSchema } from './shared/db/orm.js'
@@ -15,28 +16,24 @@ import { historiaRouter } from './historia/historia.routes.js'
 
 
 const app = express()
-
 app.use(express.json())
+
+// Cors
 app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
   })
 );
-const multerUpload = multer({
-  dest: './uploads',
-  limits: {
-    fieldSize: 100000000
-  }
-})
 
-//After 
+
+//After Middleware
 
 app.use((req, res, next) => {
   RequestContext.create(orm.em, next)
 })
 
-//Before
+//Before Middleware
 
 app.use('/api/tags', tagRouter)
 app.use('/api/puntosDeInteres', puntoDeInteresRouter)

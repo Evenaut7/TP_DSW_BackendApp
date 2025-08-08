@@ -9,12 +9,12 @@ POST http://localhost:3000/api/puntosDeInteres
 Content-Type: application/json
 
 {
-  "nombre" : "Alto Rosario",
-  "descripcion" : "Shopping Alto Rosario",
-  "imagen" : "shopping.png",
-  "calle" : "Junín",
-  "altura" : 5001,
-  "privado" : true,
+  "nombre" : "Barrio Arroyito",
+  "descripcion" : "Barrio Historico",
+  "imagen" : "Arroyito.png",
+  "calle" : "Av Rosario Centrlal",
+  "altura" : 0,
+  "privado" : false,
   "tags" : [],
   "eventos" : [],
   "localidad" : 1,

@@ -25,4 +25,4 @@ Content-Type: application/json
     "puntoDeInteres": 2
 }
 ### DELETE
-DELETE http://localhost:3000/api/historias/1  
+DELETE http://localhost:3000/api/historias/4 

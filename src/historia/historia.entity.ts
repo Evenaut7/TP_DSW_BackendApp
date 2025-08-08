@@ -4,6 +4,8 @@ import { PuntoDeInteres } from "../puntoDeInteres/puntoDeInteres.entity.js";
 
 @Entity()
 export class Historia extends BaseEntity {
+  @Property({ nullable: false, unique: false, type: 'string'})
+  titulo!: string
 
   @Property({ nullable: false, unique: false, type: 'date'})
   fechaDesde!: Date;
@@ -14,8 +16,8 @@ export class Historia extends BaseEntity {
   @Property({ nullable: false, unique: false, type: 'string'})
   descripcion!: string;
 
-  @Property({ nullable: false, unique: false, type: 'string'})
-  imagen!: string;
+  @Property({ nullable: true})
+  imagen?: string;
 
   @ManyToOne(() => PuntoDeInteres, { nullable: false, cascade: [Cascade.ALL] })
   puntoDeInteres!: Rel<PuntoDeInteres>;
