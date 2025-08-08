@@ -20,6 +20,9 @@ export class Usuario extends BaseEntity{
   @Property({ nullable: false,  unique: true, type: 'string' })
   gmail!: string
 
+  @Property({ nullable: false, unique: false, type: 'string'})
+  password!: string
+
   @ManyToOne(() => Localidad,  { nullable: false , cascade: [ Cascade.ALL ] })
   localidad! : Rel<Localidad>
 

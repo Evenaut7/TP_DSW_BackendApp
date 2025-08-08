@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
     "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\"",
-    "seed":"tsx ./src/seed.ts"
+    "seed": "tsx ./src/seed.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "5.0.2",
+    "@types/multer": "^2.0.0",
     "@types/node": "22.15.19",
     "tsc-watch": "6.0.4",
     "tsx": "^4.20.3",
@@ -27,6 +28,7 @@
     "@mikro-orm/sql-highlighter": "1.0.1",
     "cors": "^2.8.5",
     "express": "4.21.2",
+    "multer": "^2.0.2",
     "reflect-metadata": "0.2.2"
   }
 }

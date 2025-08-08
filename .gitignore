@@ -27,3 +27,7 @@ dist/**/*
 
 ## built vscode extensions
 *.vsix
+
+## Ignoro contenido carpeta uploads 
+uploads/**
+!.gitkeep

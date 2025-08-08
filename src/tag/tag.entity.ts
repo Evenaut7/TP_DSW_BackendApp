@@ -10,9 +10,6 @@ export class Tag extends BaseEntity {
   nombre!: string
 
   @Property({nullable: false, unique: false, type: 'string'})
-  descripcion!: string
-
-  @Property({nullable: false, unique: false, type: 'string'})
   tipo!: string
   
   @ManyToMany( () => Evento, (evento) => evento.tags )

@@ -1,6 +1,7 @@
 import 'reflect-metadata'
 import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
+import multer from 'multer'
 import { tagRouter } from './tag/tag.routes.js'
 import { puntoDeInteresRouter } from './puntoDeInteres/puntoDeInteres.routes.js'
 import { orm, syncSchema } from './shared/db/orm.js'
@@ -10,10 +11,11 @@ import { provinciaRouter } from './provincia/provincia.routes.js'
 import { localidadRouter } from './localidad/localidad.routes.js'
 import { usuarioRouter } from './usuario/usuario.routes.js'
 import { valoracionRouter } from './valoracion/valoracion.routes.js'
-import { historiaRouter } from './historia/historia.routes.js'  
+import { historiaRouter } from './historia/historia.routes.js' 
 
 
 const app = express()
+
 app.use(express.json())
 app.use(
   cors({
@@ -21,6 +23,12 @@ app.use(
     credentials: true,
   })
 );
+const multerUpload = multer({
+  dest: './uploads',
+  limits: {
+    fieldSize: 100000000
+  }
+})
 
 //After 
 

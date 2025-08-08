@@ -15,23 +15,18 @@ async function main() {
   // PROVINCIAS -------------------------------------------------------------------------------
   const p1 = new Provincia();
   p1.nombre = 'Buenos Aires';
-  p1.codUta = 'BA001';
   await em.persistAndFlush(p1);
   const p2 = new Provincia();
   p2.nombre = 'Santa Fe';
-  p2.codUta = 'SF002';
   await em.persistAndFlush(p2);
   const p3 = new Provincia();
   p3.nombre = 'Cordoba';
-  p3.codUta = 'CO003';
   await em.persistAndFlush(p3);
   const p4 = new Provincia();
   p4.nombre = 'Mendoza';
-  p4.codUta = 'MZ004';
   await em.persistAndFlush(p4);
   const p5 = new Provincia();
   p5.nombre = 'Tierra del Fuego';
-  p5.codUta = 'TF005';
   await em.persistAndFlush(p5);
   // LOCALIDADES ----------------------------------------------------------------------------------------------------------------------------------------------
   const l0 = new Localidad();
@@ -65,65 +60,46 @@ async function main() {
   // TAGS ----------------------------------------------------------------------------------------------------------------------------------------------
   const tag1 = new Tag();
   tag1.nombre = 'Familiar';
-  tag1.descripcion = 'Para toda la familia';
   tag1.tipo = 'Evento';
   await em.persistAndFlush(tag1);
   const tagMusica = new Tag();
   tagMusica.nombre = 'Música';
-  tagMusica.descripcion =
-    'Eventos y lugares relacionados con géneros musicales.';
   tagMusica.tipo = 'Evento';
   await em.persistAndFlush(tagMusica);
   const tagHistorico = new Tag();
   tagHistorico.nombre = 'Histórico';
-  tagHistorico.descripcion =
-    'Puntos de interés con valor histórico o patrimonial.';
   tagHistorico.tipo = 'Punto de Interés';
   await em.persistAndFlush(tagHistorico);
   const tagAireLibre = new Tag();
   tagAireLibre.nombre = 'Aire Libre';
-  tagAireLibre.descripcion =
-    'Actividades y lugares para disfrutar al exterior.';
   tagAireLibre.tipo = 'Actividad';
   await em.persistAndFlush(tagAireLibre);
   const tagGastronomia = new Tag();
   tagGastronomia.nombre = 'Gastronomía';
-  tagGastronomia.descripcion =
-    'Experiencias culinarias, restaurantes y ferias de comida.';
   tagGastronomia.tipo = 'Punto de Interés';
   await em.persistAndFlush(tagGastronomia);
   const tagDeporte = new Tag();
   tagDeporte.nombre = 'Deporte';
-  tagDeporte.descripcion =
-    'Eventos deportivos, ligas y lugares para practicar deportes.';
   tagDeporte.tipo = 'Evento';
   await em.persistAndFlush(tagDeporte);
   const tagCultura = new Tag();
   tagCultura.nombre = 'Cultura';
-  tagCultura.descripcion =
-    'Museos, galerías de arte, teatros y expresiones culturales.';
   tagCultura.tipo = 'Punto de Interés';
   await em.persistAndFlush(tagCultura);
   const tagCompras = new Tag();
   tagCompras.nombre = 'Compras';
-  tagCompras.descripcion =
-    'Centros comerciales, mercados y tiendas de interés.';
   tagCompras.tipo = 'Punto de Interés';
   await em.persistAndFlush(tagCompras);
   const tagEducacion = new Tag();
   tagEducacion.nombre = 'Educación';
-  tagEducacion.descripcion = 'Charlas, talleres y sitios de aprendizaje.';
   tagEducacion.tipo = 'Evento';
   await em.persistAndFlush(tagEducacion);
   const tagBienestar = new Tag();
   tagBienestar.nombre = 'Bienestar';
-  tagBienestar.descripcion = 'Spas, centros de yoga, parques para meditar.';
   tagBienestar.tipo = 'Punto de Interés';
   await em.persistAndFlush(tagBienestar);
   const tagTecnologia = new Tag();
   tagTecnologia.nombre = 'Tecnología';
-  tagTecnologia.descripcion =
-    'Charlas de tecnología, meetups, lugares de innovación.';
   tagTecnologia.tipo = 'Evento';
   await em.persistAndFlush(tagTecnologia);
   // USUARIOS ----------------------------------------------------------------------------------------------------------------------------------------------
