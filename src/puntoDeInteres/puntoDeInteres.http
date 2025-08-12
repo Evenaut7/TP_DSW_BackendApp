@@ -9,9 +9,9 @@ POST http://localhost:3000/api/puntosDeInteres
 Content-Type: application/json
 
 {
-  "nombre" : "Barrio Arroyito",
+  "nombre" : "Barrio Toba",
   "descripcion" : "Barrio Historico",
-  "imagen" : "Arroyito.png",
+  "imagen" : "foto.png",
   "calle" : "Av Rosario Centrlal",
   "altura" : 0,
   "privado" : false,
@@ -42,7 +42,7 @@ Content-Type: application/json
 }
 
 ### Delete
-DELETE http://localhost:3000/api/puntosDeInteres/2
+DELETE http://localhost:3000/api/puntosDeInteres/3
 
 ### Update
 PUT http://localhost:3000/api/puntosDeInteres/4

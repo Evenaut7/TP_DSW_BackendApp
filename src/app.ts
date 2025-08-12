@@ -29,6 +29,8 @@ app.use(
 
 //After Middleware
 
+app.use('/public', express.static('./uploads'))
+
 app.use((req, res, next) => {
   RequestContext.create(orm.em, next)
 })
@@ -43,7 +45,6 @@ app.use('/api/localidades', localidadRouter)
 app.use('/api/usuarios', usuarioRouter)
 app.use('/api/valoraciones', valoracionRouter)
 app.use('/api/historias', historiaRouter)
-
 
 app.use((_,res) => {
   res.status(404).send({message: 'Resource not found'});
