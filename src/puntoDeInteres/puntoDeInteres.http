@@ -9,10 +9,10 @@ POST http://localhost:3000/api/puntosDeInteres
 Content-Type: application/json
 
 {
-  "nombre" : "Barrio Toba",
+  "nombre" : "Catedral",
   "descripcion" : "Barrio Historico",
   "imagen" : "foto.png",
-  "calle" : "Av Rosario Centrlal",
+  "calle" : "Avellaneda",
   "altura" : 0,
   "privado" : false,
   "tags" : [],

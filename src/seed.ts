@@ -9,6 +9,7 @@ import { Historia } from './historia/historia.entity.js';
 import { Valoracion } from './valoracion/valoracion.entity.js';
 import { Evento } from './evento/evento.entity.js';
 
+/*
 async function main() {
   const em = orm.em.fork(); // creamos EntityManager aislado
 
@@ -273,3 +274,4 @@ main().catch((err) => {
   console.error('❌ Error al ejecutar el seed', err);
   process.exit(1);
 });
+*/

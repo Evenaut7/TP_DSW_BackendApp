@@ -9,8 +9,7 @@ POST http://localhost:3000/api/localidades
 Content-Type: application/json
 
 {
-    "nombre": "Mar Del Plata",
-    "codUta": "U123",
+    "nombre": "Cordoba Capital",
     "latitud": -27.4228,
     "longitud": -50.265,
     "provincia": 1

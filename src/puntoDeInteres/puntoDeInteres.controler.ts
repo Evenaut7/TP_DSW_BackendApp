@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { orm } from '../shared/db/orm.js';
 import { PuntoDeInteres } from './puntoDeInteres.entity.js';
+import * as fs from 'fs/promises';
 
 import { Usuario } from '../usuario/usuario.entity.js';
 import { Localidad } from '../localidad/localidad.entity.js';
@@ -25,16 +26,29 @@ async function findAll(req: Request, res: Response) {
   }
 }
 
-// async function add(req: Request, res: Response) {
-//   try {
-//     const newPuntoDeInteres = em.create(PuntoDeInteres, req.body)
-//     await em.flush()
-//     res.status(201).json({message: 'Punto De Interes created successfully', data: newPuntoDeInteres})
-//   }
-//   catch (error: any) {
-//     res.status(500).json({message: error.message})
-//   }
-// }
+async function add(req: Request, res: Response) {
+  console.log('test')
+  if (!req.files || req.files.length === 0) res.status(400).send('No se han subido archivos')
+  let imagenes: string[] = [];
+  (req.files as Express.Multer.File[]).map((file: Express.Multer.File) => imagenes.push(file.fieldname))
+  console.log(imagenes)
+  try {
+    const newPuntoDeInteres = em.create(PuntoDeInteres, Object.assign({ imagenes }, req.body))
+    await em.persistAndFlush(newPuntoDeInteres)
+    res.status(201).json({ message: 'Punto De Interes created successfully', data: newPuntoDeInteres })
+  }
+  catch (error: any) {
+    try {
+      if (req.files != undefined) {
+        await Promise.all((req.files as Express.Multer.File[]).map(file => fs.unlink(`uploads/${file.filename}`)));
+      }
+    }
+    catch (fsErr) {
+      console.error("Error deleting uploaded image after failure:", fsErr);
+    }
+    res.status(500).json({ message: error.message });
+  }
+}
 
 async function findOne(req: Request, res: Response) {
   try {
@@ -82,12 +96,13 @@ async function remove(req: Request, res: Response) {
   }
 }
 
+/*
 async function add(req: Request, res: Response) {
   try {
     const {
       nombre,
       descripcion,
-      imagen,
+      imagenes,
       calle,
       altura,
       privado,
@@ -96,12 +111,12 @@ async function add(req: Request, res: Response) {
       localidad: localidadId,
     } = req.body;
 
-    // Buscar las entidades relacionadas
+     Buscar las entidades relacionadas
     const usuario = await em.findOneOrFail(Usuario, usuarioId);
     const localidad = await em.findOneOrFail(Localidad, localidadId);
     const tags = tagIds ? await em.find(Tag, { id: { $in: tagIds } }) : [];
 
-    // Crear el nuevo PDI
+     Crear el nuevo PDI
     const newPuntoDeInteres = new PuntoDeInteres();
     newPuntoDeInteres.nombre = nombre;
     newPuntoDeInteres.descripcion = descripcion;
@@ -126,4 +141,6 @@ async function add(req: Request, res: Response) {
     res.status(500).json({ message: error.message });
   }
 }
+*/
+
 export { findAll, findOne, add, update, remove };

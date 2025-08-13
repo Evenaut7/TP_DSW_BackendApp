@@ -16,9 +16,10 @@ import { historiaRouter } from './historia/historia.routes.js'
 
 
 const app = express()
+
+//Middlewares
 app.use(express.json())
 
-// Cors
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -26,16 +27,12 @@ app.use(
   })
 );
 
-
-//After Middleware
-
-app.use('/public', express.static('./uploads'))
-
 app.use((req, res, next) => {
   RequestContext.create(orm.em, next)
 })
 
-//Before Middleware
+//Routes
+app.use('/public', express.static('./uploads'))
 
 app.use('/api/tags', tagRouter)
 app.use('/api/puntosDeInteres', puntoDeInteresRouter)

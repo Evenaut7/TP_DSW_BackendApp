@@ -15,6 +15,7 @@ export const uploadImages = multer({
     else cb(new Error(`Solo se permiten los tipos de dato: ${types.join(' ')}`))
   },
   limits: {
-    fieldSize: 10000000
+    fieldSize: 1024 * 1024 * 10,
+    files: 20
   }
 });
