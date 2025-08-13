@@ -63,6 +63,7 @@ export class LocalidadController {
         try {
             const id = Number.parseInt(req.params.id);
             const localidad = await em.getReference(Localidad, id);
+            await fs.unlink('uploads/' + localidad.imagen);
             await em.removeAndFlush(localidad);
             res.status(200).json({message: 'Localidad deleted successfully'});
         } catch (error: any) {

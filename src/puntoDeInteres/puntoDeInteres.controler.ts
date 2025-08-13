@@ -27,11 +27,8 @@ async function findAll(req: Request, res: Response) {
 }
 
 async function add(req: Request, res: Response) {
-  console.log('test')
   if (!req.files || req.files.length === 0) res.status(400).send('No se han subido archivos')
-  let imagenes: string[] = [];
-  (req.files as Express.Multer.File[]).map((file: Express.Multer.File) => imagenes.push(file.fieldname))
-  console.log(imagenes)
+  const imagenes = (req.files as Express.Multer.File[]).map((file: Express.Multer.File) => file.filename)
   try {
     const newPuntoDeInteres = em.create(PuntoDeInteres, Object.assign({ imagenes }, req.body))
     await em.persistAndFlush(newPuntoDeInteres)
@@ -85,7 +82,8 @@ async function update(req: Request, res: Response) {
 async function remove(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const puntoDeInteresToRemove = em.getReference(PuntoDeInteres, id);
+    const puntoDeInteresToRemove = await em.findOneOrFail(PuntoDeInteres, id);
+    await Promise.all((puntoDeInteresToRemove.imagenes).map(imagen => fs.unlink(`uploads/${imagen}`)));
     await em.removeAndFlush(puntoDeInteresToRemove);
     res.status(200).json({
       message: 'Punto De Interes removed successfully',
