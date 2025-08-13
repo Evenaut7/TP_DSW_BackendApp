@@ -3,7 +3,7 @@ import { Historia } from "./historia.entity.js";
 import { orm } from "../shared/db/orm.js";
 import * as fs from 'fs/promises';  
 
-const em = orm.em;  
+const em = orm.em.fork();  
 
 export class HistoriaControler {
     findAll = async (req: Request, res: Response) => {

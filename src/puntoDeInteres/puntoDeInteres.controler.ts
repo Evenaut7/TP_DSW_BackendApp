@@ -7,7 +7,7 @@ import { Usuario } from '../usuario/usuario.entity.js';
 import { Localidad } from '../localidad/localidad.entity.js';
 import { Tag } from '../tag/tag.entity.js';
 
-const em = orm.em;
+const em = orm.em.fork();
 
 //Faltaria crear una sanitizeInput
 
