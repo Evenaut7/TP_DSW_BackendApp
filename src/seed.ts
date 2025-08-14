@@ -266,10 +266,10 @@ async function main() {
   em.flush(); // guardamos todos los cambios en la base de datos
 
   console.log('✅ Base de datos poblada correctamente');
-  process.exit(); // terminamos el proceso
+//  process.exit(); // terminamos el proceso
 }
 
 main().catch((err) => {
   console.error('❌ Error al ejecutar el seed', err);
-  process.exit(1);
+//  process.exit(1);
 });
