@@ -16,6 +16,9 @@ export class Localidad extends BaseEntity {
     @Property({ nullable: true, type: 'float' })
     longitud!: number
 
+    @Property({ nullable: true})
+    imagen?: string;
+
     @ManyToOne(() => Provincia, { nullable: false , cascade: [ Cascade.ALL ] })
     provincia!: Rel<Provincia>;
 
