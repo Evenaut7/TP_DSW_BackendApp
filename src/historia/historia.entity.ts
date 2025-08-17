@@ -16,7 +16,7 @@ export class Historia extends BaseEntity {
   @Property({ nullable: false, unique: false, type: 'string'})
   descripcion!: string;
 
-  @Property({ nullable: true})
+  @Property({ nullable: true, type: 'string'})
   imagen?: string;
 
   @ManyToOne(() => PuntoDeInteres, { nullable: false, cascade: [Cascade.ALL] })
