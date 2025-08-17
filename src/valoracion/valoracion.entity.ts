@@ -13,7 +13,7 @@ export class Valoracion extends BaseEntity {
 
   @Property({nullable: false, unique: false, type: 'number'})
   cantEstrellas!: number 
- 
+
   @Property({nullable: false, unique: false, type: 'date'})
   fechaHora!: Date
 

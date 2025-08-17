@@ -9,9 +9,14 @@ import { Historia } from './historia/historia.entity.js';
 import { Valoracion } from './valoracion/valoracion.entity.js';
 import { Evento } from './evento/evento.entity.js';
 
+// console.log('📄 seed file loaded:', new Date().toISOString());
+// console.log('📄 running file URL:', import.meta.url);
 
-async function main() {
+async function main() 
+{
+  console.log('▶️ seed: start');
   const em = orm.em.fork(); // creamos EntityManager aislado
+  console.time('⏱ seed');
   //-------------------------------------------------------------------------------------------
   // PROVINCIAS -------------------------------------------------------------------------------
   //-------------------------------------------------------------------------------------------
@@ -918,60 +923,63 @@ async function main() {
 // VALORACIONES----------------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Valoraciones Rosario
-for (const pdi of [pdiParqueIndependencia, pdiRioMio, pdiMonumentoBandera, pdiCCPE, pdiJardinNinos]) {
-  const valoracion1 = new Valoracion();
-  valoracion1.comentario = 'Hermoso lugar para visitar en familia.';
-  valoracion1.cantEstrellas = 5;
-  valoracion1.fechaHora = new Date('2025-03-15 15:00:00');
-  valoracion1.puntoDeInteres = pdi;
-  valoracion1.usuario = usuario4; 
-  await em.persistAndFlush(valoracion1);
+  for (const pdi of [pdiParqueIndependencia, pdiRioMio, pdiMonumentoBandera, pdiCCPE, pdiJardinNinos]) 
+  {
+    const valoracion1 = new Valoracion();
+    valoracion1.comentario = 'Hermoso lugar para visitar en familia.';
+    valoracion1.cantEstrellas = 5;
+    valoracion1.fechaHora = new Date('2025-03-15 15:00:00');
+    valoracion1.puntoDeInteres = pdi;
+    valoracion1.usuario = usuario4; 
+    await em.persistAndFlush(valoracion1);
 
-  const valoracion2 = new Valoracion();
-  valoracion2.comentario = 'Muy concurrido pero bien cuidado.';
-  valoracion2.cantEstrellas = 4;
-  valoracion2.fechaHora = new Date('2025-04-10 16:30:00');
-  valoracion2.puntoDeInteres = pdi;
-  valoracion2.usuario = usuario5; 
-  await em.persistAndFlush(valoracion2);
+    const valoracion2 = new Valoracion();
+    valoracion2.comentario = 'Muy concurrido pero bien cuidado.';
+    valoracion2.cantEstrellas = 4;
+    valoracion2.fechaHora = new Date('2025-04-10 16:30:00');
+    valoracion2.puntoDeInteres = pdi;
+    valoracion2.usuario = usuario5; 
+    await em.persistAndFlush(valoracion2);
 
-  const valoracion3 = new Valoracion();
-  valoracion3.comentario = 'Me encantó la experiencia, volvería sin dudas.';
-  valoracion3.cantEstrellas = 5;
-  valoracion3.fechaHora = new Date('2025-05-20 18:00:00');
-  valoracion3.puntoDeInteres = pdi;
-  valoracion3.usuario = usuario7; 
-  await em.persistAndFlush(valoracion3);
-}
+    const valoracion3 = new Valoracion();
+    valoracion3.comentario = 'Me encantó la experiencia, volvería sin dudas.';
+    valoracion3.cantEstrellas = 5;
+    valoracion3.fechaHora = new Date('2025-05-20 18:00:00');
+    valoracion3.puntoDeInteres = pdi;
+    valoracion3.usuario = usuario7; 
+    await em.persistAndFlush(valoracion3);
+  }
 
 // Valoraciones Funes
-for (const pdi of [pdiPaseoEstacionFunes, pdiClubKentucky]) {
-  const valoracion1 = new Valoracion();
-  valoracion1.comentario = 'Buen ambiente y actividades entretenidas.';
-  valoracion1.cantEstrellas = 4;
-  valoracion1.fechaHora = new Date('2025-06-05 14:00:00');
-  valoracion1.puntoDeInteres = pdi;
-  valoracion1.usuario = usuario6; // Gabriel
-  await em.persistAndFlush(valoracion1);
+  for (const pdi of [pdiPaseoEstacionFunes, pdiClubKentucky]) 
+  {
+    const valoracion1 = new Valoracion();
+    valoracion1.comentario = 'Buen ambiente y actividades entretenidas.';
+    valoracion1.cantEstrellas = 4;
+    valoracion1.fechaHora = new Date('2025-06-05 14:00:00');
+    valoracion1.puntoDeInteres = pdi;
+    valoracion1.usuario = usuario6; // Gabriel
+    await em.persistAndFlush(valoracion1);
 
-  const valoracion2 = new Valoracion();
-  valoracion2.comentario = 'Ideal para pasar la tarde con amigos.';
-  valoracion2.cantEstrellas = 5;
-  valoracion2.fechaHora = new Date('2025-07-02 17:00:00');
-  valoracion2.puntoDeInteres = pdi;
-  valoracion2.usuario = usuario4; // Valentino
-  await em.persistAndFlush(valoracion2);
+    const valoracion2 = new Valoracion();
+    valoracion2.comentario = 'Ideal para pasar la tarde con amigos.';
+    valoracion2.cantEstrellas = 5;
+    valoracion2.fechaHora = new Date('2025-07-02 17:00:00');
+    valoracion2.puntoDeInteres = pdi;
+    valoracion2.usuario = usuario4; // Valentino
+    await em.persistAndFlush(valoracion2);
 
-  const valoracion3 = new Valoracion();
-  valoracion3.comentario = 'Muy lindo, aunque podría mejorar la señalización.';
-  valoracion3.cantEstrellas = 4;
-  valoracion3.fechaHora = new Date('2025-07-18 12:00:00');
-  valoracion3.puntoDeInteres = pdi;
-  valoracion3.usuario = usuario5; // Joaquín
-  await em.persistAndFlush(valoracion3);
+    const valoracion3 = new Valoracion();
+    valoracion3.comentario = 'Muy lindo, aunque podría mejorar la señalización.';
+    valoracion3.cantEstrellas = 4;
+    valoracion3.fechaHora = new Date('2025-07-18 12:00:00');
+    valoracion3.puntoDeInteres = pdi;
+    valoracion3.usuario = usuario5; // Joaquín
+    await em.persistAndFlush(valoracion3);
+  }
 
-const v1 = new Valoracion();
-v1.comentario = 'Pésimo lugar, muy sucio, descuidado y hace mucho frio. No lo recomiendo.' , v1.cantEstrellas = 1;
+  const v1 = new Valoracion();
+  v1.comentario = 'Pésimo lugar, muy sucio, descuidado y hace mucho frio. No lo recomiendo.' , v1.cantEstrellas = 1;
   v1.fechaHora = new Date('2024-01-10 10:00:00');
   v1.puntoDeInteres = pdiParqueIndependencia; // Asignar el punto de interés "Parque de la Independencia"
   v1.usuario = usuarioMalaOnda; // Asignar el usuario "Pedro Mal
@@ -1044,9 +1052,9 @@ v1.comentario = 'Pésimo lugar, muy sucio, descuidado y hace mucho frio. No lo r
   for (const pdi of [pdiMalvinasRG, pdiReservaRG, pdiCaboDomingo]) {
     for (let i = 0; i < 3; i++) {
       const v = new Valoracion();
-      v.comentario = ['Emotivo', 'Excelente guía', 'Paisajes únicos'][i] + ' (RG)';
+      v.comentario = ['Emotivo', 'Excelente guía', 'Paisajes únicos'][i];
       v.cantEstrellas = [5, 5, 4][i];
-      v.fechaHora = new Date(`2025-1${1+i}-0${i+1} 11:30:00`);
+      v.fechaHora = new Date(`2025-1${0+i}-0${i+1} 11:30:00`);
       v.puntoDeInteres = pdi;
       v.usuario = poolUsuariosValoracion[(i + 2) % poolUsuariosValoracion.length];
       await em.persistAndFlush(v);
@@ -1059,7 +1067,7 @@ v1.comentario = 'Pésimo lugar, muy sucio, descuidado y hace mucho frio. No lo r
       const v = new Valoracion();
       v.comentario = ['Tranquilo y lindo', 'Buena propuesta', 'Rico y atención amable'][i];
       v.cantEstrellas = [5, 4, 4][i];
-      v.fechaHora = new Date(`2025-0${9+i}-1${i} 14:30:00`);
+      v.fechaHora = new Date(`2025-0${2+i}-1${i} 14:30:00`);
       v.puntoDeInteres = pdi;
       v.usuario = poolUsuariosValoracion[(i + 1) % poolUsuariosValoracion.length];
       await em.persistAndFlush(v);
@@ -1069,15 +1077,17 @@ v1.comentario = 'Pésimo lugar, muy sucio, descuidado y hace mucho frio. No lo r
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+  console.log('🟡 pre-flush');
   em.flush(); // guardamos todos los cambios en la base de datos
-
+  console.log('🟢 post-flush');
+  console.timeEnd('⏱ seed');
   console.log('✅ Base de datos poblada correctamente');
-//  process.exit(); // terminamos el proceso
-};
-
-main().catch((err) => {
-  console.error('❌ Error al ejecutar el seed', err);
-//  process.exit(1);
-})
+  await orm.close(true);  // <- cierra pool
+  process.exit(0); // terminamos el proceso
 }
+
+main().catch(async (err) => {
+  console.error('❌ Error al ejecutar el seed', err);
+  await orm.close(true);  // <- cierra pool
+  process.exit(1);
+})
