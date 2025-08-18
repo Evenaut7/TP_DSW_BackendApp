@@ -45,23 +45,27 @@ async function main()
   const l0 = new Localidad();
   l0.nombre = 'CABA';
   l0.provincia = p1;
+  l0.imagen = 'caba.jpg';
   l0.latitud = -34.6037; l0.longitud = -58.3816; // Coordenadas aproximadas de CABA
   await em.persistAndFlush(l0);
 
   const l1 = new Localidad();
   l1.nombre = 'Quilmes';
   l1.provincia = p1;
+  l1.imagen = 'quilmes.png';
   l1.latitud = -34.7333; l1.longitud = -58.4167; // Coordenadas aproximadas de Quilmes
   await em.persistAndFlush(l1);
 
   const l2 = new Localidad();
   l2.nombre = 'Rosario';
+  l2.imagen = 'rosario.jpg';
   l2.provincia = p2;
   l2.latitud = -32.9617; l2.longitud = -60.6653; // Coordenadas aproximadas de Rosario
   await em.persistAndFlush(l2);
 
   const l3 = new Localidad();
   l3.nombre = 'Funes';
+  l3.imagen = 'funes.jpg';
   l3.provincia = p2;
   l3.latitud = -32.9731; l3.longitud = -60.7060; // Coordenadas aproximadas de Funes
   await em.persistAndFlush(l3);
@@ -69,18 +73,21 @@ async function main()
   const l4 = new Localidad();
   l4.nombre = 'Cordoba';
   l4.provincia = p3;
+  l4.imagen = 'cordoba.png';
   l4.latitud = -31.4201; l4.longitud = -64.1888; // Coordenadas aproximadas de Cordoba
   await em.persistAndFlush(l4);
 
   const l5 = new Localidad();
   l5.nombre = 'Mendoza';
   l5.provincia = p4;
+  l5.imagen = 'mendoza.png';
   l5.latitud = -32.8894; l5.longitud = -68.8272; // Coordenadas aproximadas de Mendoza
   await em.persistAndFlush(l5);
 
   const l6 = new Localidad();
   l6.nombre = 'Ushuaia';
   l6.provincia = p5;
+  l6.imagen = 'ushuaia.png';
   l6.latitud = -54.8019; l6.longitud = -68.3030; // Coordenadas aproximadas de Ushuaia
   await em.persistAndFlush(l6);
 
@@ -88,36 +95,42 @@ async function main()
   l7.nombre = 'Villa Carlos Paz';
   l7.latitud = -31.424; l7.longitud = -64.497;
   l7.provincia = p3; // Cordoba
+  l7.imagen = 'villacarlospaz.jpg';
   await em.persistAndFlush(l7);
 
   const l8 = new Localidad();
   l8.nombre = 'Villa María';
   l8.latitud = -32.408; l8.longitud = -63.240;
   l8.provincia = p3; // Cordoba
+  l8.imagen = 'villamaria.png';
   await em.persistAndFlush(l8);
 
   const l9 = new Localidad();
   l9.nombre = 'Godoy Cruz';
   l9.latitud = -32.925; l9.longitud = -68.844;
   l9.provincia = p4; // Mendoza
+  l9.imagen = 'godoycruz.jpg';
   await em.persistAndFlush(l9);
 
   const l10 = new Localidad();
   l10.nombre = 'San Rafael';
   l10.latitud = -34.617; l10.longitud = -68.330;
   l10.provincia = p4;
+  l10.imagen = 'sanrafael.jpg';
   await em.persistAndFlush(l10);
 
   const l11 = new Localidad();
   l11.nombre = 'Río Grande';
   l11.latitud = -53.787; l11.longitud = -67.708;
   l11.provincia = p5; // Tierra del Fuego
+  l11.imagen = 'riogrande.png';
   await em.persistAndFlush(l11);
 
   const l12 = new Localidad();
   l12.nombre = 'Tolhuin';
   l12.latitud = -54.504; l12.longitud = -67.189;
   l12.provincia = p5;
+  l12.imagen = 'tolhuin.jpg';
   await em.persistAndFlush(l12);
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
