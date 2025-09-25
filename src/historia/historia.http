@@ -6,10 +6,10 @@ POST http://localhost:3000/api/historias
 Content-Type: application/json
 
 {
+    "titulo": "Historia de prueba",
     "fechaDesde": "2023-01-01T00:00:00.000Z",
     "fechaHasta": "2023-12-31T23:59:59.999Z",
     "descripcion": "Historia de prueba",  
-    "imagen": "base64EncodedImageString",
     "puntoDeInteres": 2
 }
 

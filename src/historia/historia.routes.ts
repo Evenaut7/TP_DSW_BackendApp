@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { HistoriaControler } from "./historia.controler.js";
 import { uploadImages } from '../multer.js'; 
+import { schemaValidator } from "../schemaValidator.js";
+import { historiaSchema } from "./historia.schema.js";
 
 export const historiaRouter = Router();
 const historiaControler = new HistoriaControler();  
@@ -11,3 +13,4 @@ historiaRouter.post('/', uploadImages.single('imagen'), historiaControler.add);
 historiaRouter.put('/:id', uploadImages.single('imagen'), historiaControler.update); 
 historiaRouter.delete('/:id', historiaControler.delete);
 
+// Agregar el Schema Valdiator
