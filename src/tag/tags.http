@@ -11,9 +11,8 @@ POST http://localhost:3000/api/tags
 Content-Type: application/json
 
 {
-  "nombre" : "Gimnasio",
-  "descripcion" : "Lugar para hacer Ejercicio",
-  "tipo" : "Ejercicio"
+  "nombre" : "",
+  "tipo" : ""
 }
 
 

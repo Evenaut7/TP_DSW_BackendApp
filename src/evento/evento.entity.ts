@@ -28,6 +28,6 @@ export class Evento extends BaseEntity {
   @ManyToOne( () => PuntoDeInteres, {nullable: false, unique: false})
   puntoDeInteres!: Rel<PuntoDeInteres>
 
-  @ManyToOne(() => Usuario,  { nullable: false, unique: false})
+  @ManyToOne(() => Usuario,  { nullable: true, unique: false})
   usuario!: Rel<Usuario>
 }
