@@ -8,8 +8,8 @@ export const puntoDeInteresRouter = Router()
 
 puntoDeInteresRouter.get('/', findAll)
 puntoDeInteresRouter.get('/:id', findOne)
-puntoDeInteresRouter.post('/', uploadImages.array('imagenes'), add)
-puntoDeInteresRouter.put('/:id', uploadImages.array('imagenes'), update)
+puntoDeInteresRouter.post('/', schemaValidator(puntoDeInteresSchema), add)
+puntoDeInteresRouter.put('/:id', schemaValidator(puntoDeInteresSchema), update)
 puntoDeInteresRouter.delete('/:id', remove)
 
 // Agregar el Schema Valdiator

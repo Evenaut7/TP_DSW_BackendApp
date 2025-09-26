@@ -10,5 +10,6 @@ export const puntoDeInteresSchema = z.object({
     tags: z.array(z.number({message: "cada tag debe ser un número"}).int({message: "cada tag debe ser un número entero"}).positive({message: "cada tag debe ser un número positivo"})).optional(),
     localidad: z.number({message: "localidad es obligatorio"}).int({message: "localidad debe ser un número entero"}).positive({message: "localidad debe ser un número positivo"}),
     usuario: z.number({message: "usuario es obligatorio"}).int({message: "usuario debe ser un número entero"}).positive({message: "usuario debe ser un número positivo"}),
+    imagen: z.string().min(1, {message: "imagen no puede estar vacío"}).max(255, {message: "imagen no puede superar los 255 caracteres"}),
   })
 });

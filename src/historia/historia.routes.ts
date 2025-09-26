@@ -9,8 +9,8 @@ const historiaControler = new HistoriaControler();
 
 historiaRouter.get('/', historiaControler.findAll);
 historiaRouter.get('/:id', historiaControler.findOne);    
-historiaRouter.post('/', uploadImages.single('imagen'), schemaValidator(historiaSchema), historiaControler.add);
-historiaRouter.put('/:id', uploadImages.single('imagen'), schemaValidator(historiaSchema), historiaControler.update); 
+historiaRouter.post('/', schemaValidator(historiaSchema), historiaControler.add);
+historiaRouter.put('/:id', schemaValidator(historiaSchema), historiaControler.update); 
 historiaRouter.delete('/:id', historiaControler.delete);
 
 // Agregar el Schema Valdiator
