@@ -1,5 +1,6 @@
 import multer from 'multer';
 import {ParsedPath, extname} from 'path';
+import { v4 as uuidv4 } from "uuid";
 
 const types = ['image/jpeg', 'image/png']
 
@@ -7,7 +8,7 @@ export const uploadImages = multer({
   storage: multer.diskStorage({
     destination: './uploads',
     filename: (req, file, cb) => {
-      cb(null, file.fieldname + '-' + Date.now() + extname(file.originalname))
+      cb(null, uuidv4() + extname(file.originalname))
     }
   }),
   fileFilter: (req, file, cb) => {

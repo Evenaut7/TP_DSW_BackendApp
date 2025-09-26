@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { Historia } from "./historia.entity.js";
-import { orm } from "../shared/db/orm.js";
-import * as fs from 'fs/promises';  
+import { orm } from "../shared/db/orm.js";  
 
-const em = orm.em.fork();  
+const em = orm.em;  
 
 export class HistoriaControler {
     findAll = async (req: Request, res: Response) => {
@@ -26,19 +25,11 @@ export class HistoriaControler {
     }
 
     add = async (req: Request, res: Response) => {
-        const imagen = req.file ? req.file.filename : undefined;
         try {
-            const newHistoria = em.create(Historia, Object.assign({imagen}, req.body))
-            await em.persistAndFlush(newHistoria)
+            const newHistoria = em.create(Historia, req.body);
+            await em.flush();
             res.status(201).json({ message: 'Historia added successfully', data: newHistoria });
         } catch (error: any) {
-            if (imagen != undefined) {
-                try {
-                    await fs.unlink(`uploads/${imagen}`);
-                } catch (fsErr) {
-                    console.error("Error deleting uploaded image after failure:", fsErr);
-                }
-            }
             res.status(500).json({ message: 'Error adding historia', error: error.message });
         }
     }
@@ -47,9 +38,6 @@ export class HistoriaControler {
         try {
             const id = Number.parseInt(req.params.id);
             const historia = await em.findOneOrFail(Historia, id);
-            const imagen = req.file ? req.file.filename : undefined
-            await fs.unlink('uploads/' + historia.imagen);
-            historia.imagen = imagen
             em.assign(historia, req.body);
             await em.flush();
             res.status(200).json({ message: 'Historia updated successfully', data: historia });
@@ -61,8 +49,7 @@ export class HistoriaControler {
     delete = async (req: Request, res: Response) => {
         try {
             const id = Number.parseInt(req.params.id);
-            const historiaToRemove = await em.findOneOrFail(Historia, id);
-            await fs.unlink('uploads/' + historiaToRemove.imagen);
+            const historiaToRemove = em.getReference(Historia, id);
             await em.removeAndFlush(historiaToRemove);
             res.status(200).json({ message: 'Historia removed successfully', data: historiaToRemove });
         } catch (error: any) {

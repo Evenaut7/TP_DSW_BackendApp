@@ -432,7 +432,7 @@ async function main()
   const pdiParqueIndependencia = new PuntoDeInteres(); // 1. Parque de la Independencia
   pdiParqueIndependencia.nombre = 'Parque de la Independencia';
   pdiParqueIndependencia.descripcion = "Uno de los parques urbanos más grandes y antiguos de Rosario, hogar de museos, el Rosedal, el Laguito y el estadio del club Newell's Old Boys.";
-  pdiParqueIndependencia.imagenes = ['parque-independencia.jpg']; 
+  pdiParqueIndependencia.imagen = 'parque-independencia.jpg'
   pdiParqueIndependencia.calle = 'Av. Carlos Pellegrini';
   pdiParqueIndependencia.altura = 2500;
   pdiParqueIndependencia.privado = false;
@@ -443,7 +443,7 @@ async function main()
   const pdiRioMio = new PuntoDeInteres();
   pdiRioMio.nombre = 'Río Mío - Costanera';
   pdiRioMio.descripcion = 'Espacio de esparcimiento a orillas del río Paraná, ideal para caminatas, deportes y disfrutar la vista.';
-  pdiRioMio.imagenes = ['rio-mio-costanera.jpg']; 
+  pdiRioMio.imagen = 'rio-mio-costanera.jpg'
   pdiRioMio.calle = 'Av. Estanislao López';
   pdiRioMio.altura = 2000; 
   pdiRioMio.privado = false;
@@ -454,7 +454,7 @@ async function main()
   const pdiMonumentoBandera = new PuntoDeInteres();// 3. Monumento Nacional a la Bandera
   pdiMonumentoBandera.nombre = 'Monumento Nacional a la Bandera';
   pdiMonumentoBandera.descripcion = 'El ícono de Rosario y uno de los monumentos más importantes de Argentina, dedicado a la creación de la bandera.';
-  pdiMonumentoBandera.imagenes = ['monumento-bandera.jpg']; 
+  pdiMonumentoBandera.imagen = 'monumento-bandera.jpg'
   pdiMonumentoBandera.calle = 'Córdoba';
   pdiMonumentoBandera.altura = 1300; 
   pdiMonumentoBandera.privado = false;
@@ -465,7 +465,7 @@ async function main()
   const pdiCCPE = new PuntoDeInteres();// 4. Centro Cultural Parque de España
   pdiCCPE.nombre = 'Centro Cultural Parque de España';
   pdiCCPE.descripcion = 'Un complejo arquitectónico y cultural a orillas del Paraná con teatros, exposiciones y espacios de encuentro.';
-  pdiCCPE.imagenes = ['ccpe.jpg']; 
+  pdiCCPE.imagen = 'ccpe.jpg'
   pdiCCPE.calle = 'Sarmiento';
   pdiCCPE.altura = 1201; 
   pdiCCPE.privado = false;
@@ -476,7 +476,7 @@ async function main()
   const pdiJardinNinos = new PuntoDeInteres();// 5. El Jardín de los Niños
   pdiJardinNinos.nombre = 'El Jardín de los Niños';
   pdiJardinNinos.descripcion = 'Un espacio lúdico y educativo dentro del Parque Independencia, con juegos, laberintos y propuestas interactivas para los más pequeños.';
-  pdiJardinNinos.imagenes = ['jardin-ninos.jpg']; 
+  pdiJardinNinos.imagen = 'jardin-ninos.jpg'
   pdiJardinNinos.calle = 'Av. Presidente Perón';
   pdiJardinNinos.altura = 3300; 
   pdiJardinNinos.privado = false;
@@ -488,7 +488,7 @@ async function main()
   const pdiPaseoEstacionFunes = new PuntoDeInteres();// 1. Paseo de la Estación (Funes)
   pdiPaseoEstacionFunes.nombre = 'Paseo de la Estación';
   pdiPaseoEstacionFunes.descripcion = 'Antigua estación de tren convertida en espacio recreativo y cultural, con ferias y eventos.';
-  pdiPaseoEstacionFunes.imagenes = ['paseo-estacion-funes.jpg']; 
+  pdiPaseoEstacionFunes.imagen = 'paseo-estacion-funes.jpg'
   pdiPaseoEstacionFunes.calle = 'Pedro Ríos';
   pdiPaseoEstacionFunes.altura = 1400; // Un número de altura aproximado o representativo
   pdiPaseoEstacionFunes.privado = false;
@@ -499,7 +499,7 @@ async function main()
   const pdiClubKentucky = new PuntoDeInteres();// 2. Club de Campo Kentucky (Funes) - Si es un punto de interés conocido, aunque sea privado
   pdiClubKentucky.nombre = 'Club de Campo Kentucky';
   pdiClubKentucky.descripcion = 'Reconocido club de campo con campos de golf, instalaciones deportivas y áreas verdes en Funes.';
-  pdiClubKentucky.imagenes = ['club-kentucky-funes.png']; 
+  pdiClubKentucky.imagen = 'club-kentucky-funes.png'
   pdiClubKentucky.calle = 'Ruta Nacional A012'; // O una calle interna si es relevante
   pdiClubKentucky.altura = 500; 
   pdiClubKentucky.privado = true; // Este es un ejemplo de un punto de interés privado
@@ -511,7 +511,7 @@ async function main()
   const pdiObelisco = new PuntoDeInteres();
   pdiObelisco.nombre = 'Obelisco';
   pdiObelisco.descripcion = 'Monumento emblemático sobre Av. 9 de Julio.';
-  pdiObelisco.imagenes = ['obelisco.jpg'];
+  pdiObelisco.imagen = 'obelisco.jpg'
   pdiObelisco.calle = 'Av. 9 de Julio';
   pdiObelisco.altura = 1100;
   pdiObelisco.privado = false;
@@ -523,7 +523,7 @@ async function main()
   const pdiTeatroColon = new PuntoDeInteres();
   pdiTeatroColon.nombre = 'Teatro Colón';
   pdiTeatroColon.descripcion = 'Principal casa de ópera del país, de relevancia mundial.';
-  pdiTeatroColon.imagenes = ['teatro-colon.jpg'];
+  pdiTeatroColon.imagen = 'teatro-colon.jpg'
   pdiTeatroColon.calle = 'Cerrito';
   pdiTeatroColon.altura = 600;
   pdiTeatroColon.privado = false;
@@ -536,7 +536,7 @@ async function main()
   const pdiRiberaQuilmes = new PuntoDeInteres();
   pdiRiberaQuilmes.nombre = 'Ribera de Quilmes';
   pdiRiberaQuilmes.descripcion = 'Costanera sobre el Río de la Plata con espacios verdes.';
-  pdiRiberaQuilmes.imagenes = ['ribera-de-quilmes.jpg'];
+  pdiRiberaQuilmes.imagen = 'ribera-de-quilmes.jpg'
   pdiRiberaQuilmes.calle = 'Av. Cervantes';
   pdiRiberaQuilmes.altura = 200;
   pdiRiberaQuilmes.privado = false;
@@ -548,7 +548,7 @@ async function main()
   const pdiCatedralQuilmes = new PuntoDeInteres();
   pdiCatedralQuilmes.nombre = 'Catedral de Quilmes';
   pdiCatedralQuilmes.descripcion = 'Templo histórico y centro religioso de la ciudad.';
-  pdiCatedralQuilmes.imagenes = ['catedral-de-quilmes.png'];
+  pdiCatedralQuilmes.imagen = 'catedral-de-quilmes.png'
   pdiCatedralQuilmes.calle = 'Rivadavia';
   pdiCatedralQuilmes.altura = 300;
   pdiCatedralQuilmes.privado = false;
@@ -561,7 +561,7 @@ async function main()
   const pdiParqueSarmientoCba = new PuntoDeInteres();
   pdiParqueSarmientoCba.nombre = 'Parque Sarmiento';
   pdiParqueSarmientoCba.descripcion = 'Pulmón verde de Córdoba con laguna y senderos.';
-  pdiParqueSarmientoCba.imagenes = ['parque-sarmiento.jpg'];
+  pdiParqueSarmientoCba.imagen = 'parque-sarmiento.jpg'
   pdiParqueSarmientoCba.calle = 'Av. Poeta Lugones';
   pdiParqueSarmientoCba.altura = 300;
   pdiParqueSarmientoCba.privado = false;
@@ -573,7 +573,7 @@ async function main()
   const pdiBuenPastor = new PuntoDeInteres();
   pdiBuenPastor.nombre = 'Paseo del Buen Pastor';
   pdiBuenPastor.descripcion = 'Centro cultural y paseo gastronómico/comercial.';
-  pdiBuenPastor.imagenes = ['paseo-del-buen-pastor.jpg'];
+  pdiBuenPastor.imagen = 'paseo-del-buen-pastor.jpg'
   pdiBuenPastor.calle = 'Av. Hipólito Yrigoyen';
   pdiBuenPastor.altura = 325;
   pdiBuenPastor.privado = false;
@@ -586,7 +586,7 @@ async function main()
   const pdiPlazaIndMza = new PuntoDeInteres();
   pdiPlazaIndMza.nombre = 'Plaza Independencia';
   pdiPlazaIndMza.descripcion = 'Plaza central con ferias y actividades culturales.';
-  pdiPlazaIndMza.imagenes = ['plaza-independencia-mendoza.jpg'];
+  pdiPlazaIndMza.imagen = 'plaza-independencia-mendoza.jpg'
   pdiPlazaIndMza.calle = 'Patricias Mendocinas';
   pdiPlazaIndMza.altura = 900;
   pdiPlazaIndMza.privado = false;
@@ -598,7 +598,7 @@ async function main()
   const pdiParqueSanMartinMza = new PuntoDeInteres();
   pdiParqueSanMartinMza.nombre = 'Parque General San Martín';
   pdiParqueSanMartinMza.descripcion = 'Parque icónico con lago, rosedal y cerro de la Gloria.';
-  pdiParqueSanMartinMza.imagenes = ['parque-general-san-martin.jpg'];
+  pdiParqueSanMartinMza.imagen = 'parque-general-san-martin.jpg'
   pdiParqueSanMartinMza.calle = 'Av. del Libertador';
   pdiParqueSanMartinMza.altura = 3900;
   pdiParqueSanMartinMza.privado = false;
@@ -611,7 +611,7 @@ async function main()
   const pdiFaroFinDelMundo = new PuntoDeInteres();
   pdiFaroFinDelMundo.nombre = 'Faro del fin del mundo';
   pdiFaroFinDelMundo.descripcion = 'Faro emblemático del extremo austral, en el Canal Beagle.';
-  pdiFaroFinDelMundo.imagenes = ['faro-del-fin-del-mundo.jpg'];
+  pdiFaroFinDelMundo.imagen = 'faro-del-fin-del-mundo.jpg'
   pdiFaroFinDelMundo.calle = 'Canal Beagle';
   pdiFaroFinDelMundo.altura = 1;
   pdiFaroFinDelMundo.privado = false;
@@ -623,7 +623,7 @@ async function main()
   const pdiMuseoFinDelMundo = new PuntoDeInteres();
   pdiMuseoFinDelMundo.nombre = 'Museo del Fin del Mundo';
   pdiMuseoFinDelMundo.descripcion = 'Museo regional con patrimonio histórico y natural.';
-  pdiMuseoFinDelMundo.imagenes = ['museo-del-fin-del-mundo.jpg'];
+  pdiMuseoFinDelMundo.imagen = 'museo-del-fin-del-mundo.jpg'
   pdiMuseoFinDelMundo.calle = 'Maipú';
   pdiMuseoFinDelMundo.altura = 170;
   pdiMuseoFinDelMundo.privado = false;
@@ -636,7 +636,7 @@ async function main()
   const pdiRelojCucu = new PuntoDeInteres();
   pdiRelojCucu.nombre = 'Reloj Cucú (VCP)';
   pdiRelojCucu.descripcion = 'Emblema turístico de Villa Carlos Paz. Punto de encuentro clásico.';
-  pdiRelojCucu.imagenes = ['reloj-cucu.jpg'];
+  pdiRelojCucu.imagen = 'reloj-cucu.jpg'
   pdiRelojCucu.calle = 'Bv. Sarmiento'; pdiRelojCucu.altura = 50;
   pdiRelojCucu.privado = false;
   pdiRelojCucu.usuario = muniCarlosPaz;
@@ -646,7 +646,7 @@ async function main()
   const pdiCostaneraVCP = new PuntoDeInteres();
   pdiCostaneraVCP.nombre = 'Costanera del Lago San Roque (VCP)';
   pdiCostaneraVCP.descripcion = 'Paseo costero para caminar, andar en bici y disfrutar del lago San Roque.';
-  pdiCostaneraVCP.imagenes = ['costanera-vcp.jpg'];
+  pdiCostaneraVCP.imagen = 'costanera-vcp.jpg'
   pdiCostaneraVCP.calle = 'Costanera Oeste'; pdiCostaneraVCP.altura = 1800;
   pdiCostaneraVCP.privado = false;
   pdiCostaneraVCP.usuario = muniCarlosPaz;
@@ -656,7 +656,7 @@ async function main()
   const pdiAerosilla = new PuntoDeInteres();
   pdiAerosilla.nombre = 'Aerosilla Carlos Paz';
   pdiAerosilla.descripcion = 'Complejo con aerosilla y miradores panorámicos de la ciudad.';
-  pdiAerosilla.imagenes = ['aerosilla-carlos-paz.jpg'];
+  pdiAerosilla.imagen = 'aerosilla-carlos-paz.jpg'
   pdiAerosilla.calle = 'Florencio Sánchez'; pdiAerosilla.altura = 1000;
   pdiAerosilla.privado = true;
   pdiAerosilla.usuario = muniCarlosPaz;
@@ -667,7 +667,7 @@ async function main()
     const pdiAnfiteatroVM = new PuntoDeInteres();
   pdiAnfiteatroVM.nombre = 'Anfiteatro Municipal (Villa María)';
   pdiAnfiteatroVM.descripcion = 'Sede del Festival Internacional de Peñas.';
-  pdiAnfiteatroVM.imagenes = ['anfiteatro-municipal-vm.jpg'];
+  pdiAnfiteatroVM.imagen = 'anfiteatro-municipal-vm.jpg'
   pdiAnfiteatroVM.calle = 'Estados Unidos'; pdiAnfiteatroVM.altura = 100;
   pdiAnfiteatroVM.privado = false;
   pdiAnfiteatroVM.usuario = muniVillaMaria;
@@ -677,7 +677,7 @@ async function main()
   const pdiCostaneraVM = new PuntoDeInteres();
   pdiCostaneraVM.nombre = 'Costanera de Villa María';
   pdiCostaneraVM.descripcion = 'Paseo junto al río Ctalamochita con espacios verdes y recreación.';
-  pdiCostaneraVM.imagenes = ['costanera-vm.jpg'];
+  pdiCostaneraVM.imagen = 'costanera-vm.jpg'
   pdiCostaneraVM.calle = 'Costanera'; pdiCostaneraVM.altura = 500;
   pdiCostaneraVM.privado = false;
   pdiCostaneraVM.usuario = muniVillaMaria;
@@ -687,7 +687,7 @@ async function main()
   const pdiPlazaIndVM = new PuntoDeInteres();
   pdiPlazaIndVM.nombre = 'Plaza Independencia (Villa María)';
   pdiPlazaIndVM.descripcion = 'Plaza central con actividades culturales frecuentes.';
-  pdiPlazaIndVM.imagenes = ['plaza-independencia-vm.jpg'];
+  pdiPlazaIndVM.imagen = 'plaza-independencia-vm.jpg'
   pdiPlazaIndVM.calle = 'Entre Ríos'; pdiPlazaIndVM.altura = 300;
   pdiPlazaIndVM.privado = false;
   pdiPlazaIndVM.usuario = muniVillaMaria;
@@ -698,7 +698,7 @@ async function main()
   const pdiPlazaGC = new PuntoDeInteres();
   pdiPlazaGC.nombre = 'Plaza Godoy Cruz';
   pdiPlazaGC.descripcion = 'Espacio verde central con propuestas culturales.';
-  pdiPlazaGC.imagenes = ['plaza-godoy-cruz.jpg'];
+  pdiPlazaGC.imagen = 'plaza-godoy-cruz.jpg'
   pdiPlazaGC.calle = 'Colón'; pdiPlazaGC.altura = 100;
   pdiPlazaGC.privado = false;
   pdiPlazaGC.usuario = muniGodoyCruz;
@@ -708,7 +708,7 @@ async function main()
   const pdiTeatroPlaza = new PuntoDeInteres();
   pdiTeatroPlaza.nombre = 'Teatro Plaza (Godoy Cruz)';
   pdiTeatroPlaza.descripcion = 'Sala histórica con obras y conciertos.';
-  pdiTeatroPlaza.imagenes = ['teatro-plaza-godoy-cruz.jpg'];
+  pdiTeatroPlaza.imagen = 'teatro-plaza-godoy-cruz.jpg'
   pdiTeatroPlaza.calle = 'Colón'; pdiTeatroPlaza.altura = 27;
   pdiTeatroPlaza.privado = false;
   pdiTeatroPlaza.usuario = muniGodoyCruz;
@@ -718,7 +718,7 @@ async function main()
   const pdiPalmares = new PuntoDeInteres();
   pdiPalmares.nombre = 'Palmares Open Mall';
   pdiPalmares.descripcion = 'Centro comercial y de esparcimiento.';
-  pdiPalmares.imagenes = ['palmares-open-mall.jpg'];
+  pdiPalmares.imagen = 'palmares-open-mall.jpg'
   pdiPalmares.calle = 'Panamericana'; pdiPalmares.altura = 2650;
   pdiPalmares.privado = true;
   pdiPalmares.usuario = muniGodoyCruz;
@@ -729,7 +729,7 @@ async function main()
   const pdiParqueSR = new PuntoDeInteres();
   pdiParqueSR.nombre = 'Parque Hipólito Yrigoyen (San Rafael)';
   pdiParqueSR.descripcion = 'Parque urbano con lago, monumentos y actividades.';
-  pdiParqueSR.imagenes = ['parque-hipolito-yrigoyen.jpg'];
+  pdiParqueSR.imagen = 'parque-hipolito-yrigoyen.jpg'
   pdiParqueSR.calle = 'Balloffet'; pdiParqueSR.altura = 1600;
   pdiParqueSR.privado = false;
   pdiParqueSR.usuario = muniSanRafael;
@@ -739,7 +739,7 @@ async function main()
   const pdiValleGrande = new PuntoDeInteres();
   pdiValleGrande.nombre = 'Dique Valle Grande (San Rafael)';
   pdiValleGrande.descripcion = 'Paisajes, deportes náuticos y aventura.';
-  pdiValleGrande.imagenes = ['dique-valle-grande.jpg'];
+  pdiValleGrande.imagen = 'dique-valle-grande.jpg'
   pdiValleGrande.calle = 'Ruta 173'; pdiValleGrande.altura = 30;
   pdiValleGrande.privado = false;
   pdiValleGrande.usuario = muniSanRafael;
@@ -749,7 +749,7 @@ async function main()
   const pdiMuseoSR = new PuntoDeInteres();
   pdiMuseoSR.nombre = 'Museo de San Rafael';
   pdiMuseoSR.descripcion = 'Colecciones históricas de la región.';
-  pdiMuseoSR.imagenes = ['museo-san-rafael.jpg'];
+  pdiMuseoSR.imagen = 'museo-san-rafael.jpg'
   pdiMuseoSR.calle = 'Day'; pdiMuseoSR.altura = 57;
   pdiMuseoSR.privado = false;
   pdiMuseoSR.usuario = muniSanRafael;
@@ -760,7 +760,7 @@ async function main()
   const pdiMalvinasRG = new PuntoDeInteres();
   pdiMalvinasRG.nombre = 'Monumento a los Héroes de Malvinas (Río Grande)';
   pdiMalvinasRG.descripcion = 'Espacio de memoria y reconocimiento.';
-  pdiMalvinasRG.imagenes = ['monumento-malvinas.jpg'];
+  pdiMalvinasRG.imagen = 'monumento-malvinas.jpg'
   pdiMalvinasRG.calle = 'Av. Héroes de Malvinas'; pdiMalvinasRG.altura = 1200;
   pdiMalvinasRG.privado = false;
   pdiMalvinasRG.usuario = muniRioGrande;
@@ -770,7 +770,7 @@ async function main()
   const pdiReservaRG = new PuntoDeInteres();
   pdiReservaRG.nombre = 'Reserva Costa Atlántica (Río Grande)';
   pdiReservaRG.descripcion = 'Área protegida para avistaje de aves migratorias.';
-  pdiReservaRG.imagenes = ['reserva-costa-atlantica.jpg'];
+  pdiReservaRG.imagen = 'reserva-costa-atlantica.jpg'
   pdiReservaRG.calle = 'Acceso Costero'; pdiReservaRG.altura = 1;
   pdiReservaRG.privado = false;
   pdiReservaRG.usuario = muniRioGrande;
@@ -780,7 +780,7 @@ async function main()
   const pdiCaboDomingo = new PuntoDeInteres();
   pdiCaboDomingo.nombre = 'Cabo Domingo (Río Grande)';
   pdiCaboDomingo.descripcion = 'Acantilados y vistas del Atlántico Sur.';
-  pdiCaboDomingo.imagenes = ['cabo-domingo.jpg'];
+  pdiCaboDomingo.imagen = 'cabo-domingo.jpg'
   pdiCaboDomingo.calle = 'Ruta Complementaria 5'; pdiCaboDomingo.altura = 5;
   pdiCaboDomingo.privado = false;
   pdiCaboDomingo.usuario = muniRioGrande;
@@ -791,7 +791,7 @@ async function main()
   const pdiLagoFagnano = new PuntoDeInteres();
   pdiLagoFagnano.nombre = 'Lago Fagnano (Tolhuin)';
   pdiLagoFagnano.descripcion = 'Lago compartido con Chile, ideal para contemplación y pesca.';
-  pdiLagoFagnano.imagenes = ['lago-fagnano.jpg'];
+  pdiLagoFagnano.imagen = 'lago-fagnano.jpg'
   pdiLagoFagnano.calle = 'Av. de los Selknam'; pdiLagoFagnano.altura = 100;
   pdiLagoFagnano.privado = false;
   pdiLagoFagnano.usuario = muniTolhuin;
@@ -801,7 +801,7 @@ async function main()
   const pdiPaseoLagoTol = new PuntoDeInteres();
   pdiPaseoLagoTol.nombre = 'Paseo del Lago (Tolhuin)';
   pdiPaseoLagoTol.descripcion = 'Costanera urbana con miradores.';
-  pdiPaseoLagoTol.imagenes = ['paseo-del-lago.jpg'];
+  pdiPaseoLagoTol.imagen = 'paseo-del-lago.jpg'
   pdiPaseoLagoTol.calle = 'Costanera del Fagnano'; pdiPaseoLagoTol.altura = 1;
   pdiPaseoLagoTol.privado = false;
   pdiPaseoLagoTol.usuario = muniTolhuin;
@@ -811,7 +811,7 @@ async function main()
   const pdiPanaderiaUnion = new PuntoDeInteres();
   pdiPanaderiaUnion.nombre = 'Panadería La Unión (Tolhuin)';
   pdiPanaderiaUnion.descripcion = 'Clásica panadería fueguina, punto de parada de ruta.';
-  pdiPanaderiaUnion.imagenes = ['panaderia-la-union.jpg'];
+  pdiPanaderiaUnion.imagen = 'panaderia-la-union.jpg'
   pdiPanaderiaUnion.calle = 'RN3'; pdiPanaderiaUnion.altura = 2900;
   pdiPanaderiaUnion.privado = true;
   pdiPanaderiaUnion.usuario = muniTolhuin;

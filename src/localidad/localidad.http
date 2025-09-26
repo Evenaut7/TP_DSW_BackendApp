@@ -9,10 +9,11 @@ POST http://localhost:3000/api/localidades
 Content-Type: application/json
 
 {
-    "nombre": "Cordoba Capital",
+    "nombre": "Test",
     "latitud": -27.4228,
     "longitud": -50.265,
-    "provincia": 1
+    "provincia": 1,
+    "imagen": "bee0891c-2873-434e-803e-81b5e8803416.jpg"
 }
 ###POST
 POST http://localhost:3000/api/localidades
@@ -26,18 +27,14 @@ Content-Type: application/json
 }
 
 ###PUT
-POST  http://localhost:3000/api/localidades
+PUT  http://localhost:3000/api/localidades/15
 Content-Type: application/json
 
 {
-    "nombre": "Roldan",
-    "codUta": "UTA123",
-    "latitud": -31.6333,
-    "longitud": -60.7003,
-    "provincia": 4
+    "imagen": "1a1e419c-a4ad-4020-b025-ba9a7d525b1c.jpg"
 }
 ###PUT
-POST  http://localhost:3000/api/localidades
+PUT  http://localhost:3000/api/localidades
 Content-Type: application/json
 
 {
@@ -49,4 +46,4 @@ Content-Type: application/json
 }
 
 ###DELETE
-DELETE http://localhost:3000/api/localidades/1
+DELETE http://localhost:3000/api/localidades/15

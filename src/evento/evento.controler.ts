@@ -4,8 +4,6 @@ import { Evento } from './evento.entity.js'
 
 const em = orm.em
 
-//Faltaria crear una sanitizeInput
-
 async function findAll(req: Request, res: Response) {
   try {
     const eventos = await em.find(Evento, {}, {populate: ['tags']})

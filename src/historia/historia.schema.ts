@@ -6,6 +6,6 @@ export const historiaSchema = z.object({
     descripcion: z.string().min(1, {message: "titulo no puede estar vacío"}).max(1024, {message: "titulo no puede superar los 1024 caracteres"}),
     fechaDesde: z.string().nonempty({message: "La fecha desde no puede estar vacia"}).refine((date) => !isNaN(Date.parse(date)), { message: "Formato de fecha Invalido" }),
     fechaHasta: z.string().nonempty({message: "La fecha hasta no puede estar vacia"}).refine((date) => !isNaN(Date.parse(date)), { message: "Formato de fecha Invalido" }),
-    puntoDeInteres: z.number({message: "El punto de interes es obligatorio"}).positive({message: "El id del punto de interes debe ser un numero positivo"}), 
+    puntoDeInteres: z.coerce.number({message: "El punto de interes es obligatorio"}).positive({message: "El id del punto de interes debe ser un numero positivo"}), 
   })
 });

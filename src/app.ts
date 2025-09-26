@@ -13,6 +13,7 @@ import { localidadRouter } from './localidad/localidad.routes.js'
 import { usuarioRouter } from './usuario/usuario.routes.js'
 import { valoracionRouter } from './valoracion/valoracion.routes.js'
 import { historiaRouter } from './historia/historia.routes.js' 
+import { imagenRouter } from './imagen/imagen.routes.js'
 
 
 const app = express()
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
 
 //Routes
 app.use('/public', express.static('./uploads'))
+app.use('/api/imagenes', imagenRouter)
 
 app.use('/api/tags', tagRouter)
 app.use('/api/puntosDeInteres', puntoDeInteresRouter)
