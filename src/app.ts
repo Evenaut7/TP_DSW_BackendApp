@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import multer from 'multer'
 import path from 'path';
+import { clerkMiddleware } from '@clerk/express'
 import { tagRouter } from './tag/tag.routes.js'
 import { puntoDeInteresRouter } from './puntoDeInteres/puntoDeInteres.routes.js'
 import { orm, syncSchema } from './shared/db/orm.js'
@@ -26,7 +27,12 @@ app.use(
     credentials: true,
   })
 );
-
+// ------------------------------------
+// ➡️ NUEVO: Middleware de Clerk
+// Esto debe ir ANTES de tus rutas.
+// Usa 'clerkMiddleware()' para inicializar y hacer que el auth esté disponible en `req.auth`.
+app.use(clerkMiddleware()); 
+// ------------------------------------
 app.use((req, res, next) => {
   RequestContext.create(orm.em, next)
 })

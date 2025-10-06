@@ -8,20 +8,27 @@ import { Valoracion } from "../valoracion/valoracion.entity.js"
 @Entity()
 export class Usuario extends BaseEntity{
 
-  @Property({ nullable: false,  unique: true , type: 'string'})
-  nombre!: string
+  @Property({ nullable: true,  unique: true , type: 'string'})
+  clerkUserId?: string
 
-  @Property({ nullable: false,  unique: false, type: 'string' })
-  tipo!: string
+  // Estos campos ahora son OPCIONALES/NULABLES (nullable: true) para el lazy upsert.
+  // Si el usuario ya existe con auth local, estos tendrán valor.
+  // Si es un nuevo usuario de Clerk, solo tendrá el clerkUserId inicialmente.
 
-  @Property({ nullable: false,  unique: true, type: 'string' })
-  cuit!: string
+  @Property({ nullable: true,  unique: true , type: 'string'})
+  nombre?: string
 
-  @Property({ nullable: false,  unique: true, type: 'string' })
-  gmail!: string
+  @Property({ nullable: true,  unique: false, type: 'string' })
+  tipo?: string
 
-  @Property({ nullable: false, unique: false, type: 'string'})
-  password!: string
+  @Property({ nullable: true,  unique: true, type: 'string' })
+  cuit?: string
+
+  @Property({ nullable: true,  unique: true, type: 'string' })
+  gmail?: string //lo gestiona clerk
+
+  @Property({ nullable: true, unique: false, type: 'string'})
+  password?: string
 
   @ManyToOne(() => Localidad,  { nullable: false , cascade: [ Cascade.ALL ] })
   localidad! : Rel<Localidad>
