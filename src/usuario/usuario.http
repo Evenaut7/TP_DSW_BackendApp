@@ -1,6 +1,8 @@
 ###GET ALL
 GET http://localhost:3000/api/usuarios
 
+###GET ONE
+GET http://localhost:3000/api/usuarios/gt@gmail.com
 
 ###POST
 POST http://localhost:3000/api/usuarios
@@ -11,7 +13,6 @@ Content-Type: application/json
   "password": "1234",
   "gmail": "juanperez@gmail",
   "tipo": "cliente",
-  "cuit": "20-12345678-9",
   "password": "clave",
   "localidad": 7,
   "puntosDeInteres" : [],
@@ -29,7 +30,6 @@ Content-Type: application/json
   "nombre": "Gabi gol",
   "gmail": "gabigol@gmail",
   "tipo": "creador",
-  "cuit": "20-12345123-9",
   "localidad": 2,
   "puntosDeInteres" : [],
   "agendaPDI" : [],

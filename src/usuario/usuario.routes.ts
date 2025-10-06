@@ -11,7 +11,7 @@ const usuarioController = new UsuarioController();
 usuarioRouter.get('/me', protect, usuarioController.lazyUpsert); // ⬅️ NUEVO método
 // -----------------------------------------
 usuarioRouter.get('/', usuarioController.findAll);
-usuarioRouter.get('/:id', usuarioController.findOne);   
+usuarioRouter.get('/:gmail', usuarioController.findOne);
 usuarioRouter.post('/', usuarioController.add);
-usuarioRouter.put('/:id', usuarioController.update);  
-usuarioRouter.delete('/:id', usuarioController.delete);
+usuarioRouter.put('/:gmail', usuarioController.update);
+usuarioRouter.delete('/:gmail', usuarioController.delete);

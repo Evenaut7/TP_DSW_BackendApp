@@ -196,7 +196,7 @@ async function main()
   const usuarioAdmin = new Usuario();
   usuarioAdmin.nombre = 'Administrador';
   usuarioAdmin.tipo = 'Creador';
-  usuarioAdmin.cuit = '20-12345678-9';
+  //usuarioAdmin.cuit = '20-12345678-9';
   usuarioAdmin.gmail = 'administrador@gmail.com';
   usuarioAdmin.password = '123';
   usuarioAdmin.localidad = l1;
@@ -205,7 +205,7 @@ async function main()
   const usuario2 = new Usuario();
   usuario2.nombre = 'Municipalidad de Rosario';
   usuario2.tipo = 'Creador';
-  usuario2.cuit = '20-121578-9';
+  // usuario2.cuit = '20-121578-9';
   usuario2.gmail = 'munirosario@gmail.com';
   usuario2.password = '123';
   usuario2.localidad = l2;
@@ -214,7 +214,7 @@ async function main()
   const usuario3 = new Usuario();
   usuario3.nombre = 'Municipalidad de Funes';
   usuario3.tipo = 'Creador';
-  usuario3.cuit = '20-55545454-9';
+  // usuario3.cuit = '20-55545454-9';
   usuario3.gmail = 'munifunes@gmail.com';
   usuario3.password = '123';
   usuario3.localidad = l3;
@@ -223,7 +223,7 @@ async function main()
   const muniCarlosPaz = new Usuario();
   muniCarlosPaz.nombre = 'Municipalidad de Villa Carlos Paz';
   muniCarlosPaz.tipo = 'Creador';
-  muniCarlosPaz.cuit = '30-10000001-0';
+  // muniCarlosPaz.cuit = '30-10000001-0';
   muniCarlosPaz.gmail = 'muni.carlospaz@gmail.com';
   muniCarlosPaz.password = '123';
   muniCarlosPaz.localidad = l7;
@@ -232,7 +232,7 @@ async function main()
   const muniVillaMaria = new Usuario();
   muniVillaMaria.nombre = 'Municipalidad de Villa María';
   muniVillaMaria.tipo = 'Creador';
-  muniVillaMaria.cuit = '30-10000002-0';
+  // muniVillaMaria.cuit = '30-10000002-0';
   muniVillaMaria.gmail = 'muni.villamaria@gmail.com';
   muniVillaMaria.password = '123';
   muniVillaMaria.localidad = l8;
@@ -241,7 +241,7 @@ async function main()
   const muniGodoyCruz = new Usuario();
   muniGodoyCruz.nombre = 'Municipalidad de Godoy Cruz';
   muniGodoyCruz.tipo = 'Creador';
-  muniGodoyCruz.cuit = '30-10000003-0';
+  // muniGodoyCruz.cuit = '30-10000003-0';
   muniGodoyCruz.gmail = 'muni.godoycruz@gmail.com';
   muniGodoyCruz.password = '123';
   muniGodoyCruz.localidad = l9;
@@ -250,7 +250,7 @@ async function main()
   const muniSanRafael = new Usuario();
   muniSanRafael.nombre = 'Municipalidad de San Rafael';
   muniSanRafael.tipo = 'Creador';
-  muniSanRafael.cuit = '30-10000004-0';
+  // muniSanRafael.cuit = '30-10000004-0';
   muniSanRafael.gmail = 'muni.sanrafael@gmail.com';
   muniSanRafael.password = '123';
   muniSanRafael.localidad = l10;
@@ -259,7 +259,7 @@ async function main()
   const muniRioGrande = new Usuario();
   muniRioGrande.nombre = 'Municipalidad de Río Grande';
   muniRioGrande.tipo = 'Creador';
-  muniRioGrande.cuit = '30-10000005-0';
+  // muniRioGrande.cuit = '30-10000005-0';
   muniRioGrande.gmail = 'muni.riogrande@gmail.com';
   muniRioGrande.password = '123';
   muniRioGrande.localidad = l11;
@@ -268,7 +268,7 @@ async function main()
   const muniTolhuin = new Usuario();
   muniTolhuin.nombre = 'Municipalidad de Tolhuin';
   muniTolhuin.tipo = 'Creador';
-  muniTolhuin.cuit = '30-10000006-0';
+  // muniTolhuin.cuit = '30-10000006-0';
   muniTolhuin.gmail = 'muni.tolhuin@gmail.com';
   muniTolhuin.password = '123';
   muniTolhuin.localidad = l12;
@@ -277,7 +277,7 @@ async function main()
   const usuario4 = new Usuario();
   usuario4.nombre = 'Valentino Laveggi';
   usuario4.tipo = 'Usuario';
-  usuario4.cuit = '20-11111111-1';
+  // usuario4.cuit = '20-11111111-1';
   usuario4.gmail = 'vl@gmail.com';
   usuario4.password = '123';
   usuario4.localidad = l2;
@@ -286,7 +286,7 @@ async function main()
   const usuario5 = new Usuario();
   usuario5.nombre = 'Joaquín Mourua';
   usuario5.tipo = 'Usuario';
-  usuario5.cuit = '20-22222222-2';
+  // usuario5.cuit = '20-22222222-2';
   usuario5.gmail = 'jm@gmail.com';
   usuario5.password = '123';
   usuario5.localidad = l2;
@@ -295,7 +295,7 @@ async function main()
   const usuario6 = new Usuario();
   usuario6.nombre = 'Gabriel Romero';
   usuario6.tipo = 'Usuario';
-  usuario6.cuit = '20-33333333-3';
+  // usuario6.cuit = '20-33333333-3';
   usuario6.gmail = 'gt@gmail.com';
   usuario6.password = '123';
   usuario6.localidad = l2;
@@ -304,7 +304,7 @@ async function main()
   const usuario7 = new Usuario();
   usuario7.nombre = 'Lionel Messi';
   usuario7.tipo = 'Usuario';
-  usuario7.cuit = '20-44444444-4';
+  // usuario7.cuit = '20-44444444-4';
   usuario7.gmail = 'lm@gmail.com';
   usuario7.password = '123';
   usuario7.localidad = l2;
@@ -313,7 +313,7 @@ async function main()
   const usuario8 = new Usuario();
   usuario8.nombre = 'Leandro Paredes';
   usuario8.tipo = 'Usuario';
-  usuario8.cuit = '10-11111111-1';
+  // usuario8.cuit = '10-11111111-1';
   usuario8.gmail = 'lp@gmail.com';
   usuario8.password = '123';
   usuario8.localidad = l0;
@@ -322,7 +322,7 @@ async function main()
   const usuario9 = new Usuario();
   usuario9.nombre = 'Enzo Fernández';
   usuario9.tipo = 'Usuario';
-  usuario9.cuit = '10-22222222-2';
+  // usuario9.cuit = '10-22222222-2';
   usuario9.gmail = 'ef@gmail.com';
   usuario9.password = '123';
   usuario9.localidad = l0;
@@ -331,7 +331,7 @@ async function main()
   const usuario10 = new Usuario();
   usuario10.nombre = 'Paulo Dybala';
   usuario10.tipo = 'Usuario';
-  usuario10.cuit = '40-11111111-1';
+  // usuario10.cuit = '40-11111111-1';
   usuario10.gmail = 'pd@gmail.com';
   usuario10.password = '123';
   usuario10.localidad = l4;
@@ -340,7 +340,7 @@ async function main()
   const usuario11 = new Usuario();
   usuario11.nombre = 'Mariana Díaz';
   usuario11.tipo = 'Usuario';
-  usuario11.cuit = '27-55555555-5';
+  // usuario11.cuit = '27-55555555-5';
   usuario11.gmail = 'mariana.diaz@example.com';
   usuario11.password = '123';
   usuario11.localidad = l7;
@@ -349,7 +349,7 @@ async function main()
   const usuario12 = new Usuario();
   usuario12.nombre = 'Santiago Pérez';
   usuario12.tipo = 'Usuario';
-  usuario12.cuit = '20-66666666-6';
+  // usuario12.cuit = '20-66666666-6';
   usuario12.gmail = 'santiago.perez@example.com';
   usuario12.password = '123';
   usuario12.localidad = l9;
@@ -358,7 +358,7 @@ async function main()
   const usuario13 = new Usuario();
   usuario13.nombre = 'Lucía Fernández';
   usuario13.tipo = 'Usuario';
-  usuario13.cuit = '27-77777777-7';
+  // usuario13.cuit = '27-77777777-7';
   usuario13.gmail = 'lucia.fernandez@example.com';
   usuario13.password = '123';
   usuario13.localidad = l11;
@@ -367,7 +367,7 @@ async function main()
   const usuarioMalaOnda = new Usuario();
   usuarioMalaOnda.nombre = 'Pedro Malafama';
   usuarioMalaOnda.tipo = 'Usuario';
-  usuarioMalaOnda.cuit = '20-99999999-9';
+  // usuarioMalaOnda.cuit = '20-99999999-9';
   usuarioMalaOnda.gmail = 'pedro.malafama@gmail.com';
   usuarioMalaOnda.password = '123';
   usuarioMalaOnda.localidad = l2;
