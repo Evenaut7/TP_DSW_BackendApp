@@ -1,11 +1,14 @@
 import { Response, Request } from "express";
 import { orm } from "../shared/db/orm.js";
 import { Usuario } from "./usuario.entity.js";
+import { Localidad } from "../localidad/localidad.entity.js";
+//import { SALT_ROUNDS } from "../../.env.js";
+import bcrypt from 'bcryptjs';
 
 const em = orm.em;
 
 export class UsuarioController {
-    findAll = async (req: Request, res: Response) => {
+    findAll = async (req: Request, res: Response): Promise<void> => {
         try {
             const usuarios = await em.find(
                 Usuario, 
@@ -29,11 +32,106 @@ export class UsuarioController {
 
     add = async (req: Request, res: Response) => {
         try {
-            const newUser = em.create(Usuario, req.body);
-            await em.flush();
+            const { nombre, tipo, gmail, password } = req.body;
+
+            // Validaciones básicas
+            const missing: string[] = [];
+            if (!nombre) missing.push('nombre');
+            if (!tipo) missing.push('tipo');
+            //if (!cuit) missing.push('cuit');
+            if (!gmail) missing.push('gmail');
+            if (!password) missing.push('password');
+            //if (!localidad) missing.push('localidad');
+
+            if (missing.length) {
+                res.status(400).json({ message: 'Missing required fields', missing });
+                return;
+            }
+
+            // Formato de email simple
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(gmail)) {
+                res.status(400).json({ message: 'Invalid email format' });
+                return;
+            }
+
+            // Unicidad de gmail y nombre y CUIT
+            const existingGmail = await em.findOne(Usuario, { gmail });
+            if (existingGmail) {
+                res.status(409).json({ message: 'Usuario with this gmail already exists' });
+                return;
+            }
+            const existingNombre = await em.findOne(Usuario, { nombre });
+            if (existingNombre) {
+                res.status(409).json({ message: 'Usuario with this nombre already exists' });
+                return;
+            }
+            // const existingCUIT = await em.findOne(Usuario, { cuit });
+            // if (existingCUIT) {
+            //     res.status(409).json({ message: 'Usuario with this CUIT already exists' });
+            //     return;
+            // }
+
+            // Validar existencia de localidad (aceptamos id numérico o string)
+            // const locId = Number(localidad);
+            // const localidadEntity = await em.findOne(Localidad, isNaN(locId) ? { id: localidad } : locId);
+            // if (!localidadEntity) {
+            //     res.status(400).json({ message: 'Localidad not found' });
+            //     return;
+            // }
+            // Valido tipo de usuario
+            if (tipo !== 'admin' && tipo !== 'user' && tipo !== 'creator') {
+                res.status(400).json({ message: 'Tipo must be either "user" or "creator"' });
+                return;
+            }
+            // Hashear la contraseña (uso simple de sha256; puedes cambiar por bcrypt si prefieres)
+            const hashedPassword = await bcrypt.hashSync(password, 10);
+            //const ok = await bcrypt.compare(password, hashedPassword);
+
+            const newUser = new Usuario();
+            newUser.nombre = nombre;
+            newUser.tipo = tipo;
+            newUser.gmail = gmail;
+            newUser.password = hashedPassword;
+
+            await em.persistAndFlush(newUser);
             res.status(201).json({message: 'Usuario added successfully', data: newUser});
+            return;
         } catch (error: any) {
             res.status(500).json({message: 'Error adding usuario', error:error.message});
+            return;
+        }
+    }
+
+    login = async(req: Request, res: Response) => {
+        try {
+            const { gmail, password } = req.body;
+            if (!gmail || !password) {
+                res.status(400).json({ message: 'Missing required fields' });
+                return;
+            }
+
+            const em = orm.em.fork();
+            const user = await em.findOne(Usuario, { gmail });
+            if (!user) {
+                res.status(401).json({ message: 'Invalid credentials' });
+                return;
+            }
+
+            const isValid = await bcrypt.compare(password, user.password);
+            if (!isValid) {
+                res.status(401).json({ message: 'Invalid credentials' });
+                return;
+            }
+            const publicUser = {
+                nombre: user.nombre,
+                tipo: user.tipo,
+                gmail: user.gmail
+            }
+            // Aquí puedes generar un token JWT y enviarlo al cliente
+            res.status(200).json({ message: 'Login successful', user: publicUser });
+        } catch (error: any) {
+            res.status(500).json({ message: 'Error logging in', error: error.message });
         }
     }
 

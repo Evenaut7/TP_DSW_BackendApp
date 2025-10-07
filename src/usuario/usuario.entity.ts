@@ -14,8 +14,8 @@ export class Usuario extends BaseEntity{
   @Property({ nullable: false,  unique: false, type: 'string' })
   tipo!: string
 
-  @Property({ nullable: false,  unique: true, type: 'string' })
-  cuit!: string
+  @Property({ nullable: true,  unique: true, type: 'string' })
+  cuit?: string
 
   @Property({ nullable: false,  unique: true, type: 'string' })
   gmail!: string
@@ -23,8 +23,8 @@ export class Usuario extends BaseEntity{
   @Property({ nullable: false, unique: false, type: 'string'})
   password!: string
 
-  @ManyToOne(() => Localidad,  { nullable: false })
-  localidad! : Rel<Localidad>
+  @ManyToOne(() => Localidad,  { nullable: true })
+  localidad? : Rel<Localidad>
 
   @OneToMany(() => PuntoDeInteres, (puntoDeInteres) => puntoDeInteres.usuario,  { nullable: true , cascade: [ Cascade.ALL ] })
   puntosDeInteres = new Collection<PuntoDeInteres>(this)

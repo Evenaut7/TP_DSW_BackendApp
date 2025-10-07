@@ -63,10 +63,24 @@ Content-Type: application/json
   "nombre": "Fideo Di Maria",
   "gmail": "DimariaGol@gmail",
   "tipo": "cliente",
+  "password": "123",
   "cuit": "20-4567823-9",
   "localidad": 2,
   "puntosDeInteres" : [],
   "agendaPDI" : [],
   "valoraciones": [],
   "favoritos": []
+}
+
+### login
+POST http://localhost:3000/api/usuarios/register
+Content-Type: application/json
+
+{
+    "nombre": "Administrador",
+    "tipo": "admin",
+    "cuit": "20-12345678-9",
+    "gmail": "administrador@gmail.com",
+    "password": "123",
+    "localidad": 1
 }
