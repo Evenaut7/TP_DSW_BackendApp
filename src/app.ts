@@ -1,8 +1,10 @@
 import 'reflect-metadata'
+import cookeParser from 'cookie-parser';
 import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import multer from 'multer'
 import path from 'path';
+import { sessionData } from './sessionData.js'
 import { tagRouter } from './tag/tag.routes.js'
 import { puntoDeInteresRouter } from './puntoDeInteres/puntoDeInteres.routes.js'
 import { orm, syncSchema } from './shared/db/orm.js'
@@ -20,6 +22,8 @@ const app = express()
 
 //Middlewares
 app.use(express.json())
+app.use(cookeParser())
+app.use(sessionData);
 
 app.use(
   cors({
@@ -35,7 +39,6 @@ app.use((req, res, next) => {
 //Routes
 app.use('/public', express.static('./uploads'))
 app.use('/api/imagenes', imagenRouter)
-
 app.use('/api/tags', tagRouter)
 app.use('/api/puntosDeInteres', puntoDeInteresRouter)
 app.use('/api/eventos', eventoRouter)

@@ -2,8 +2,10 @@ import { Response, Request } from "express";
 import { orm } from "../shared/db/orm.js";
 import { Usuario } from "./usuario.entity.js";
 import { Localidad } from "../localidad/localidad.entity.js";
-//import { SALT_ROUNDS } from "../../.env.js";
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+
+//falta el import { SALT_ROUNDS } from "../../.env.js" cuando este listo;
 
 const em = orm.em;
 
@@ -34,27 +36,6 @@ export class UsuarioController {
         try {
             const { nombre, tipo, gmail, password } = req.body;
 
-            // Validaciones básicas
-            const missing: string[] = [];
-            if (!nombre) missing.push('nombre');
-            if (!tipo) missing.push('tipo');
-            //if (!cuit) missing.push('cuit');
-            if (!gmail) missing.push('gmail');
-            if (!password) missing.push('password');
-            //if (!localidad) missing.push('localidad');
-
-            if (missing.length) {
-                res.status(400).json({ message: 'Missing required fields', missing });
-                return;
-            }
-
-            // Formato de email simple
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(gmail)) {
-                res.status(400).json({ message: 'Invalid email format' });
-                return;
-            }
-
             // Unicidad de gmail y nombre y CUIT
             const existingGmail = await em.findOne(Usuario, { gmail });
             if (existingGmail) {
@@ -79,12 +60,8 @@ export class UsuarioController {
             //     res.status(400).json({ message: 'Localidad not found' });
             //     return;
             // }
-            // Valido tipo de usuario
-            if (tipo !== 'admin' && tipo !== 'user' && tipo !== 'creator') {
-                res.status(400).json({ message: 'Tipo must be either "user" or "creator"' });
-                return;
-            }
-            // Hashear la contraseña (uso simple de sha256; puedes cambiar por bcrypt si prefieres)
+
+            // Hasheo de Contraseña
             const hashedPassword = await bcrypt.hashSync(password, 10);
             //const ok = await bcrypt.compare(password, hashedPassword);
 
@@ -128,11 +105,29 @@ export class UsuarioController {
                 tipo: user.tipo,
                 gmail: user.gmail
             }
-            // Aquí puedes generar un token JWT y enviarlo al cliente
-            res.status(200).json({ message: 'Login successful', user: publicUser });
+
+            const token = jwt.sign(
+                { id: user.id, gmail: user.gmail}, 
+                'Un secreto super secreto que nos ayudara a poder implementar autenticacion en nuestro super proyecto! :D (Despues lo introducimos en variables de entorno)', 
+                { expiresIn: '1h' });
+
+            res
+            .cookie('acess_token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict',
+                maxAge: 3600000, // -> 1 hora
+            })
+            .status(200).json({ message: 'Login successful', user: publicUser });
         } catch (error: any) {
             res.status(500).json({ message: 'Error logging in', error: error.message });
         }
+    }
+
+    logout = async(req: Request, res: Response) => {
+        res
+        .clearCookie('access_token')
+        .json({ message: 'Logout successful' });
     }
 
     update = async(req: Request, res: Response) => {
