@@ -30,7 +30,7 @@ export class UsuarioController {
             res.status(500).json({message: 'Error fetching usuario', error:error.message});
         }
     }
-/* ***************** AHORA LA CREACION Y ACTUALIZACION DE USUARIO LAS HACE CLERK *******
+// ***************** AHORA LA CREACION Y ACTUALIZACION DE USUARIO LAS HACE CLERK *******
     add = async (req: Request, res: Response) => {
         try {
             const newUser = em.create(Usuario, req.body);
@@ -52,7 +52,7 @@ export class UsuarioController {
             res.status(500).json({message: 'Error updating usuario', error:error.message});
         }
     }
-*/
+
     delete = async (req: Request, res: Response) => {
         try {
             const gmail = req.params.gmail;
