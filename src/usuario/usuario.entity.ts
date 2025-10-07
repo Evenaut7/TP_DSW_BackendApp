@@ -8,30 +8,33 @@ import { Valoracion } from "../valoracion/valoracion.entity.js"
 @Entity()
 export class Usuario{
 
-  @PrimaryKey({ nullable: true,  unique: true , type: 'string'})
-  clerkUserId?: string
+  // Estos campos los va a manejar Clerk, no nosotros.
 
-  // Estos campos ahora son OPCIONALES/NULABLES (nullable: true) para el lazy upsert.
-  // Si el usuario ya existe con auth local, estos tendrán valor.
-  // Si es un nuevo usuario de Clerk, solo tendrá el clerkUserId inicialmente.
+  @PrimaryKey({ nullable: false,  unique: true , type: 'string'})
+  clerkUserId!: string
+
+  @Property({ nullable: false,  unique: true, type: 'string' })
+  gmail!: string //mi indice y constraint
 
   @Property({ nullable: true,  unique: true , type: 'string'})
+  nombreUsuario?: string
+
+  // Estos campos ahora son OPCIONALES/NULABLES (nullable: true) para el lazy upsert.
+
+  @Property({ nullable: true,  unique: false , type: 'string'})
   nombre?: string
 
   @Property({ nullable: true,  unique: false, type: 'string' })
   tipo?: string
 
+  // @Property({ nullable: true, unique: false, type: 'string'})
+  // password?: string
+
   // @Property({ nullable: true,  unique: true, type: 'string' })
   // cuit?: string
 
-  @Property({ nullable: false,  unique: true, type: 'string' })
-  gmail!: string //mi indice y constraint
-
-  @Property({ nullable: true, unique: false, type: 'string'})
-  password?: string
-
-  @ManyToOne(() => Localidad,  { nullable: false , cascade: [ Cascade.ALL ] })
-  localidad! : Rel<Localidad>
+  @ManyToOne(() => Localidad,  { nullable: true })
+  localidad? : Rel<Localidad>
 
   @OneToMany(() => PuntoDeInteres, (puntoDeInteres) => puntoDeInteres.usuario,  { nullable: true , cascade: [ Cascade.ALL ] })
   puntosDeInteres = new Collection<PuntoDeInteres>(this)

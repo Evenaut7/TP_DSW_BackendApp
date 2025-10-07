@@ -7,9 +7,10 @@ export const protect = (req: Request, res: Response, next: NextFunction): void =
     const { isAuthenticated, userId } = getAuth(req);
     if (isAuthenticated && userId) {
         next();
-        return; // aseguramos que la función retorna void después de next()
+        //return; 
     }
 
     // En caso no autenticado, enviamos la respuesta, pero no la retornamos como valor desde la función.
     res.status(401).json({ message: 'Acceso no autorizado. Se requiere token de sesión (JWT) válido.' });
+    
 }

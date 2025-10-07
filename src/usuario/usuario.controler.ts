@@ -2,7 +2,8 @@ import { Response, Request } from "express";
 import { orm } from "../shared/db/orm.js";
 import { Usuario } from "./usuario.entity.js";
 import {  clerkClient , getAuth } from '@clerk/express'
-import { get } from "http";
+import { Localidad } from "../localidad/localidad.entity.js";
+//import { get } from "http";
 
 const em = orm.em;
 
@@ -56,12 +57,14 @@ export class UsuarioController {
         try {
             const gmail = req.params.gmail;
             const usuarioToRemove = await em.findOne(Usuario, { gmail });
-            if (!usuarioToRemove) {
-                res.status(404).json({ message: 'Usuario not found' });
+            if (usuarioToRemove) {
+                await clerkClient.users.deleteUser(usuarioToRemove.clerkUserId);
+                console.log(`[Clerk Sync] Usuario Clerk ${usuarioToRemove.clerkUserId} eliminado.`);
+                await em.removeAndFlush(usuarioToRemove);  // Use ORM remove so cascades (valoraciones, etc.) are applied
+                //falta la logica de eliminacion en clerk
+                res.status(200).json({message: 'Usuario removed successfully', data: usuarioToRemove});
             } else {
-            await em.removeAndFlush(usuarioToRemove);  // Use ORM remove so cascades (valoraciones, etc.) are applied
-            //falta la logica de eliminacion en clerk
-            res.status(200).json({message: 'Usuario removed successfully', data: usuarioToRemove});
+                res.status(404).json({message: 'Usuario not found'});
             }
         } catch (error: any) {  
             res.status(500).json({message: 'Error removing usuario', error:error.message});
@@ -72,39 +75,70 @@ export class UsuarioController {
         const { userId } = getAuth(req);
 
         try {
-            if (userId) {
-                const usuarioLocal = await em.findOne(Usuario, { clerkUserId: userId });
-                const clerkUser = await clerkClient.users.getUser(userId);
-                if (!usuarioLocal && clerkUser) {
+            if (!userId) {
+                res.status(401).json({ error: 'Fallo de autenticación.' });
 
+            } else {
+
+                const usuarioLocal = await em.findOne(Usuario, { clerkUserId: userId });
+                const clerkUser = await clerkClient.users.getUser(userId); // 1. Obtener la data del usuario desde Clerk
+                if (!usuarioLocal) {
+                    // 2. Chequeo de seguridad / Edge Case
+                    if (!clerkUser) {
+                        console.error(`[SEGURIDAD CRÍTICA] Token válido pero usuario Clerk no encontrado: ${userId}`);
+                        res.status(404).json({ message: 'Usuario Clerk no encontrado, acceso denegado.' });
+                    }
+                    // ------------------------------------------------------------------------
+                    // 3. Lazy Upsert (CREAR USUARIO)
+                    // ------------------------------------------------------------------------
+                    // GMAIL
+                    const primaryEmail = clerkUser.emailAddresses.find(
+                        (email) => email.id === clerkUser.primaryEmailAddressId
+                        )?.emailAddress ?? 'Sin Email'; 
+                    if (primaryEmail === 'Sin Email') res.status(404).json({ message: 'Usuario Clerk sin gmail' });
                     console.log(`[Lazy Upsert] Creando nuevo usuario Clerk: ${userId}`);
-                    // (ej: import { clerkClient } from '@clerk/clerk-sdk-node';
                     
-                    //const { email, name } = clerkUser;
-                    const newUsuario = new Usuario();
-                    newUsuario.clerkUserId = userId;
-                    newUsuario.nombre = clerkUser.fullName ;
-                    newUsuario.tipo = 'Usuario'; // Valor por defecto
-                    newUsuario.gmail = clerkUser.primaryEmailAddress?.emailAddress;
-                        // Nota: Si localidad sigue siendo OBLIGATORIA en la entidad
-                        // necesitarías añadirla aquí. Si la hiciste opcional (nullable: true), 
-                        // puedes omitirla. Asumiremos que la hiciste opcional.
+                    const newUsuario = em.create(Usuario, {
+                        clerkUserId: userId,
+                        nombreUsuario: clerkUser.username ?? undefined, // Manejo de null/undefined: usamos ?? para asignar 'Usuario' si fullName o username son nulos
+                        gmail: primaryEmail,
+                        tipo: 'Usuario'
+                        });
+                    
                     await em.persistAndFlush(newUsuario);
+
                     res.status(200).json({
                     message: 'Usuario autenticado y sincronizado.',
-                    data: newUsuario,
+                    data: newUsuario
                     });
+                    
                 } else {
+                    // ------------------------------------------------------------------------
+                    // 3. Lazy Upsert (ACTUALIZAR USUARIO)
+                    // ------------------------------------------------------------------------
+
+                    // GMAIL
+                    const primaryEmail = clerkUser.emailAddresses.find((email) => email.id === clerkUser.primaryEmailAddressId)?.emailAddress;
+                    // NOMBRE
+                    const newUserName = clerkUser.username;
+
+                    const needsUpdate = (usuarioLocal.nombreUsuario !== newUserName) || (usuarioLocal.gmail !== primaryEmail);
+                
+                    if (needsUpdate) {
+                        em.assign(usuarioLocal, {
+                            nombreUsuario: newUserName,
+                            gmail: primaryEmail
+                        });
+                    await em.persistAndFlush(usuarioLocal); 
+
                     res.status(200).json({
                     message: 'Usuario autenticado y sincronizado.',
                     data: usuarioLocal
                     });
-            }
-            } else {
-                res.status(401).json({ error: 'No autorizado o token inválido.' });
-            }
-
-        } catch (error: any) {
+                }
+            }}
+        }
+        catch (error: any) {
             console.error('Error en lazy upsert:', error);
             res.status(500).json({ message: 'Error interno del servidor al procesar el usuario.', error: error.message });
         }
