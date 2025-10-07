@@ -19,7 +19,7 @@ export class Localidad extends BaseEntity {
     @Property({ nullable: true, type: 'string' })
     imagen?: string;
 
-    @ManyToOne(() => Provincia, { nullable: false , cascade: [ Cascade.ALL ] })
+    @ManyToOne(() => Provincia, { nullable: false })
     provincia!: Rel<Provincia>;
 
     @OneToMany(() => PuntoDeInteres, (PuntoDeInteres) => PuntoDeInteres.localidad, { nullable: true, cascade: [Cascade.ALL] })

@@ -20,6 +20,6 @@ export class Valoracion extends BaseEntity {
   @ManyToOne( () => PuntoDeInteres, {nullable: false, unique: false})
   puntoDeInteres!: Rel<PuntoDeInteres>
 
-  @ManyToOne(()=> Usuario, { nullable: false})
+  @ManyToOne(()=> Usuario, { nullable: false, unique: false})
   usuario!: Rel<Usuario>
 }

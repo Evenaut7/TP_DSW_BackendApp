@@ -23,7 +23,7 @@ export class Usuario extends BaseEntity{
   @Property({ nullable: false, unique: false, type: 'string'})
   password!: string
 
-  @ManyToOne(() => Localidad,  { nullable: false , cascade: [ Cascade.ALL ] })
+  @ManyToOne(() => Localidad,  { nullable: false })
   localidad! : Rel<Localidad>
 
   @OneToMany(() => PuntoDeInteres, (puntoDeInteres) => puntoDeInteres.usuario,  { nullable: true , cascade: [ Cascade.ALL ] })

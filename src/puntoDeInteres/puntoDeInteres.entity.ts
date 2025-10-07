@@ -29,7 +29,7 @@ export class PuntoDeInteres extends BaseEntity {
   @Property({ nullable: false, unique: false, type: 'boolean' })
   privado!: boolean
 
-  @ManyToMany(() => Tag, (tag) => tag.puntosDeInteres, { nullable: true, owner: true, cascade: [Cascade.ALL] })
+  @ManyToMany(() => Tag, (tag) => tag.puntosDeInteres, { nullable: true, owner: true})
   tags = new Collection<Tag>(this)
 
   @OneToMany(() => Evento, (evento) => evento.puntoDeInteres, { nullable: true, cascade: [Cascade.ALL] })

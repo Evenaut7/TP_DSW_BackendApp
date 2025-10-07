@@ -12,9 +12,9 @@ export class Tag extends BaseEntity {
   @Property({nullable: false, unique: false, type: 'string'})
   tipo!: string
   
-  @ManyToMany( () => Evento, (evento) => evento.tags )
-  eventos = new Collection<Tag>(this)
+  @ManyToMany( () => Evento, (evento) => evento.tags , { nullable: true})
+  eventos = new Collection<Evento>(this)
 
-  @ManyToMany( () => PuntoDeInteres, (puntoDeInteres) => puntoDeInteres.tags)
+  @ManyToMany( () => PuntoDeInteres, (puntoDeInteres) => puntoDeInteres.tags, { nullable: true})
   puntosDeInteres = new Collection<PuntoDeInteres>(this)
 }
