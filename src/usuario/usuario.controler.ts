@@ -112,7 +112,7 @@ export class UsuarioController {
                 { expiresIn: '1h' });
 
             res
-            .cookie('acess_token', token, {
+            .cookie('access_token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
