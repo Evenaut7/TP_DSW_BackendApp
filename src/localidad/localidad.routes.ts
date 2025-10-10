@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { LocalidadController } from "./localidad.controller.js";
-import { uploadImages } from '../multer.js'; 
+import { uploadImages } from '../shared/multer.js'; 
 
 export const localidadRouter = Router();
 export const localidadController = new LocalidadController();

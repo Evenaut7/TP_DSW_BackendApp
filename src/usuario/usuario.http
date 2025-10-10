@@ -1,5 +1,5 @@
 ###GET ALL
-GET http://localhost:3000/api/usuarios
+GET http://localhost:3000/api/usuarios/3
 
 
 ###POST
@@ -39,19 +39,14 @@ Content-Type: application/json
 
 
 ###POST
-POST http://localhost:3000/api/usuarios
+POST http://localhost:3000/api/usuarios/register
 Content-Type: application/json
 
 {
-  "nombre": "Colo Satur",
-  "gmail": "saturColo@gmail",
+  "nombre": "Satur",
+  "gmail": "satur@gmail.com",
   "tipo": "creador",
-  "cuit": "20-199999-9",
-  "localidad": 3,
-  "puntosDeInteres" : [],
-  "agendaPDI" : [],
-  "valoraciones": [],
-  "favoritos": []
+  "password": "123456"
 }
 
 

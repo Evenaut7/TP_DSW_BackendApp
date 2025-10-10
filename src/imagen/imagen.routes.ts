@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ImagenControler } from "./imagen.controler.js";
-import { uploadImages } from "../multer.js";
+import { uploadImages } from "../shared/multer.js";
 
 export const imagenRouter = Router();
 const imagenControler = new ImagenControler();  

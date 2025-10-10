@@ -1,8 +1,15 @@
 ### Find All
-GET http://localhost:3000/api/puntosDeInteres
+GET http://localhost:3000/api/puntosDeInteres/usuarioLogeado
 
 ### Find One
-GET http://localhost:3000/api/puntosDeInteres/4
+POST http://localhost:3000/api/puntosDeInteres/filtro
+Content-Type: application/json
+
+{
+  "localidad" : 3,
+  "busqueda" : "Parque",
+  "tags" : [6]
+}
 
 ### Add
 POST http://localhost:3000/api/puntosDeInteres
@@ -49,12 +56,5 @@ PUT http://localhost:3000/api/puntosDeInteres/4
 Content-Type: application/json
 
 {
-  "nombre" : "Alto Rosario 2",
-  "descripcion" : "Shopping Alto Rosario Editado",
-  "imagen" : "shopping.png",
-  "calle" : "Junín",
-  "altura" : 5001,
-  "privado" : true,
-  "tags" : [4,6],
-  "eventos" : []
+  "tags" : [7,10,6]
 }

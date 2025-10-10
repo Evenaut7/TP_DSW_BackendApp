@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { orm } from '../shared/db/orm.js'
 import { PuntoDeInteres } from './puntoDeInteres.entity.js'
+import { EntityManager, EntityRepository } from '@mikro-orm/mysql'
 
 const em = orm.em
 
@@ -8,7 +9,7 @@ const em = orm.em
 
 async function findAll(req: Request, res: Response) {
   try {
-    const puntosDeInteres = await em.find(PuntoDeInteres, {}, {populate: ['eventos', 'eventos.tags' , 'tags', 'valoraciones']})
+    const puntosDeInteres = await em.find(PuntoDeInteres, {}, {populate: ['eventos', 'tags', 'valoraciones']})
     res.status(200).json({message: 'Found all Puntos De Interes', data: puntosDeInteres})
   } 
   catch (error: any) {
@@ -63,4 +64,40 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export { findAll, findOne, add, update, remove };
+async function filtro(req: Request, res: Response) {
+  try {
+
+    const {localidad, tags, busqueda} = req.body;
+
+    const puntosDeInteres = await em.find(PuntoDeInteres, {
+      localidad,
+      ...(busqueda ? { nombre: { $like: `%${busqueda}%` } } : {})
+    }, { populate: ['eventos', 'tags'] });
+
+    // No es lo mas eficiente, pero funciona para pocos datos. No puede hacer andar el Query builder de MikroORM
+    const puntosFiltrados = puntosDeInteres.filter(pdi =>
+      tags.every((tagId: Number) => pdi.tags.getItems().some(tag => tag.id === tagId)));
+
+    res.status(200).json({ message: 'Filtered Puntos De Interes', data: puntosFiltrados });
+
+  } catch (error: any) {
+    res.status(500).json({message: error.message})
+  }
+}
+
+async function getAllFromUsuarioLogeado(req: Request, res: Response): Promise<void> {
+  try {
+    const usuarioId = req.user?.id;
+    if (!usuarioId) {
+      res.status(401).json({ message: 'Usuario no autenticado' });
+      return;
+    }
+    const puntosDeInteres = await em.find(PuntoDeInteres, { usuario: usuarioId }, { populate: ['tags'] });
+    res.status(200).json({ message: 'Puntos De Interes del usuario logeado', data: puntosDeInteres });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+
+export { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado };

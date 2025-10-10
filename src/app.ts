@@ -1,10 +1,10 @@
 import 'reflect-metadata'
-import cookeParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import multer from 'multer'
 import path from 'path';
-import { sessionData } from './sessionData.js'
+import { sessionData } from './shared/sessionData.js'
 import { tagRouter } from './tag/tag.routes.js'
 import { puntoDeInteresRouter } from './puntoDeInteres/puntoDeInteres.routes.js'
 import { orm, syncSchema } from './shared/db/orm.js'
@@ -22,13 +22,12 @@ const app = express()
 
 //Middlewares
 app.use(express.json())
-app.use(cookeParser())
-app.use(sessionData);
+app.use(cookieParser())
 
 app.use(
   cors({
     origin: "http://localhost:5173",
-    credentials: true,
+    credentials: true
   })
 );
 
