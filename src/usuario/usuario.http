@@ -67,7 +67,7 @@ Content-Type: application/json
   "favoritos": []
 }
 
-### login
+### register
 POST http://localhost:3000/api/usuarios/register
 Content-Type: application/json
 
@@ -78,4 +78,13 @@ Content-Type: application/json
     "gmail": "administrador@gmail.com",
     "password": "123",
     "localidad": 1
+}
+
+### login
+POST http://localhost:3000/api/usuarios/login
+Content-Type: application/json
+
+{
+    "gmail": "administrador@gmail.com",
+    "password": "123"
 }
