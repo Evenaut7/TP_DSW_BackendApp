@@ -8,7 +8,7 @@ Content-Type: application/json
 {
   "localidad" : 3,
   "busqueda" : "Parque",
-  "tags" : [6]
+  "tags" : [10]
 }
 
 ### Add
@@ -56,5 +56,5 @@ PUT http://localhost:3000/api/puntosDeInteres/4
 Content-Type: application/json
 
 {
-  "tags" : [7,10,6]
+  "usuario" : 27
 }

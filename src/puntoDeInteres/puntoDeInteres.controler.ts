@@ -85,19 +85,31 @@ async function filtro(req: Request, res: Response) {
   }
 }
 
-async function getAllFromUsuarioLogeado(req: Request, res: Response): Promise<void> {
+async function getAllFromUsuarioLogeado(req: Request, res: Response) {
+  console.log("Entré a la función");
+  console.log("req.user:", req.user);
+
   try {
     const usuarioId = req.user?.id;
     if (!usuarioId) {
-      res.status(401).json({ message: 'Usuario no autenticado' });
-      return;
+      res.status(401).json({ message: "Usuario no autenticado" });
+      return; 
     }
-    const puntosDeInteres = await em.find(PuntoDeInteres, { usuario: usuarioId }, { populate: ['tags'] });
-    res.status(200).json({ message: 'Puntos De Interes del usuario logeado', data: puntosDeInteres });
+
+    const puntosDeInteres = await em.find(
+      PuntoDeInteres,
+      { usuario: usuarioId },
+      { populate: ["tags"] }
+    );
+
+    res.status(200).json({
+      message: "Puntos de interés del usuario logeado",
+      data: puntosDeInteres,
+    });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
 
 export { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado };

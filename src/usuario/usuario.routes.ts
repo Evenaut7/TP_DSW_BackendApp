@@ -11,7 +11,7 @@ const usuarioController = new UsuarioController();
 usuarioRouter.get('/', usuarioController.findAll);
 usuarioRouter.get('/:id', usuarioController.findOne);   
 usuarioRouter.delete('/:id', usuarioController.delete);
-usuarioRouter.put('/:id', schemaValidator(usuarioSchema), usuarioController.update);  
+usuarioRouter.put('/:id', usuarioController.update);  
 
 //GESTION DE USUARIOS
 usuarioRouter.post('/register', schemaValidator(usuarioSchema), usuarioController.register);
