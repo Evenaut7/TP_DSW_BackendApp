@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import { orm } from '../shared/db/orm.js'
-import { PuntoDeInteres } from './puntoDeInteres.entity.js'
-import { EntityManager, EntityRepository } from '@mikro-orm/mysql'
+import { PuntoDeInteres} from './puntoDeInteres.entity.js'
+import { Usuario } from '../usuario/usuario.entity.js'
 
 const em = orm.em
 
@@ -86,14 +86,17 @@ async function filtro(req: Request, res: Response) {
 }
 
 async function getAllFromUsuarioLogeado(req: Request, res: Response) {
-  console.log("Entré a la función");
-  console.log("req.user:", req.user);
-
   try {
     const usuarioId = req.user?.id;
+    const usuarioTipo = req.user?.tipo;
+
     if (!usuarioId) {
       res.status(401).json({ message: "Usuario no autenticado" });
       return; 
+    }
+    if (usuarioTipo === 'usuario') {
+      res.status(403).json({ message: "Acceso denegado: usuario no es del tipo admin o creador" });
+      return;
     }
 
     const puntosDeInteres = await em.find(
@@ -111,5 +114,79 @@ async function getAllFromUsuarioLogeado(req: Request, res: Response) {
   }
 };
 
+async function esFavorito(req: Request, res: Response) {
+  try {
+    const usuarioId = req.user?.id;
+    const puntoDeInteresId = Number.parseInt(req.params.id);
+    if (!usuarioId) {
+      res.status(401).json({ message: "Usuario no autenticado" });
+      return; 
+    }
+    const puntoDeInteres = await em.findOneOrFail(PuntoDeInteres, { id: puntoDeInteresId }, { populate: ['favoritoDe'] });
+    const esFavorito = puntoDeInteres.favoritoDe.getItems().some(user => user.id === usuarioId);
+    res.status(200).json({ message: "Chequeo de favorito realizado", data: { esFavorito } });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
 
-export { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado };
+async function addToFavoritos(req: Request, res: Response) {
+  try {
+    const usuarioId = req.user?.id;
+    const puntoDeInteresId = req.body.id;
+    if (!usuarioId) {
+      res.status(401).json({ message: "Usuario no autenticado" });
+      return; 
+    }
+    const puntoDeInteres = await em.findOneOrFail(PuntoDeInteres, { id: puntoDeInteresId }, { populate: ['favoritoDe'] });
+    const yaEsFavorito = puntoDeInteres.favoritoDe.getItems().some(user => user.id === usuarioId);
+    if (yaEsFavorito) {
+      res.status(400).json({ message: "El punto de interés ya está en favoritos" });
+      return
+    } 
+    const usuario = await em.findOneOrFail(Usuario, usuarioId)
+    puntoDeInteres.favoritoDe.add(usuario);
+    await em.flush();
+    res.status(200).json({ message: "Punto de interés añadido a favoritos", data: puntoDeInteres });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+async function sacarDeFavoritos(req: Request, res: Response) {
+  try {
+    const usuarioId = req.user?.id;
+    const puntoDeInteresId = req.body.id;
+
+    if (!usuarioId) {
+      res.status(401).json({ message: "Usuario no autenticado" });
+      return
+    }
+
+    const usuario = await em.findOneOrFail(
+      Usuario,
+      { id: usuarioId },
+      { populate: ['favoritos'] }
+    );
+
+    const puntoDeInteres = await em.findOneOrFail(PuntoDeInteres, { id: puntoDeInteresId });
+
+    if (!usuario.favoritos.contains(puntoDeInteres)) {
+      res.status(400).json({ message: "El punto de interés no está en favoritos" });
+      return
+    }
+    usuario.favoritos.remove(puntoDeInteres);
+    await em.flush();
+
+    res.status(200).json({
+      message: "Punto de interés eliminado de favoritos",
+      data: puntoDeInteres.id 
+    });
+
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+
+export { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado, addToFavoritos, sacarDeFavoritos, esFavorito };

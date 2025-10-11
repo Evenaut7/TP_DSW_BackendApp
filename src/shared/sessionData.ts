@@ -13,22 +13,21 @@ export const sessionData: RequestHandler = (req: Request, res: Response, next: N
   try {
     const token = req.cookies?.access_token;
     if (!token) {
-      req.user = undefined;
-      return next();
+      req.user = res.status(401).json({ message: "Token Requerido" })
+      return
     }
 
     const data = jwt.verify(
       token,
       'Un secreto super secreto que nos ayudara a poder implementar autenticacion en nuestro super proyecto! :D (Despues lo introducimos en variables de entorno)'
     ) as JwtPayload;
-
-    req.user = {
-      ...data,
-      id: data.id ? Number(data.id) : undefined,
-    };
+    req.user = data
+    
+    next()
+  
   } catch (err) {
-    req.user = undefined; 
+    req.user = res.status(401).json({ message: "Token Invalido" })
+    return
   }
 
-  next();
 };
