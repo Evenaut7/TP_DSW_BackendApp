@@ -152,4 +152,19 @@ export class UsuarioController {
             res.status(500).json({message: 'Error removing usuario', error:error.message});
         }
     }
+
+    isAdmin = async (req: Request, res: Response) => {
+        try {
+            if (!req.user || !req.user.tipo) {
+                res.status(401).json({ message: 'Unauthorized' });
+                return;
+            }
+            const isAdmin = req.user.tipo === 'admin';
+            isAdmin ? res.status(200).json({ message: 'User is admin', isAdmin: true })
+                    : res.status(401).json({ message: 'User is not admin', isAdmin: false });
+        } catch (error: any) {
+            res.status(500).json({ message: 'Error checking admin status', error: error.message });
+        }
+    }
+
 } 

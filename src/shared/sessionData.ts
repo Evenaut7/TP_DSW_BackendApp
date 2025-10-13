@@ -26,7 +26,7 @@ export const sessionData: RequestHandler = (req: Request, res: Response, next: N
     next()
   
   } catch (err) {
-    req.user = res.status(401).json({ message: "Token Invalido" })
+    req.user = res.status(401).json({ message: "Token Invalido o Expirado" })
     return
   }
 

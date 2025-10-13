@@ -3,16 +3,16 @@ GET http://localhost:3000/api/usuarios/27
 
 
 ###POST
-POST http://localhost:3000/api/usuarios
+POST http://localhost:3000/api/usuarios/register
 Content-Type: application/json
 
 {
   "nombre": "Juan Perez",
   "password": "1234",
-  "gmail": "juanperez@gmail",
-  "tipo": "cliente",
-  "cuit": "20-12345678-9",
-  "password": "clave",
+  "gmail": "juanperez@gmail.com",
+  "tipo": "admin",
+  "cuit": "20123456789",
+  "password": "clave123",
   "localidad": 7,
   "puntosDeInteres" : [],
   "agendaPDI" : [],
