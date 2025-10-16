@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 const types = ['image/jpeg', 'image/png']
 
 export const uploadImages = multer({ 
-  storage: multer.diskStorage({
+    storage: multer.diskStorage({
     destination: './uploads',
     filename: (req, file, cb) => {
       cb(null, uuidv4() + extname(file.originalname))

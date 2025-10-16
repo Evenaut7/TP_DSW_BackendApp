@@ -9,8 +9,8 @@ import { Historia } from '../historia/historia.entity.js';
 import { Valoracion } from '../valoracion/valoracion.entity.js';
 import { Evento } from '../evento/evento.entity.js';
 
-// console.log('📄 seed file loaded:', new Date().toISOString());
-// console.log('📄 running file URL:', import.meta.url);
+console.log('📄 seed file loaded:', new Date().toISOString());
+console.log('📄 running file URL:', import.meta.url);
 
 async function main() 
 {
