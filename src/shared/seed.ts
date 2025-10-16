@@ -1,13 +1,13 @@
 // src/seed.ts
-import { orm } from './shared/db/orm.js';
-import { Provincia } from './provincia/provincia.entity.js';
-import { Localidad } from './localidad/localidad.entity.js';
-import { Tag } from './tag/tag.entity.js';
-import { PuntoDeInteres } from './puntoDeInteres/puntoDeInteres.entity.js';
-import { Usuario } from './usuario/usuario.entity.js';
-import { Historia } from './historia/historia.entity.js';
-import { Valoracion } from './valoracion/valoracion.entity.js';
-import { Evento } from './evento/evento.entity.js';
+import { orm } from './db/orm.js';
+import { Provincia } from '../provincia/provincia.entity.js';
+import { Localidad } from '../localidad/localidad.entity.js';
+import { Tag } from '../tag/tag.entity.js';
+import { PuntoDeInteres } from '../puntoDeInteres/puntoDeInteres.entity.js';
+import { Usuario } from '../usuario/usuario.entity.js';
+import { Historia } from '../historia/historia.entity.js';
+import { Valoracion } from '../valoracion/valoracion.entity.js';
+import { Evento } from '../evento/evento.entity.js';
 
 // console.log('📄 seed file loaded:', new Date().toISOString());
 // console.log('📄 running file URL:', import.meta.url);
