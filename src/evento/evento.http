@@ -13,9 +13,9 @@ Content-Type: application/json
   "descripcion" : "Triatlon al aire libre",
   "horaDesde" : "1995-12-17T03:24:00" ,
   "horaHasta" : "1995-12-18T03:24:00" ,
-  "estado" : "activo" ,
+  "estado" : "Disponible" ,
   "tags" : [],
-  "puntoDeInteres" : 4
+  "puntoDeInteres" : 10
 }
 
 ### Delete

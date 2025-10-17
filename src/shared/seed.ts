@@ -196,10 +196,10 @@ async function main()
   
 
     const usuarioAdmin = new Usuario();
-    usuarioAdmin.nombre = 'Administrador';
-    usuarioAdmin.tipo = 'administrador';
-    usuarioAdmin.cuit = '20-12345678-9';
-    usuarioAdmin.gmail = 'administrador@gmail.com';
+    usuarioAdmin.nombre = 'admin';
+    usuarioAdmin.tipo = 'admin';
+    usuarioAdmin.cuit = '20123456789';
+    usuarioAdmin.gmail = 'admin@gmail.com';
     usuarioAdmin.password = '123';
     usuarioAdmin.localidad = l1;
     await em.persistAndFlush(usuarioAdmin);
