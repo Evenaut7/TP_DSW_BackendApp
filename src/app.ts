@@ -22,11 +22,7 @@ const app = express()
 
 //Middlewares
 app.use(express.json())
-<<<<<<< HEAD
-app.use(cookeParser())
-=======
 app.use(cookieParser())
->>>>>>> 67cdb1034ac4b8f4a12050e23deb4e311beed0e2
 
 app.use(
   cors({

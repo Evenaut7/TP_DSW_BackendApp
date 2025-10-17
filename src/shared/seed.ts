@@ -197,7 +197,7 @@ async function main()
 
     const usuarioAdmin = new Usuario();
     usuarioAdmin.nombre = 'Administrador';
-    usuarioAdmin.tipo = 'admin';
+    usuarioAdmin.tipo = 'administrador';
     usuarioAdmin.cuit = '20-12345678-9';
     usuarioAdmin.gmail = 'administrador@gmail.com';
     usuarioAdmin.password = '123';
@@ -206,7 +206,7 @@ async function main()
 
   const usuario4 = new Usuario();
   usuario4.nombre = 'Valentino Laveggi';
-  usuario4.tipo = 'user';
+  usuario4.tipo = 'usuario';
   usuario4.cuit = '20-11111111-1';
   usuario4.gmail = 'vl@gmail.com';
   usuario4.password = '123';
@@ -215,7 +215,7 @@ async function main()
 
   const usuario5 = new Usuario();
   usuario5.nombre = 'Joaquín Mourua';
-  usuario5.tipo = 'user';
+  usuario5.tipo = 'usuario';
   usuario5.cuit = '20-22222222-2';
   usuario5.gmail = 'jm@gmail.com';
   usuario5.password = '123';
@@ -224,7 +224,7 @@ async function main()
 
   const usuario6 = new Usuario();
   usuario6.nombre = 'Gabriel Romero';
-  usuario6.tipo = 'user';
+  usuario6.tipo = 'usuario';
   usuario6.cuit = '20-33333333-3';
   usuario6.gmail = 'gt@gmail.com';
   usuario6.password = '123';
@@ -233,7 +233,7 @@ async function main()
 
   const usuario7 = new Usuario();
   usuario7.nombre = 'Lionel Messi';
-  usuario7.tipo = 'user';
+  usuario7.tipo = 'usuario';
   usuario7.cuit = '20-44444444-4';
   usuario7.gmail = 'lm@gmail.com';
   usuario7.password = '123';
@@ -242,7 +242,7 @@ async function main()
 
   const usuario8 = new Usuario();
   usuario8.nombre = 'Leandro Paredes';
-  usuario8.tipo = 'user';
+  usuario8.tipo = 'usuario';
   usuario8.cuit = '10-11111111-1';
   usuario8.gmail = 'lp@gmail.com';
   usuario8.password = '123';
@@ -251,7 +251,7 @@ async function main()
   
   const usuario9 = new Usuario();
   usuario9.nombre = 'Enzo Fernández';
-  usuario9.tipo = 'user';
+  usuario9.tipo = 'usuario';
   usuario9.cuit = '10-22222222-2';
   usuario9.gmail = 'ef@gmail.com';
   usuario9.password = '123';
@@ -260,7 +260,7 @@ async function main()
 
   const usuario10 = new Usuario();
   usuario10.nombre = 'Paulo Dybala';
-  usuario10.tipo = 'user';
+  usuario10.tipo = 'usuario';
   usuario10.cuit = '40-11111111-1';
   usuario10.gmail = 'pd@gmail.com';
   usuario10.password = '123';
@@ -269,7 +269,7 @@ async function main()
 
   const usuario11 = new Usuario();
   usuario11.nombre = 'Mariana Díaz';
-  usuario11.tipo = 'user';
+  usuario11.tipo = 'usuario';
   usuario11.cuit = '27-55555555-5';
   usuario11.gmail = 'mariana.diaz@example.com';
   usuario11.password = '123';
@@ -278,7 +278,7 @@ async function main()
 
   const usuario12 = new Usuario();
   usuario12.nombre = 'Santiago Pérez';
-  usuario12.tipo = 'user';
+  usuario12.tipo = 'usuario';
   usuario12.cuit = '20-66666666-6';
   usuario12.gmail = 'santiago.perez@example.com';
   usuario12.password = '123';
@@ -287,7 +287,7 @@ async function main()
 
   const usuario13 = new Usuario();
   usuario13.nombre = 'Lucía Fernández';
-  usuario13.tipo = 'user';
+  usuario13.tipo = 'usuario';
   usuario13.cuit = '27-77777777-7';
   usuario13.gmail = 'lucia.fernandez@example.com';
   usuario13.password = '123';
@@ -296,7 +296,7 @@ async function main()
 
   const usuarioMalaOnda = new Usuario();
   usuarioMalaOnda.nombre = 'Pedro Malafama';
-  usuarioMalaOnda.tipo = 'user';
+  usuarioMalaOnda.tipo = 'usuario';
   usuarioMalaOnda.cuit = '20-99999999-9';
   usuarioMalaOnda.gmail = 'pedro.malafama@gmail.com';
   usuarioMalaOnda.password = '123';
@@ -306,7 +306,7 @@ async function main()
 
     const muniCaba = new Usuario();
     muniCaba.nombre = 'Gobierno de la Ciudad de Buenos Aires';
-    muniCaba.tipo = 'creator';
+    muniCaba.tipo = 'creador';
     muniCaba.cuit = '30-90000001-7';
     muniCaba.gmail = 'gcba@buenosaires.gob.ar';
     muniCaba.password = '123';
