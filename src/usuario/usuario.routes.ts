@@ -1,15 +1,20 @@
 import { Router } from "express";
 import { UsuarioController } from "./usuario.controler.js";
-import { schemaValidator } from "../schemaValidator.js";
+import { schemaValidator } from "../shared/schemaValidator.js";
 import { usuarioSchema } from "./usuario.schema.js";
-import { sessionData } from "../sessionData.js";
+import { sessionData } from "../shared/sessionData.js";
 
 export const usuarioRouter = Router();
 const usuarioController = new UsuarioController();  
+
+//GESTION DE USUARIOS
+usuarioRouter.post('/register', schemaValidator(usuarioSchema), usuarioController.register);
+usuarioRouter.post('/login', usuarioController.login);
+usuarioRouter.post('/logout', usuarioController.logout);
+usuarioRouter.get('/is-admin', sessionData, usuarioController.isAdmin);
+
+//CRUD BÁSICO
 usuarioRouter.get('/', usuarioController.findAll);
 usuarioRouter.get('/:id', usuarioController.findOne);   
-usuarioRouter.post('/register', schemaValidator(usuarioSchema), usuarioController.add);
-usuarioRouter.post('/login', usuarioController.login);
-usuarioRouter.put('/:id', schemaValidator(usuarioSchema), usuarioController.update);  
 usuarioRouter.delete('/:id', usuarioController.delete);
-usuarioRouter.post('/logout', usuarioController.logout);
+usuarioRouter.put('/:id', usuarioController.update);  

@@ -15,7 +15,7 @@ export class UsuarioController {
             const usuarios = await em.find(
                 Usuario, 
                 {}, 
-                { populate: ['localidad','localidad.provincia', 'puntosDeInteres', 'favoritos', 'agendaPDI', 'valoraciones'] });
+                { populate: ['localidad', 'localidad.provincia', 'puntosDeInteres', 'favoritos', 'agendaPDI', 'valoraciones'] });
             res.status(200).json({message: 'Usuarios found', data: usuarios});
         } catch (error: any) {
             res.status(500).json({message: 'Error fetching usuarios', error:error.message});
@@ -32,7 +32,7 @@ export class UsuarioController {
         }
     }
 
-    add = async (req: Request, res: Response) => {
+    register = async (req: Request, res: Response) => {
         try {
             const { nombre, tipo, gmail, password } = req.body;
 
@@ -107,16 +107,16 @@ export class UsuarioController {
             }
 
             const token = jwt.sign(
-                { id: user.id, gmail: user.gmail}, 
+                { id: user.id, gmail: user.gmail, tipo: user.tipo }, 
                 'Un secreto super secreto que nos ayudara a poder implementar autenticacion en nuestro super proyecto! :D (Despues lo introducimos en variables de entorno)', 
-                { expiresIn: '1h' });
+                { expiresIn: '7D' });
 
             res
             .cookie('access_token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-                maxAge: 3600000, // -> 1 hora
+                sameSite: 'lax',
+                maxAge: 7 * 24 * 60 * 60 * 1000, // -> 7 dias
             })
             .status(200).json({ message: 'Login successful', user: publicUser });
         } catch (error: any) {
@@ -152,4 +152,19 @@ export class UsuarioController {
             res.status(500).json({message: 'Error removing usuario', error:error.message});
         }
     }
+
+    isAdmin = async (req: Request, res: Response) => {
+        try {
+            if (!req.user || !req.user.tipo) {
+                res.status(401).json({ message: 'Unauthorized' });
+                return;
+            }
+            const isAdmin = req.user.tipo === 'admin';
+            isAdmin ? res.status(200).json({ message: 'User is admin', isAdmin: true })
+                    : res.status(401).json({ message: 'User is not admin', isAdmin: false });
+        } catch (error: any) {
+            res.status(500).json({ message: 'Error checking admin status', error: error.message });
+        }
+    }
+
 } 

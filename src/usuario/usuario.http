@@ -1,18 +1,18 @@
 ###GET ALL
-GET http://localhost:3000/api/usuarios
+GET http://localhost:3000/api/usuarios/
 
 
 ###POST
-POST http://localhost:3000/api/usuarios
+POST http://localhost:3000/api/usuarios/register
 Content-Type: application/json
 
 {
   "nombre": "Juan Perez",
   "password": "1234",
-  "gmail": "juanperez@gmail",
-  "tipo": "cliente",
-  "cuit": "20-12345678-9",
-  "password": "clave",
+  "gmail": "juanperez@gmail.com",
+  "tipo": "admin",
+  "cuit": "20123456789",
+  "password": "clave123",
   "localidad": 7,
   "puntosDeInteres" : [],
   "agendaPDI" : [],
@@ -39,37 +39,24 @@ Content-Type: application/json
 
 
 ###POST
-POST http://localhost:3000/api/usuarios
+POST http://localhost:3000/api/usuarios/register
 Content-Type: application/json
 
 {
-  "nombre": "Colo Satur",
-  "gmail": "saturColo@gmail",
-  "tipo": "creador",
-  "cuit": "20-199999-9",
-  "localidad": 3,
-  "puntosDeInteres" : [],
-  "agendaPDI" : [],
-  "valoraciones": [],
-  "favoritos": []
+  "nombre": "Satur2",
+  "gmail": "satur2@gmail.com",
+  "tipo": "usuario",
+  "password": "123456"
 }
 
 
 ###POST
-POST http://localhost:3000/api/usuarios
+PUT http://localhost:3000/api/usuarios/27
 Content-Type: application/json
 
 {
-  "nombre": "Fideo Di Maria",
-  "gmail": "DimariaGol@gmail",
-  "tipo": "cliente",
-  "password": "123",
-  "cuit": "20-4567823-9",
-  "localidad": 2,
-  "puntosDeInteres" : [],
-  "agendaPDI" : [],
-  "valoraciones": [],
-  "favoritos": []
+  "id": 27,
+  "puntosDeInteres" : [20]
 }
 
 ### register
