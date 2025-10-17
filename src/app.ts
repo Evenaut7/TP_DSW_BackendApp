@@ -23,7 +23,6 @@ const app = express()
 //Middlewares
 app.use(express.json())
 app.use(cookeParser())
-app.use(sessionData);
 
 app.use(
   cors({
