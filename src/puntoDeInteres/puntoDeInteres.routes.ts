@@ -3,14 +3,18 @@ import { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado
 import { puntoDeInteresSchema } from './puntoDeInteres.schema.js';
 import { schemaValidator } from "../shared/schemaValidator.js";
 import { sessionData } from '../shared/sessionData.js';
+import { adminValidator } from '../shared/adminValidator.js';
 
 export const puntoDeInteresRouter = Router()
 
 //ENDPOINTS EXTRA
+
 // Recibe una Localidad, una busqueda (string) y una lista de Tags (number[]) y retorna los PuntosDeInteres que cumplan con esos filtros
 puntoDeInteresRouter.post('/filtro', filtro)
+
 // Retorna todos los PuntosDeInteres creados por el usuario que está logeado
 puntoDeInteresRouter.get('/usuarioPdis', sessionData, getAllFromUsuarioLogeado) 
+
 // Toma un  pdi y lo agrega a favoritos
 puntoDeInteresRouter.post('/favorito', sessionData, addToFavoritos)
 // Toma un pdi y lo saca de favoritos
@@ -21,6 +25,8 @@ puntoDeInteresRouter.get('/favorito/:id', sessionData, esFavorito)
 //CRUD BÁSICO
 puntoDeInteresRouter.get('/', findAll)
 puntoDeInteresRouter.get('/:id', findOne)
+// Rutas Protegidas - Admin 
+puntoDeInteresRouter.use('/', sessionData, adminValidator); // Por ahora solo validamos que sea admin, pero deberemos validar que sea admin o dueño del pdi
 puntoDeInteresRouter.post('/', schemaValidator(puntoDeInteresSchema), add)
 puntoDeInteresRouter.put('/:id', update)
 puntoDeInteresRouter.delete('/:id', remove)

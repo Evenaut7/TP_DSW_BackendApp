@@ -8,19 +8,11 @@ export const usuarioRouter = Router();
 const usuarioController = new UsuarioController();
 
 //GESTION DE USUARIOS
-usuarioRouter.post(
-  '/register',
-  schemaValidator(usuarioSchema),
-  usuarioController.register
-);
+usuarioRouter.post('/register', schemaValidator(usuarioSchema), usuarioController.register);
 usuarioRouter.post('/login', usuarioController.login);
 usuarioRouter.post('/logout', usuarioController.logout);
 usuarioRouter.get('/is-admin', sessionData, usuarioController.isAdmin);
-usuarioRouter.get(
-  '/currentUser',
-  sessionData,
-  usuarioController.getCurrentUser
-);
+usuarioRouter.get('/currentUser', sessionData, usuarioController.getCurrentUser);
 
 //CRUD BÁSICO
 usuarioRouter.get('/', usuarioController.findAll);
