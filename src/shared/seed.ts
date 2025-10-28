@@ -200,7 +200,7 @@ async function main()
     usuarioAdmin.tipo = 'admin';
     usuarioAdmin.cuit = '20123456789';
     usuarioAdmin.gmail = 'admin@gmail.com';
-    usuarioAdmin.password = '123';
+    usuarioAdmin.password = '123456';
     usuarioAdmin.localidad = l1;
     await em.persistAndFlush(usuarioAdmin);
 
@@ -209,7 +209,7 @@ async function main()
   usuario4.tipo = 'usuario';
   usuario4.cuit = '20-11111111-1';
   usuario4.gmail = 'vl@gmail.com';
-  usuario4.password = '123';
+  usuario4.password = '123456';
   usuario4.localidad = l2;
   await em.persistAndFlush(usuario4);
 
@@ -218,7 +218,7 @@ async function main()
   usuario5.tipo = 'usuario';
   usuario5.cuit = '20-22222222-2';
   usuario5.gmail = 'jm@gmail.com';
-  usuario5.password = '123';
+  usuario5.password = '123456';
   usuario5.localidad = l2;
   await em.persistAndFlush(usuario5);
 
@@ -227,7 +227,7 @@ async function main()
   usuario6.tipo = 'usuario';
   usuario6.cuit = '20-33333333-3';
   usuario6.gmail = 'gt@gmail.com';
-  usuario6.password = '123';
+  usuario6.password = '123456';
   usuario6.localidad = l2;
   await em.persistAndFlush(usuario6);
 
@@ -236,7 +236,7 @@ async function main()
   usuario7.tipo = 'usuario';
   usuario7.cuit = '20-44444444-4';
   usuario7.gmail = 'lm@gmail.com';
-  usuario7.password = '123';
+  usuario7.password = '123456';
   usuario7.localidad = l2;
   await em.persistAndFlush(usuario7);
 
@@ -245,7 +245,7 @@ async function main()
   usuario8.tipo = 'usuario';
   usuario8.cuit = '10-11111111-1';
   usuario8.gmail = 'lp@gmail.com';
-  usuario8.password = '123';
+  usuario8.password = '123456';
   usuario8.localidad = l0;
   await em.persistAndFlush(usuario8);
   
@@ -254,7 +254,7 @@ async function main()
   usuario9.tipo = 'usuario';
   usuario9.cuit = '10-22222222-2';
   usuario9.gmail = 'ef@gmail.com';
-  usuario9.password = '123';
+  usuario9.password = '123456';
   usuario9.localidad = l0;
   await em.persistAndFlush(usuario9);
 
@@ -263,7 +263,7 @@ async function main()
   usuario10.tipo = 'usuario';
   usuario10.cuit = '40-11111111-1';
   usuario10.gmail = 'pd@gmail.com';
-  usuario10.password = '123';
+  usuario10.password = '123456';
   usuario10.localidad = l4;
   await em.persistAndFlush(usuario10);
 
@@ -272,7 +272,7 @@ async function main()
   usuario11.tipo = 'usuario';
   usuario11.cuit = '27-55555555-5';
   usuario11.gmail = 'mariana.diaz@example.com';
-  usuario11.password = '123';
+  usuario11.password = '123456';
   usuario11.localidad = l7;
   await em.persistAndFlush(usuario11);
 
@@ -281,7 +281,7 @@ async function main()
   usuario12.tipo = 'usuario';
   usuario12.cuit = '20-66666666-6';
   usuario12.gmail = 'santiago.perez@example.com';
-  usuario12.password = '123';
+  usuario12.password = '123456';
   usuario12.localidad = l9;
   await em.persistAndFlush(usuario12);
 
@@ -290,7 +290,7 @@ async function main()
   usuario13.tipo = 'usuario';
   usuario13.cuit = '27-77777777-7';
   usuario13.gmail = 'lucia.fernandez@example.com';
-  usuario13.password = '123';
+  usuario13.password = '123456';
   usuario13.localidad = l11;
   await em.persistAndFlush(usuario13);
 
@@ -299,7 +299,7 @@ async function main()
   usuarioMalaOnda.tipo = 'usuario';
   usuarioMalaOnda.cuit = '20-99999999-9';
   usuarioMalaOnda.gmail = 'pedro.malafama@gmail.com';
-  usuarioMalaOnda.password = '123';
+  usuarioMalaOnda.password = '123456';
   usuarioMalaOnda.localidad = l2;
   await em.persistAndFlush(usuarioMalaOnda);
   // ----------------------------- USUARIOS (CREADOR) -----------------------------
@@ -309,7 +309,7 @@ async function main()
     muniCaba.tipo = 'creador';
     muniCaba.cuit = '30-90000001-7';
     muniCaba.gmail = 'gcba@buenosaires.gob.ar';
-    muniCaba.password = '123';
+    muniCaba.password = '123456';
     muniCaba.localidad = l0; // CABA
     await em.persistAndFlush(muniCaba);
 
@@ -318,7 +318,7 @@ async function main()
     muniQuilmes.tipo = 'creador';
     muniQuilmes.cuit = '30-90000002-5';
     muniQuilmes.gmail = 'municipio@quilmes.gov.ar';
-    muniQuilmes.password = '123';
+    muniQuilmes.password = '123456';
     muniQuilmes.localidad = l1; // Quilmes
     await em.persistAndFlush(muniQuilmes);
 
@@ -327,7 +327,7 @@ async function main()
     muniCordoba.tipo = 'creador';
     muniCordoba.cuit = '30-90000003-3';
     muniCordoba.gmail = 'municipalidad@cordoba.gov.ar';
-    muniCordoba.password = '123';
+    muniCordoba.password = '123456';
     muniCordoba.localidad = l4; // Córdoba
     await em.persistAndFlush(muniCordoba);
 
@@ -336,7 +336,7 @@ async function main()
     muniMendoza.tipo = 'creador';
     muniMendoza.cuit = '30-90000004-1';
     muniMendoza.gmail = 'municipalidad@mendoza.gov.ar';
-    muniMendoza.password = '123';
+    muniMendoza.password = '123456';
     muniMendoza.localidad = l5; // Mendoza
     await em.persistAndFlush(muniMendoza);
 
@@ -345,7 +345,7 @@ async function main()
     muniUshuaia.tipo = 'creador';
     muniUshuaia.cuit = '30-90000005-0';
     muniUshuaia.gmail = 'municipalidad@ushuaia.tdf.gov.ar';
-    muniUshuaia.password = '123';
+    muniUshuaia.password = '123456';
     muniUshuaia.localidad = l6; // Ushuaia
     await em.persistAndFlush(muniUshuaia);
 
@@ -354,7 +354,7 @@ async function main()
     usuario2.tipo = 'creador';
     usuario2.cuit = '20-121578-9';
     usuario2.gmail = 'munirosario@gmail.com';
-    usuario2.password = '123';
+    usuario2.password = '123456';
     usuario2.localidad = l2;
     await em.persistAndFlush(usuario2);
 
@@ -363,7 +363,7 @@ async function main()
     usuario3.tipo = 'creador';
     usuario3.cuit = '20-55545454-9';
     usuario3.gmail = 'munifunes@gmail.com';
-    usuario3.password = '123';
+    usuario3.password = '123456';
     usuario3.localidad = l3;
     await em.persistAndFlush(usuario3);
 
@@ -372,7 +372,7 @@ async function main()
     muniCarlosPaz.tipo = 'creador';
     muniCarlosPaz.cuit = '30-10000001-0';
     muniCarlosPaz.gmail = 'muni.carlospaz@gmail.com';
-    muniCarlosPaz.password = '123';
+    muniCarlosPaz.password = '123456';
     muniCarlosPaz.localidad = l7;
     await em.persistAndFlush(muniCarlosPaz);
 
@@ -381,7 +381,7 @@ async function main()
     muniVillaMaria.tipo = 'creador';
     muniVillaMaria.cuit = '30-10000002-0';
     muniVillaMaria.gmail = 'muni.villamaria@gmail.com';
-    muniVillaMaria.password = '123';
+    muniVillaMaria.password = '123456';
     muniVillaMaria.localidad = l8;
     await em.persistAndFlush(muniVillaMaria);
 
@@ -390,7 +390,7 @@ async function main()
     muniGodoyCruz.tipo = 'creador';
     muniGodoyCruz.cuit = '30-10000003-0';
     muniGodoyCruz.gmail = 'muni.godoycruz@gmail.com';
-    muniGodoyCruz.password = '123';
+    muniGodoyCruz.password = '123456';
     muniGodoyCruz.localidad = l9;
     await em.persistAndFlush(muniGodoyCruz);
 
@@ -399,7 +399,7 @@ async function main()
     muniSanRafael.tipo = 'creador';
     muniSanRafael.cuit = '30-10000004-0';
     muniSanRafael.gmail = 'muni.sanrafael@gmail.com';
-    muniSanRafael.password = '123';
+    muniSanRafael.password = '123456';
     muniSanRafael.localidad = l10;
     await em.persistAndFlush(muniSanRafael);
 
@@ -408,7 +408,7 @@ async function main()
     muniRioGrande.tipo = 'creador';
     muniRioGrande.cuit = '30-10000005-0';
     muniRioGrande.gmail = 'muni.riogrande@gmail.com';
-    muniRioGrande.password = '123';
+    muniRioGrande.password = '123456';
     muniRioGrande.localidad = l11;
     await em.persistAndFlush(muniRioGrande);
 
@@ -417,7 +417,7 @@ async function main()
     muniTolhuin.tipo = 'creador';
     muniTolhuin.cuit = '30-10000006-0';
     muniTolhuin.gmail = 'muni.tolhuin@gmail.com';
-    muniTolhuin.password = '123';
+    muniTolhuin.password = '123456';
     muniTolhuin.localidad = l12;
     await em.persistAndFlush(muniTolhuin);
 
