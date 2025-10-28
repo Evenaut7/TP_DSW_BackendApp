@@ -26,7 +26,7 @@ export class Localidad extends BaseEntity {
   @Property({ nullable: true, type: 'string' })
   imagen?: string;
 
-  @Property({ nullable: true, unique: false, type: 'string' })
+  @Property({ nullable: false, unique: false, type: 'string' })
   descripcion!: string;
 
   @ManyToOne(() => Provincia, { nullable: false })
