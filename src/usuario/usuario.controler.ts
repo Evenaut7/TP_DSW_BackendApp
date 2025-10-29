@@ -74,20 +74,6 @@ export class UsuarioController {
           .json({ message: 'Usuario with this nombre already exists' });
         return;
       }
-      // const existingCUIT = await em.findOne(Usuario, { cuit });
-      // if (existingCUIT) {
-      //     res.status(409).json({ message: 'Usuario with this CUIT already exists' });
-      //     return;
-      // }
-
-      // Validar existencia de localidad (aceptamos id numérico o string)
-      // const locId = Number(localidad);
-      // const localidadEntity = await em.findOne(Localidad, isNaN(locId) ? { id: localidad } : locId);
-      // if (!localidadEntity) {
-      //     res.status(400).json({ message: 'Localidad not found' });
-      //     return;
-      // }
-
       // Hasheo de Contraseña
       const hashedPassword = await bcrypt.hashSync(password, 10);
       //const ok = await bcrypt.compare(password, hashedPassword);
@@ -166,6 +152,32 @@ export class UsuarioController {
   update = async (req: Request, res: Response) => {
     try {
       const id = Number.parseInt(req.params.id);
+      const { nombre, gmail, cuit } = req.body;
+
+      // Unicidad de gmail y nombre y CUIT
+
+      const existingGmail = await em.findOne(Usuario, { gmail });
+      if (existingGmail && existingGmail.id !== id) {
+        res
+          .status(409)
+          .json({ message: 'Usuario with this gmail already exists' });
+        return;
+      }
+      const existingNombre = await em.findOne(Usuario, { nombre });
+      if (existingNombre && existingNombre.id !== id) {
+        res
+          .status(409)
+          .json({ message: 'Usuario with this nombre already exists' });
+        return;
+      }
+      const existingCUIT = await em.findOne(Usuario, { cuit });
+      if (existingCUIT && existingCUIT.id !== id) {
+        res
+          .status(409)
+          .json({ message: 'Usuario with this CUIT already exists' });
+        return;
+      }
+
       const usuario = await em.findOneOrFail(Usuario, id);
       em.assign(usuario, req.body);
       await em.flush();
