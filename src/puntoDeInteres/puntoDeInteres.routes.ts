@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado, addToFavoritos, sacarDeFavoritos, esFavorito} from './puntoDeInteres.controler.js'
+import { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado, addToFavoritos, sacarDeFavoritos, esFavorito, getFavoritos} from './puntoDeInteres.controler.js'
 import { puntoDeInteresSchema } from './puntoDeInteres.schema.js';
 import { schemaValidator } from "../shared/schemaValidator.js";
 import { sessionData } from '../shared/sessionData.js';
@@ -14,6 +14,9 @@ puntoDeInteresRouter.post('/filtro', filtro)
 
 // Retorna todos los PuntosDeInteres creados por el usuario que está logeado
 puntoDeInteresRouter.get('/usuarioPdis', sessionData, getAllFromUsuarioLogeado) 
+
+// Retorna todos los PuntosDeInteres marcados como favoritos por el usuario logeado
+puntoDeInteresRouter.get('/favoritos', sessionData, getFavoritos)
 
 // Toma un  pdi y lo agrega a favoritos
 puntoDeInteresRouter.post('/favorito', sessionData, addToFavoritos)

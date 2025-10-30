@@ -188,5 +188,29 @@ async function sacarDeFavoritos(req: Request, res: Response) {
   }
 }
 
+async function getFavoritos(req: Request, res: Response) {
+  try {
+    const usuarioId = req.user?.id;
 
-export { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado, addToFavoritos, sacarDeFavoritos, esFavorito };
+    if (!usuarioId) {
+      res.status(401).json({ message: "Usuario no autenticado" });
+      return;
+    }
+
+    const usuario = await em.findOneOrFail(
+      Usuario,
+      { id: usuarioId },
+      { populate: ['favoritos', 'favoritos.tags'] }
+    );
+
+    res.status(200).json({
+      message: "Puntos de interés favoritos del usuario",
+      data: usuario.favoritos.getItems(),
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+
+export { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado, addToFavoritos, sacarDeFavoritos, esFavorito, getFavoritos };
