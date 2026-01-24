@@ -1,17 +1,11 @@
 import { Response, Request } from 'express';
 import { orm } from '../shared/db/orm.js';
 import { Usuario } from './usuario.entity.js';
-import { Localidad } from '../localidad/localidad.entity.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-
-//falta el import { SALT_ROUNDS } from "../../.env.js" cuando este listo;
+import { config } from '../shared/config.js';
 
 const em = orm.em;
-
-const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || 'Un secreto super secreto que nos ayudara a poder implementar autenticacion en nuestro super proyecto! :D (Despues lo introducimos en variables de entorno)';
-const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'Un secreto super secreto para el refresco que nos ayudara a poder implementar autenticacion en nuestro super proyecto! :D (Despues lo introducimos en variables de entorno)';
-
 
 export class UsuarioController {
   findAll = async (req: Request, res: Response): Promise<void> => {
@@ -79,7 +73,7 @@ export class UsuarioController {
         return;
       }
       // Hasheo de Contraseña
-      const hashedPassword = await bcrypt.hashSync(password, 10);
+      const hashedPassword = await bcrypt.hashSync(password, config.jwt.saltRounds);
       //const ok = await bcrypt.compare(password, hashedPassword);
 
       const newUser = new Usuario();
@@ -130,13 +124,13 @@ export class UsuarioController {
 
       const accessToken = jwt.sign(
         { id: user.id, gmail: user.gmail, tipo: user.tipo },
-        ACCESS_SECRET,
+        config.jwt.accessSecret,
         { expiresIn: '15m' }
       );
 
       const refreshToken = jwt.sign(
         { id: user.id, gmail: user.gmail, tipo: user.tipo },
-        REFRESH_SECRET,
+        config.jwt.refreshSecret,
         { expiresIn: '7D' }
       );
 
@@ -173,12 +167,12 @@ export class UsuarioController {
 
       const decoded = jwt.verify(
         refreshToken,
-        REFRESH_SECRET
+        config.jwt.refreshSecret
       ) as jwt.JwtPayload;
 
       const newAccessToken = jwt.sign(
         { id: decoded.id, gmail: decoded.gmail, tipo: decoded.tipo },
-        ACCESS_SECRET,
+        config.jwt.accessSecret,
         { expiresIn: '15m' }
       );
 

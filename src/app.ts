@@ -4,6 +4,7 @@ import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import multer from 'multer'
 import path from 'path';
+import { config } from './shared/config.js'
 import { sessionData } from './shared/sessionData.js'
 import { tagRouter } from './tag/tag.routes.js'
 import { puntoDeInteresRouter } from './puntoDeInteres/puntoDeInteres.routes.js'
@@ -26,7 +27,7 @@ app.use(cookieParser())
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: config.cors.origin,
     credentials: true
   })
 );
@@ -55,6 +56,6 @@ app.use((_,res) => {
 
 await syncSchema()
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000/');
+app.listen(config.server.port, () => {
+  console.log(`Server is running on http://localhost:${config.server.port}/`);
 })
