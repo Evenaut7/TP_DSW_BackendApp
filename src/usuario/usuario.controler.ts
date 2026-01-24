@@ -9,6 +9,10 @@ import bcrypt from 'bcryptjs';
 
 const em = orm.em;
 
+const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || 'Un secreto super secreto que nos ayudara a poder implementar autenticacion en nuestro super proyecto! :D (Despues lo introducimos en variables de entorno)';
+const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'Un secreto super secreto para el refresco que nos ayudara a poder implementar autenticacion en nuestro super proyecto! :D (Despues lo introducimos en variables de entorno)';
+
+
 export class UsuarioController {
   findAll = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -98,6 +102,7 @@ export class UsuarioController {
   };
 
   login = async (req: Request, res: Response) => {
+
     try {
       const { gmail, password } = req.body;
       if (!gmail || !password) {
@@ -123,18 +128,30 @@ export class UsuarioController {
         gmail: user.gmail,
       };
 
-      const token = jwt.sign(
+      const accessToken = jwt.sign(
         { id: user.id, gmail: user.gmail, tipo: user.tipo },
-        'Un secreto super secreto que nos ayudara a poder implementar autenticacion en nuestro super proyecto! :D (Despues lo introducimos en variables de entorno)',
+        ACCESS_SECRET,
+        { expiresIn: '15m' }
+      );
+
+      const refreshToken = jwt.sign(
+        { id: user.id, gmail: user.gmail, tipo: user.tipo },
+        REFRESH_SECRET,
         { expiresIn: '7D' }
       );
 
       res
-        .cookie('access_token', token, {
+        .cookie('access_token', accessToken, {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
           sameSite: 'lax',
-          maxAge: 7 * 24 * 60 * 60 * 1000, // -> 7 dias
+          maxAge: 15 * 60 * 1000, // -> 15 minutos
+        })
+        .cookie('refresh_token', refreshToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
         })
         .status(200)
         .json({ message: 'Login successful', user: publicUser });
@@ -145,8 +162,48 @@ export class UsuarioController {
     }
   };
 
+  refreshToken = async (req: Request, res: Response) => {
+    try {
+      const refreshToken = req.cookies.refresh_token;
+
+      if (!refreshToken) {
+        res.status(401).json({ message: 'Refresh token required' });
+        return;
+      }
+
+      const decoded = jwt.verify(
+        refreshToken,
+        REFRESH_SECRET
+      ) as jwt.JwtPayload;
+
+      const newAccessToken = jwt.sign(
+        { id: decoded.id, gmail: decoded.gmail, tipo: decoded.tipo },
+        ACCESS_SECRET,
+        { expiresIn: '15m' }
+      );
+
+      res
+        .cookie('access_token', newAccessToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          maxAge: 15 * 60 * 1000, // -> 15 minutos
+        })
+        .status(200)
+        .json({ message: 'Token refreshed successfully' });
+    } catch (error: any) {
+      res
+        .status(500)
+        .json({ message: 'Error refreshing token', error: error.message });
+    }
+  };
+
   logout = async (req: Request, res: Response) => {
-    res.clearCookie('access_token').json({ message: 'Logout successful' });
+    res
+      .clearCookie('access_token')
+      .clearCookie('refresh_token')
+      .status(200)
+      .json({ message: 'Logout successful' });
   };
 
   update = async (req: Request, res: Response) => {

@@ -13,6 +13,7 @@ usuarioRouter.post('/login', usuarioController.login);
 usuarioRouter.post('/logout', usuarioController.logout);
 usuarioRouter.get('/is-admin', sessionData, usuarioController.isAdmin);
 usuarioRouter.get('/currentUser', sessionData, usuarioController.getCurrentUser);
+usuarioRouter.post('/refresh-token', usuarioController.refreshToken); // En desuso, se maneja automatico con cookies en sessionData.
 
 //CRUD BÁSICO
 usuarioRouter.get('/', usuarioController.findAll);
