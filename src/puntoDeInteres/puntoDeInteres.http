@@ -1,10 +1,5 @@
 ### Find All
-POST http://localhost:3000/api/puntosDeInteres/agreagarFavorito
-Content-Type: application/json
-
-{
-  "id": 5
-}
+GET http://localhost:3000/api/puntosDeInteres/
 
 ### Find One
 POST http://localhost:3000/api/puntosDeInteres/filtro

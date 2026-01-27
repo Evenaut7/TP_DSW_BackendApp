@@ -277,6 +277,25 @@ export class UsuarioController {
     }
   };
 
+  isCreator = async (req: Request, res: Response) => {
+    try {
+      if (!req.user || !req.user.tipo) {  
+        res.status(401).json({ message: 'Unauthorized' });
+        return;
+      }
+      const isCreator = req.user.tipo === 'creador';
+      isCreator
+        ? res.status(200).json({ message: 'User is creator', isCreator: true })
+        : res
+            .status(401)
+            .json({ message: 'User is not creator', isCreator: false });
+    } catch (error: any) {
+      res
+        .status(500)
+        .json({ message: 'Error checking creator status', error: error.message });
+    }
+  };
+
   getCurrentUser = async (req: Request, res: Response) => {
     try {
       if (!req.user || !req.user.id) {

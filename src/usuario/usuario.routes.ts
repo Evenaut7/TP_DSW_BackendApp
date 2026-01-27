@@ -12,8 +12,9 @@ usuarioRouter.post('/register', schemaValidator(usuarioSchema), usuarioControlle
 usuarioRouter.post('/login', usuarioController.login);
 usuarioRouter.post('/logout', usuarioController.logout);
 usuarioRouter.get('/is-admin', sessionData, usuarioController.isAdmin);
-usuarioRouter.get('/currentUser', sessionData, usuarioController.getCurrentUser);
-usuarioRouter.post('/refresh-token', usuarioController.refreshToken); // En desuso, se maneja automatico con cookies en sessionData.
+usuarioRouter.get('/is-creator', sessionData, usuarioController.isCreator);
+usuarioRouter.get('/currentUser', sessionData, usuarioController.getCurrentUser); // Esto nose si es correcto tenerlo en terminos de seguridad
+usuarioRouter.post('/refresh-token', usuarioController.refreshToken); // Por el momento en desuso, se maneja automatico con cookies en sessionData.
 
 //CRUD BÁSICO
 usuarioRouter.get('/', usuarioController.findAll);

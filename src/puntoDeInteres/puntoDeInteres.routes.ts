@@ -1,9 +1,12 @@
 import { Router } from 'express'
-import { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado, addToFavoritos, sacarDeFavoritos, esFavorito, getFavoritos} from './puntoDeInteres.controler.js'
+import { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado, addToFavoritos, sacarDeFavoritos, esFavorito, getFavoritos } from './puntoDeInteres.controler.js'
 import { puntoDeInteresSchema } from './puntoDeInteres.schema.js';
 import { schemaValidator } from "../shared/schemaValidator.js";
 import { sessionData } from '../shared/sessionData.js';
 import { adminValidator } from '../shared/adminValidator.js';
+import { creatorValidator } from '../shared/creatorValidator.js';
+import { adminOrCreatorValidator } from '../shared/adminOrCreatorValidator.js';
+import { adminOrPdiOwnerValidator } from '../shared/adminOrPdiOwnerValidator.js';
 
 export const puntoDeInteresRouter = Router()
 
@@ -13,7 +16,7 @@ export const puntoDeInteresRouter = Router()
 puntoDeInteresRouter.post('/filtro', filtro)
 
 // Retorna todos los PuntosDeInteres creados por el usuario que está logeado
-puntoDeInteresRouter.get('/usuarioPdis', sessionData, getAllFromUsuarioLogeado) 
+puntoDeInteresRouter.get('/usuarioPdis', sessionData, creatorValidator, getAllFromUsuarioLogeado) 
 
 // Retorna todos los PuntosDeInteres marcados como favoritos por el usuario logeado
 puntoDeInteresRouter.get('/favoritos', sessionData, getFavoritos)
@@ -28,11 +31,12 @@ puntoDeInteresRouter.get('/favorito/:id', sessionData, esFavorito)
 //CRUD BÁSICO
 puntoDeInteresRouter.get('/', findAll)
 puntoDeInteresRouter.get('/:id', findOne)
-// Rutas Protegidas - Admin 
-puntoDeInteresRouter.use('/', sessionData, adminValidator); // Por ahora solo validamos que sea admin, pero deberemos validar que sea admin o dueño del pdi
-puntoDeInteresRouter.post('/', schemaValidator(puntoDeInteresSchema), add)
-puntoDeInteresRouter.put('/:id', update)
-puntoDeInteresRouter.delete('/:id', remove)
+// Rutas Protegidas - Admin o Creador
+puntoDeInteresRouter.post('/', sessionData, adminOrCreatorValidator, schemaValidator(puntoDeInteresSchema), add)
+// Rutas Protegidas - Solo Admin o Dueño del PDI (Validado en Controlador)
+puntoDeInteresRouter.get('/canEdit/:id', sessionData, adminOrPdiOwnerValidator, findOne) // Reutilizo findOne para chequear permisos de edicion
+puntoDeInteresRouter.put('/:id', sessionData, adminOrPdiOwnerValidator, update)
+puntoDeInteresRouter.delete('/:id', sessionData, adminOrPdiOwnerValidator, remove)
 
 
 
