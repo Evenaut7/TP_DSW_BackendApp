@@ -203,7 +203,7 @@ export class UsuarioController {
   update = async (req: Request, res: Response) => {
     try {
       const id = Number.parseInt(req.params.id);
-      const { nombre, gmail, cuit } = req.body;
+      const { nombre, gmail, cuit, password } = req.body;
 
       // Unicidad de gmail y nombre y CUIT
 
@@ -222,11 +222,15 @@ export class UsuarioController {
         return;
       }
       const existingCUIT = await em.findOne(Usuario, { cuit });
-      if (existingCUIT && existingCUIT.id !== id) {
+      if (existingCUIT && existingCUIT.id !== id && cuit) {
         res
           .status(409)
           .json({ message: 'Usuario with this CUIT already exists' });
         return;
+      }
+
+      if (password) {
+        req.body.password = await bcrypt.hashSync(password, config.jwt.saltRounds);
       }
 
       const usuario = await em.findOneOrFail(Usuario, id);

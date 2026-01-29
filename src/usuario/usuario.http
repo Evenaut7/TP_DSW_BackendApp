@@ -52,12 +52,12 @@ Content-Type: application/json
 
 
 ###POST
-PUT http://localhost:3000/api/usuarios/27
+PUT http://localhost:3000/api/usuarios/31
 Content-Type: application/json
 
 {
-  "id": 27,
-  "puntosDeInteres" : [20]
+  "nombre": "Satur2 Modificado",
+  "password": "nuevaclave123"
 }
 
 ### register
@@ -78,6 +78,6 @@ POST http://localhost:3000/api/usuarios/login
 Content-Type: application/json
 
 {
-    "gmail": "administrador@gmail.com",
-    "password": "123"
+    "gmail": "satur2@gmail.com",
+    "password": "nuevaclave123"
 }
