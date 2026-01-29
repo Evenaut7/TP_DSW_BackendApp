@@ -6,3 +6,7 @@ export const tagSchema = z.object({
     tipo: z.string().min(1, { message: "El tipo no puede estar vacío" }),
   })
 });
+
+export const tagUpdateSchema = z.object({
+  body: tagSchema.shape.body.partial()
+});

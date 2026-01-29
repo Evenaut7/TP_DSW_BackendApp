@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { UsuarioController } from './usuario.controler.js';
 import { schemaValidator } from '../shared/schemaValidator.js';
-import { usuarioSchema } from './usuario.schema.js';
+import { usuarioSchema, usuarioUpdateSchema } from './usuario.schema.js';
 import { sessionData } from '../shared/sessionData.js';
 
 export const usuarioRouter = Router();
@@ -20,4 +20,4 @@ usuarioRouter.post('/refresh-token', usuarioController.refreshToken); // Por el 
 usuarioRouter.get('/', usuarioController.findAll);
 usuarioRouter.get('/:id', usuarioController.findOne);
 usuarioRouter.delete('/:id', usuarioController.delete);
-usuarioRouter.put('/:id', usuarioController.update);
+usuarioRouter.put('/:id', schemaValidator(usuarioUpdateSchema), usuarioController.update);

@@ -11,3 +11,7 @@ export const usuarioSchema = z.object({
     imagen: z.string().min(1, {message: "imagen no puede estar vacío"}).max(255, {message: "imagen no puede superar los 255 caracteres"}).optional(),
   })
 });
+
+export const usuarioUpdateSchema = z.object({
+  body: usuarioSchema.shape.body.partial()
+});

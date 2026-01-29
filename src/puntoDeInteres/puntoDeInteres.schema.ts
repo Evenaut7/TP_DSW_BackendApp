@@ -13,3 +13,7 @@ export const puntoDeInteresSchema = z.object({
     imagen: z.string().min(1, {message: "imagen no puede estar vacío"}).max(255, {message: "imagen no puede superar los 255 caracteres"}),
   })
 });
+
+export const puntoDeInteresUpdateSchema = z.object({
+  body: puntoDeInteresSchema.shape.body.partial()
+});

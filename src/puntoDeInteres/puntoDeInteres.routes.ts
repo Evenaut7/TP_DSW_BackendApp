@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado, addToFavoritos, sacarDeFavoritos, esFavorito, getFavoritos } from './puntoDeInteres.controler.js'
-import { puntoDeInteresSchema } from './puntoDeInteres.schema.js';
+import { puntoDeInteresSchema, puntoDeInteresUpdateSchema } from './puntoDeInteres.schema.js';
 import { schemaValidator } from "../shared/schemaValidator.js";
 import { sessionData } from '../shared/sessionData.js';
 import { adminValidator } from '../shared/adminValidator.js';
@@ -35,7 +35,7 @@ puntoDeInteresRouter.get('/:id', findOne)
 puntoDeInteresRouter.post('/', sessionData, adminOrCreatorValidator, schemaValidator(puntoDeInteresSchema), add)
 // Rutas Protegidas - Solo Admin o Dueño del PDI (Validado en Controlador)
 puntoDeInteresRouter.get('/canEdit/:id', sessionData, adminOrPdiOwnerValidator, findOne) // Reutilizo findOne para chequear permisos de edicion
-puntoDeInteresRouter.put('/:id', sessionData, adminOrPdiOwnerValidator, update)
+puntoDeInteresRouter.put('/:id', sessionData, adminOrPdiOwnerValidator, schemaValidator(puntoDeInteresUpdateSchema), update)
 puntoDeInteresRouter.delete('/:id', sessionData, adminOrPdiOwnerValidator, remove)
 
 

@@ -6,3 +6,7 @@ export const provinciaSchema = z.object({
     localidades: z.array(z.number({message: "cada localidad debe ser un número"}).int({message: "cada localidad debe ser un número entero"}).positive({message: "cada localidad debe ser un número positivo"})).optional(),
   })
 });
+
+export const provinciaUpdateSchema = z.object({
+  body: provinciaSchema.shape.body.partial()
+});

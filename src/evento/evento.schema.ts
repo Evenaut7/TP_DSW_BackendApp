@@ -12,3 +12,7 @@ export const eventoSchema = z.object({
     usuario: z.number().positive({message: "El id del usuario debe ser un numero positivo"}).optional()
   })
 });
+
+export const eventoUpdateSchema = z.object({
+  body: eventoSchema.shape.body.partial()
+});
