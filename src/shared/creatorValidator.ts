@@ -7,7 +7,7 @@ export const creatorValidator = async (
 ) => {
   try {
     if (!req.user || req.user.tipo !== 'creador') {
-      res.status(401).json({ message: 'Unauthorized' });
+      res.status(403).json({ message: 'Unauthorized' });
       return;
     }
   } catch (error: any) {

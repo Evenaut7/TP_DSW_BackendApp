@@ -7,7 +7,7 @@ export const adminValidator = async (
 ) => {
   try {
     if (!req.user || req.user.tipo !== 'admin') {
-      res.status(401).json({ message: 'Unauthorized' });
+      res.status(403).json({ message: 'Unauthorized' });
       return;
     }
   } catch (error: any) {

@@ -4,15 +4,16 @@ import { schemaValidator } from '../shared/schemaValidator.js'
 import { eventoSchema } from './evento.schema.js'
 import { sessionData } from '../shared/sessionData.js'
 import { adminValidator } from '../shared/adminValidator.js'
+import { adminOrEventoOwnerValidator } from '../shared/adminOrEventOwnerValidator.js'
 
 export const eventoRouter = Router()
 
 //CRUD BÁSICO
 eventoRouter.get('/', findAll)
 eventoRouter.get('/:id', findOne)
+
 // Rutas Protegidas - Admin
-eventoRouter.use('/', sessionData, adminValidator); // Por ahora solo validamos que sea admin, pero deberemos validar que sea admin o dueño del evento
-eventoRouter.post('/', schemaValidator(eventoSchema), add)
-eventoRouter.put('/:id', update)
-eventoRouter.patch('/:id', update)
-eventoRouter.delete('/:id', remove)
+eventoRouter.post('/', sessionData, schemaValidator(eventoSchema), add) // El control de permisos se hace en el controlador
+eventoRouter.put('/:id', sessionData, adminOrEventoOwnerValidator, update)
+eventoRouter.patch('/:id', sessionData, adminOrEventoOwnerValidator, update)
+eventoRouter.delete('/:id', sessionData, adminOrEventoOwnerValidator, remove)

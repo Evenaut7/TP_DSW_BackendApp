@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 export const adminOrCreatorValidator = async (req: Request, res: Response, next: NextFunction) => {
   try {
     if (!req.user || (req.user.tipo !== 'creador' && req.user.tipo !== 'admin')) {
-      res.status(401).json({ message: 'Unauthorized' });
+      res.status(403).json({ message: 'Unauthorized' });
       return;
     }
   } catch (error: any) {
