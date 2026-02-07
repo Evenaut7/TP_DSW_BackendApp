@@ -1,8 +1,9 @@
 import { Response, Request, NextFunction } from "express";
 import { Localidad } from "./localidad.entity.js";
 import { orm } from "../shared/db/orm.js";
+import { EntityManager } from "@mikro-orm/mysql";
 
-const em = orm.em;
+const em = orm.em as EntityManager;
 
 export class LocalidadController {
     findAll = async (req :Request, res : Response) => {
@@ -56,6 +57,23 @@ export class LocalidadController {
             res.status(200).json({message: 'Localidad deleted successfully'});
         } catch (error: any) {
             res.status(500).json({message: 'Error deleting localidad', error:error.message});
+        }
+    }
+    
+    findByFiltro = async (req: Request, res: Response) => {
+        try {
+            
+            const {provincia, busqueda} = req.body;
+            
+            const localidadesFiltradas = await em.createQueryBuilder(Localidad, 'l')
+                .where({ provincia: provincia })
+                .andWhere({nombre : { $like: `%${busqueda}%` }})
+                .getResultList();
+
+            res.status(200).json({ message: 'Localidades filtered by province and name', data: localidadesFiltradas });
+
+        } catch (error: any) {
+            res.status(500).json({ message: 'Error fetching localidades by province', error: error.message });
         }
     }
 

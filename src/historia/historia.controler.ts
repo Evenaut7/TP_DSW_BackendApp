@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Historia } from "./historia.entity.js";
 import { orm } from "../shared/db/orm.js";  
+import { PuntoDeInteres } from '../puntoDeInteres/puntoDeInteres.entity.js'
 
 const em = orm.em;  
 
@@ -26,6 +27,16 @@ export class HistoriaControler {
 
     add = async (req: Request, res: Response) => {
         try {
+            const pdi = await em.findOneOrFail(PuntoDeInteres, { id: req.body.puntoDeInteres })
+            const owner = pdi.usuario
+            if (!owner) {
+                res.status(400).json({ message: 'El Punto De Interes no tiene un dueño asignado' })
+                return
+            }
+            if (owner.id !== req.user?.id && req.user?.tipo !== 'admin') {
+                res.status(403).json({ message: 'No autorizado: debe ser dueño del PDI o admin para crear un evento' })
+                return
+            }
             const newHistoria = em.create(Historia, req.body);
             await em.flush();
             res.status(201).json({ message: 'Historia added successfully', data: newHistoria });

@@ -7,8 +7,8 @@ Content-Type: application/json
 
 {
   "localidad" : 3,
-  "busqueda" : "Parque",
-  "tags" : [10]
+  "busqueda" : "",
+  "tags" : [8, 9, 10]
 }
 
 ### Add

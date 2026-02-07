@@ -57,21 +57,6 @@ export class UsuarioController {
     try {
       const { nombre, tipo, gmail, password } = req.body;
 
-      // Unicidad de gmail y nombre y CUIT
-      const existingGmail = await em.findOne(Usuario, { gmail });
-      if (existingGmail) {
-        res
-          .status(409)
-          .json({ message: 'Usuario with this gmail already exists' });
-        return;
-      }
-      const existingNombre = await em.findOne(Usuario, { nombre });
-      if (existingNombre) {
-        res
-          .status(409)
-          .json({ message: 'Usuario with this nombre already exists' });
-        return;
-      }
       // Hasheo de Contraseña
       const hashedPassword = await bcrypt.hashSync(password, config.jwt.saltRounds);
       //const ok = await bcrypt.compare(password, hashedPassword);
@@ -203,31 +188,7 @@ export class UsuarioController {
   update = async (req: Request, res: Response) => {
     try {
       const id = Number.parseInt(req.params.id);
-      const { nombre, gmail, cuit, password } = req.body;
-
-      // Unicidad de gmail y nombre y CUIT
-
-      const existingGmail = await em.findOne(Usuario, { gmail });
-      if (existingGmail && existingGmail.id !== id) {
-        res
-          .status(409)
-          .json({ message: 'Usuario with this gmail already exists' });
-        return;
-      }
-      const existingNombre = await em.findOne(Usuario, { nombre });
-      if (existingNombre && existingNombre.id !== id) {
-        res
-          .status(409)
-          .json({ message: 'Usuario with this nombre already exists' });
-        return;
-      }
-      const existingCUIT = await em.findOne(Usuario, { cuit });
-      if (existingCUIT && existingCUIT.id !== id && cuit) {
-        res
-          .status(409)
-          .json({ message: 'Usuario with this CUIT already exists' });
-        return;
-      }
+      const { password } = req.body;
 
       if (password) {
         req.body.password = await bcrypt.hashSync(password, config.jwt.saltRounds);

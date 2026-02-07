@@ -12,7 +12,7 @@ export const eventoRouter = Router()
 eventoRouter.get('/', findAll)
 eventoRouter.get('/:id', findOne)
 
-// Rutas Protegidas - Admin
+// Rutas Protegidas
 eventoRouter.post('/', sessionData, schemaValidator(eventoSchema), add) // El control de permisos se hace en el controlador
 eventoRouter.put('/:id', sessionData, adminOrEventoOwnerValidator, schemaValidator(eventoUpdateSchema), update)
 eventoRouter.patch('/:id', sessionData, adminOrEventoOwnerValidator, schemaValidator(eventoUpdateSchema), update)

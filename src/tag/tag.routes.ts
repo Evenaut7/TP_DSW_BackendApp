@@ -11,8 +11,7 @@ export const tagRouter = Router();
 tagRouter.get('/', findAll);
 tagRouter.get('/:id', findOne);
 // Rutas Protegidas - Solo Admin
-tagRouter.use('/', sessionData, adminValidator);
-tagRouter.post('/', schemaValidator(tagSchema), add);
-tagRouter.put('/:id', schemaValidator(tagUpdateSchema), update);
-tagRouter.patch('/:id', schemaValidator(tagUpdateSchema), update);
-tagRouter.delete('/:id', remove);
+tagRouter.post('/',sessionData, adminValidator, schemaValidator(tagSchema), add);
+tagRouter.put('/:id', sessionData, adminValidator, schemaValidator(tagUpdateSchema), update);
+tagRouter.patch('/:id', sessionData, adminValidator, schemaValidator(tagUpdateSchema), update);
+tagRouter.delete('/:id', sessionData, adminValidator, remove);

@@ -2,10 +2,7 @@ import 'reflect-metadata'
 import cookieParser from 'cookie-parser';
 import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
-import multer from 'multer'
-import path from 'path';
 import { config } from './shared/config.js'
-import { sessionData } from './shared/sessionData.js'
 import { tagRouter } from './tag/tag.routes.js'
 import { puntoDeInteresRouter } from './puntoDeInteres/puntoDeInteres.routes.js'
 import { orm, syncSchema } from './shared/db/orm.js'

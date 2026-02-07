@@ -11,6 +11,7 @@ export const localidadController = new LocalidadController();
 // CRUD Basico
 localidadRouter.get('/', localidadController.findAll);
 localidadRouter.get('/:id', localidadController.findOne);
+localidadRouter.post('/filtro', localidadController.findByFiltro); // Filtrado por provincia y busqueda
 
 // Rutas Protegidas - Solo Admin
 localidadRouter.use('/', sessionData, adminValidator);

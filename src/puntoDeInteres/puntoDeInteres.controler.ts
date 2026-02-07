@@ -2,8 +2,9 @@ import { Request, Response } from 'express'
 import { orm } from '../shared/db/orm.js'
 import { PuntoDeInteres} from './puntoDeInteres.entity.js'
 import { Usuario } from '../usuario/usuario.entity.js'
+import { EntityManager } from '@mikro-orm/mysql'
 
-const em = orm.em
+const em = orm.em as EntityManager
 
 //Faltaria crear una sanitizeInput
 
@@ -69,16 +70,32 @@ async function filtro(req: Request, res: Response) {
 
     const {localidad, tags, busqueda} = req.body;
 
-    const puntosDeInteres = await em.find(PuntoDeInteres, {
-      localidad,
-      ...(busqueda ? { nombre: { $like: `%${busqueda}%` } } : {})
-    }, { populate: ['eventos', 'tags'] });
+    if (!tags || tags.length === 0) {
+      const puntosFiltrados = await em.createQueryBuilder(PuntoDeInteres, 'pdi')
+        .select('pdi.*')
+        .leftJoinAndSelect('pdi.tags', 'tag')
+        .where({ localidad: localidad })
+        .andWhere({ nombre: { $like: `%${busqueda}%` } })
+        .getResultList()
 
-    // No es lo mas eficiente, pero funciona para pocos datos. No puede hacer andar el Query builder de MikroORM
-    const puntosFiltrados = puntosDeInteres.filter(pdi =>
-      tags.every((tagId: Number) => pdi.tags.getItems().some(tag => tag.id === tagId)));
+      res.status(200).json({ message: 'Filtered Puntos De Interes', data: puntosFiltrados });
+      return;
+    }
+  
+    const puntosFiltrados = await em.createQueryBuilder(PuntoDeInteres, 'pdi')
+      .select('pdi.*')
+      .leftJoin('pdi.tags', 'tag')
+      .where({ 'pdi.localidad': localidad })
+      .andWhere({ 'pdi.nombre': { $like: `%${busqueda}%` } })
+      .andWhere({ 'tag.id': { $in: tags } })
+      .groupBy('pdi.id')
+      .having(`COUNT(DISTINCT tag.id) = ${tags.length}`) 
+      .getResultList()
+
+    await em.populate(puntosFiltrados, ['tags'])
 
     res.status(200).json({ message: 'Filtered Puntos De Interes', data: puntosFiltrados });
+    return;
 
   } catch (error: any) {
     res.status(500).json({message: error.message})

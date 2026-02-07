@@ -2,7 +2,13 @@
 GET http://localhost:3000/api/localidades
 
 ###GET ONE
-GET http://localhost:3000/api/localidades/1
+POST http://localhost:3000/api/localidades/filtro
+Content-Type: application/json
+
+{
+    "provincia": 4,
+    "busqueda": "San"
+}
 
 ###POST
 POST http://localhost:3000/api/localidades
