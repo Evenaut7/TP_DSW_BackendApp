@@ -14,7 +14,6 @@ localidadRouter.get('/:id', localidadController.findOne);
 localidadRouter.post('/filtro', localidadController.findByFiltro); // Filtrado por provincia y busqueda
 
 // Rutas Protegidas - Solo Admin
-localidadRouter.use('/', sessionData, adminValidator);
-localidadRouter.post('/', schemaValidator(localidadSchema), localidadController.add);
-localidadRouter.put('/:id', schemaValidator(localidadUpdateSchema), localidadController.update);
-localidadRouter.delete('/:id', localidadController.delete);
+localidadRouter.post('/', sessionData, adminValidator, schemaValidator(localidadSchema), localidadController.add);
+localidadRouter.put('/:id', sessionData, adminValidator, schemaValidator(localidadUpdateSchema), localidadController.update);
+localidadRouter.delete('/:id', sessionData, adminValidator, localidadController.delete);

@@ -11,8 +11,8 @@ const provinciaController = new ProvinciaController();
 // CRUD BÁSICO
 provinciaRouter.get('/', provinciaController.findAll);
 provinciaRouter.get('/:id', provinciaController.findOne);
+
 // Rutas Protegidas - Solo para admin
-provinciaRouter.use('/', sessionData, adminValidator);
-provinciaRouter.post('/',schemaValidator(provinciaSchema),provinciaController.add);
-provinciaRouter.put('/:id', schemaValidator(provinciaUpdateSchema), provinciaController.update);
-provinciaRouter.delete('/:id', provinciaController.delete);
+provinciaRouter.post('/', sessionData, adminValidator, schemaValidator(provinciaSchema), provinciaController.add);
+provinciaRouter.put('/:id', sessionData, adminValidator, schemaValidator(provinciaUpdateSchema), provinciaController.update);
+provinciaRouter.delete('/:id', sessionData, adminValidator, provinciaController.delete);

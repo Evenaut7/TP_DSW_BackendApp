@@ -4,6 +4,7 @@ import { schemaValidator } from "../shared/schemaValidator.js";
 import { historiaSchema, historiaUpdateSchema } from "./historia.schema.js";
 import { adminOrHistoriaOwnerValidator } from "../shared/adminOrHistoriaOwnerValidator.js";
 import { adminOrCreatorValidator } from "../shared/adminOrCreatorValidator.js";
+import { sessionData } from "../shared/sessionData.js";
 
 export const historiaRouter = Router();
 const historiaControler = new HistoriaControler();  
@@ -13,7 +14,8 @@ historiaRouter.get('/', historiaControler.findAll);
 historiaRouter.get('/:id', historiaControler.findOne);
 
 // Rutas Protegidas
-historiaRouter.get('/:id', adminOrHistoriaOwnerValidator, schemaValidator(historiaSchema), historiaControler.findOne);
-historiaRouter.post('/', adminOrCreatorValidator, schemaValidator(historiaSchema), historiaControler.add);
-historiaRouter.put('/:id', adminOrHistoriaOwnerValidator, schemaValidator(historiaUpdateSchema), historiaControler.update); 
-historiaRouter.delete('/:id', adminOrHistoriaOwnerValidator, historiaControler.delete);
+historiaRouter.get('/:id', sessionData, adminOrHistoriaOwnerValidator, schemaValidator(historiaSchema), historiaControler.findOne);
+historiaRouter.post('/', sessionData, adminOrCreatorValidator, schemaValidator(historiaSchema), historiaControler.add);
+historiaRouter.get('/canEdit/:id', sessionData, adminOrHistoriaOwnerValidator, historiaControler.findOne)
+historiaRouter.put('/:id', sessionData, adminOrHistoriaOwnerValidator, schemaValidator(historiaUpdateSchema), historiaControler.update); 
+historiaRouter.delete('/:id', sessionData, adminOrHistoriaOwnerValidator, historiaControler.delete);

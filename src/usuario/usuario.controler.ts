@@ -4,6 +4,7 @@ import { Usuario } from './usuario.entity.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { config } from '../shared/config.js';
+import { PuntoDeInteres } from '../puntoDeInteres/puntoDeInteres.entity.js';
 
 const em = orm.em;
 
@@ -284,4 +285,28 @@ export class UsuarioController {
         .json({ message: 'Error fetching current user', error: error.message });
     }
   };
+
+  isPdiOwner = async (req: Request, res: Response) => {
+    try {
+      if (!req.user || !req.user.tipo) {
+        res.status(401).json({ message: 'Unauthorized' });
+        return;
+      }
+
+      const id = Number.parseInt(req.params.id)
+      const pdi = await em.findOneOrFail(PuntoDeInteres, { id }, { populate: ['usuario'] })
+
+      const isOwner= req.user.id === pdi.usuario.id;
+      isOwner
+        ? res.status(200).json({ message: 'User is owner of PDI', isOwner: true })
+        : res
+            .status(401)
+            .json({ message: 'User is not owner of PDI', isOwner: false });
+    } catch (error: any) {
+      res
+        .status(500)
+        .json({ message: 'Error checking admin status', error: error.message });
+    }
+  };
+
 }
