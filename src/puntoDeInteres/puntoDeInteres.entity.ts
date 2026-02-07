@@ -26,6 +26,12 @@ export class PuntoDeInteres extends BaseEntity {
   @Property({ nullable: false, unique: false, type: 'number' })
   altura!: Number
 
+  @Property({ nullable: true, type: DecimalType, columnType: 'double' })
+  lat?: number
+
+  @Property({ nullable: true, type: DecimalType, columnType: 'double' })
+  lng?: number
+
   @Property({ nullable: false, unique: false, type: 'boolean' })
   privado!: boolean
 

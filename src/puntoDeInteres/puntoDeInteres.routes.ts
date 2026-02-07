@@ -1,12 +1,12 @@
 import { Router } from 'express'
 import { findAll, findOne, add, update, remove, filtro, getAllFromUsuarioLogeado, addToFavoritos, sacarDeFavoritos, esFavorito, getFavoritos } from './puntoDeInteres.controler.js'
 import { puntoDeInteresSchema, puntoDeInteresUpdateSchema } from './puntoDeInteres.schema.js';
-import { schemaValidator } from "../shared/schemaValidator.js";
-import { sessionData } from '../shared/sessionData.js';
-import { adminValidator } from '../shared/adminValidator.js';
-import { creatorValidator } from '../shared/creatorValidator.js';
-import { adminOrCreatorValidator } from '../shared/adminOrCreatorValidator.js';
-import { adminOrPdiOwnerValidator } from '../shared/adminOrPdiOwnerValidator.js';
+import { schemaValidator } from "../shared/middleware/schemaValidator.js";
+import { sessionData } from '../shared/middleware/sessionData.js';
+import { adminValidator } from '../shared/middleware/adminValidator.js';
+import { creatorValidator } from '../shared/middleware/creatorValidator.js';
+import { adminOrCreatorValidator } from '../shared/middleware/adminOrCreatorValidator.js';
+import { adminOrPdiOwnerValidator } from '../shared/middleware/adminOrPdiOwnerValidator.js';
 
 export const puntoDeInteresRouter = Router()
 

@@ -1,8 +1,8 @@
 import { ValoracionController } from "./valoracion.controler.js";
 import { Router } from "express";   
-import { sessionData } from "../shared/sessionData.js";
-import { adminOrValorationOwnerValidator } from "../shared/adminOrValorationOwnerValidator.js";
-import { schemaValidator } from "../shared/schemaValidator.js";
+import { sessionData } from "../shared/middleware/sessionData.js";
+import { adminOrValorationOwnerValidator } from "../shared/middleware/adminOrValorationOwnerValidator.js";
+import { schemaValidator } from "../shared/middleware/schemaValidator.js";
 import { valoracionSchema, valoracionUpdateSchema } from "./valoracion.schema.js";
 
 export const valoracionRouter = Router();

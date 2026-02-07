@@ -6,6 +6,8 @@ export const puntoDeInteresSchema = z.object({
     descripcion: z.string().min(1, {message: "descripcion no puede estar vacío"}).max(1024, {message: "descripcion no puede superar los 1024 caracteres"}),
     calle: z.string().min(1, {message: "calle no puede estar vacío"}).max(255, {message: "calle no puede superar los 255 caracteres"}),
     altura: z.number({message: "altura debe ser un número"}).int({message: "altura debe ser un número entero"}).positive({message: "altura debe ser un número positivo"}),
+    lat: z.number({message: "lat debe ser un número"}).refine((val) => val >= -90 && val <= 90, { message: "lat debe estar entre -90 y 90" }).optional(),
+    lng: z.number({message: "lng debe ser un número"}).refine((val) => val >= -180 && val <= 180, { message: "lng debe estar entre -180 y 180" }).optional(),
     privado: z.boolean({message: "privado es obligatorio"}),
     tags: z.array(z.number({message: "cada tag debe ser un número"}).int({message: "cada tag debe ser un número entero"}).positive({message: "cada tag debe ser un número positivo"})).optional(),
     localidad: z.number({message: "localidad es obligatorio"}).int({message: "localidad debe ser un número entero"}).positive({message: "localidad debe ser un número positivo"}),

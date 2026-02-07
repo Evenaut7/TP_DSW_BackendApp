@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { UsuarioController } from './usuario.controler.js';
-import { schemaValidator } from '../shared/schemaValidator.js';
+import { schemaValidator } from '../shared/middleware/schemaValidator.js';
 import { usuarioSchema, usuarioUpdateSchema } from './usuario.schema.js';
-import { sessionData } from '../shared/sessionData.js';
+import { sessionData } from '../shared/middleware/sessionData.js';
 
 export const usuarioRouter = Router();
 const usuarioController = new UsuarioController();

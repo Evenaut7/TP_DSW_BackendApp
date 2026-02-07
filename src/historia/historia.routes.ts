@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { HistoriaControler } from "./historia.controler.js";
-import { schemaValidator } from "../shared/schemaValidator.js";
+import { schemaValidator } from "../shared/middleware/schemaValidator.js";
 import { historiaSchema, historiaUpdateSchema } from "./historia.schema.js";
-import { adminOrHistoriaOwnerValidator } from "../shared/adminOrHistoriaOwnerValidator.js";
-import { adminOrCreatorValidator } from "../shared/adminOrCreatorValidator.js";
-import { sessionData } from "../shared/sessionData.js";
+import { adminOrHistoriaOwnerValidator } from "../shared/middleware/adminOrHistoriaOwnerValidator.js";
+import { adminOrCreatorValidator } from "../shared/middleware/adminOrCreatorValidator.js";
+import { sessionData } from "../shared/middleware/sessionData.js";
 
 export const historiaRouter = Router();
 const historiaControler = new HistoriaControler();  

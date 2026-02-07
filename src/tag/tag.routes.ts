@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { findAll, findOne, add, update, remove } from './tag.controler.js';
-import { schemaValidator } from '../shared/schemaValidator.js';
+import { schemaValidator } from '../shared/middleware/schemaValidator.js';
 import { tagSchema, tagUpdateSchema } from './tag.schema.js';
-import { adminValidator } from '../shared/adminValidator.js';
-import { sessionData } from '../shared/sessionData.js';
+import { adminValidator } from '../shared/middleware/adminValidator.js';
+import { sessionData } from '../shared/middleware/sessionData.js';
 
 export const tagRouter = Router();
 

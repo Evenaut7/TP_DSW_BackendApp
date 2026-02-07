@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { ProvinciaController } from './provincia.controller.js';
-import { schemaValidator } from '../shared/schemaValidator.js';
+import { schemaValidator } from '../shared/middleware/schemaValidator.js';
 import { provinciaSchema, provinciaUpdateSchema } from './provincia.schema.js';
-import { sessionData } from '../shared/sessionData.js';
-import { adminValidator } from '../shared/adminValidator.js';
+import { sessionData } from '../shared/middleware/sessionData.js';
+import { adminValidator } from '../shared/middleware/adminValidator.js';
 
 export const provinciaRouter = Router();
 const provinciaController = new ProvinciaController();

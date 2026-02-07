@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import {findAll, findOne, add, update, remove} from "./evento.controler.js"
-import { schemaValidator } from '../shared/schemaValidator.js'
+import { schemaValidator } from '../shared/middleware/schemaValidator.js'
 import { eventoSchema, eventoUpdateSchema } from './evento.schema.js'
-import { sessionData } from '../shared/sessionData.js'
-import { adminValidator } from '../shared/adminValidator.js'
-import { adminOrEventoOwnerValidator } from '../shared/adminOrEventOwnerValidator.js'
+import { sessionData } from '../shared/middleware/sessionData.js'
+import { adminValidator } from '../shared/middleware/adminValidator.js'
+import { adminOrEventoOwnerValidator } from '../shared/middleware/adminOrEventOwnerValidator.js'
 
 export const eventoRouter = Router()
 

@@ -10,7 +10,7 @@ const em = orm.em as EntityManager
 
 async function findAll(req: Request, res: Response) {
   try {
-    const puntosDeInteres = await em.find(PuntoDeInteres, {}, {populate: ['eventos', 'tags', 'valoraciones']})
+    const puntosDeInteres = await em.find(PuntoDeInteres, {}, {populate: ['localidad.nombre', 'eventos', 'tags', 'valoraciones']})
     res.status(200).json({message: 'Found all Puntos De Interes', data: puntosDeInteres})
   } 
   catch (error: any) {

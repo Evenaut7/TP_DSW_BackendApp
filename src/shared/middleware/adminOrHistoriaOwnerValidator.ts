@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import { orm } from './db/orm.js'
-import { Historia } from '../historia/historia.entity.js'
+import { orm } from '../db/orm.js'
+import { Historia } from '../../historia/historia.entity.js'
 
 const em = orm.em
 
