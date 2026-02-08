@@ -3,6 +3,7 @@ import { orm } from '../shared/db/orm.js'
 import { PuntoDeInteres} from './puntoDeInteres.entity.js'
 import { Usuario } from '../usuario/usuario.entity.js'
 import { EntityManager } from '@mikro-orm/mysql'
+import { wrap } from '@mikro-orm/core';
 
 const em = orm.em as EntityManager
 
@@ -32,7 +33,25 @@ async function add(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const findedPuntoDeInteres = await em.findOneOrFail(PuntoDeInteres, { id }, {populate: ['eventos', 'eventos.tags' , 'tags', 'valoraciones']})
+
+    const pdi = await em.findOneOrFail(
+      PuntoDeInteres,
+      { id },
+      { populate: ['eventos', 'eventos.tags', 'tags', 'valoraciones'] }
+    );
+
+    const promedioVal = await em
+      .createQueryBuilder(PuntoDeInteres, 'pdi')
+      .select('avg(valoracion.cant_estrellas) as promedio')
+      .leftJoin('pdi.valoraciones', 'valoracion')
+      .where({ id })
+      .execute('get');
+
+    const findedPuntoDeInteres = {
+      ...wrap(pdi).toObject(),
+      promedio: Number((promedioVal as any)?.promedio ?? 0),
+    };
+
     res.status(200).json({message: "Punto De Interes finded successfully", data: findedPuntoDeInteres})
   }
   catch (error: any) {

@@ -2,6 +2,9 @@
 GET http://localhost:3000/api/puntosDeInteres/
 
 ### Find One
+GET http://localhost:3000/api/puntosDeInteres/36
+
+### Find One
 POST http://localhost:3000/api/puntosDeInteres/filtro
 Content-Type: application/json
 
