@@ -18,16 +18,8 @@ async function findAll(req: Request, res: Response) {
 async function add(req: Request, res: Response) {
   try {
 
-    const pdi = await em.findOneOrFail(PuntoDeInteres, { id: req.body.puntoDeInteres })
-    const owner = pdi.usuario
-
-    if (!owner) {
-      res.status(400).json({ message: 'El Punto De Interes no tiene un dueño asignado' })
-      return
-    }
-
-    if (owner.id !== req.user?.id && req.user?.tipo !== 'admin') {
-      res.status(403).json({ message: 'No autorizado: debe ser dueño del PDI o admin para crear un evento' })
+    if(req.body.horaDesde >= req.body.horaHasta) {
+      res.status(400).json({message: 'El horario de inicio no puede ser superior al horario de finalización'})
       return
     }
 
@@ -55,6 +47,34 @@ async function update(req: Request, res: Response) {
   try {  
     const id = Number.parseInt(req.params.id)
     const eventoToUpdate = await em.findOneOrFail( Evento, id)
+    
+    const { horaDesde, horaHasta } = req.body;
+
+    if (horaDesde && horaHasta) {
+      if (horaDesde >= horaHasta) {
+        res.status(400).json({
+          message: 'El horario de inicio no puede ser superior o igual al horario de finalización'
+        });
+        return;
+      }
+    }
+    else if (horaDesde && !horaHasta) {
+      if (horaDesde >= eventoToUpdate.horaHasta) {
+        res.status(400).json({
+          message: 'El horario de inicio no puede ser superior o igual al horario de finalización'
+        });
+        return;
+      }
+    }
+    else if (!horaDesde && horaHasta) {
+      if (eventoToUpdate.horaDesde >= horaHasta) {
+        res.status(400).json({
+          message: 'El horario de inicio no puede ser superior o igual al horario de finalización'
+        });
+        return;
+      }
+    }
+
     em.assign(eventoToUpdate, req.body)
     await em.flush()
     res.status(200).json({message: 'Evento Updated successfully', data: eventoToUpdate})
