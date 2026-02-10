@@ -1,0 +1,10 @@
+{
+  "node-option": [
+    "import=tsx"
+  ],
+  "spec": "src/tests/**/*.test.ts",
+  "recursive": true,
+  "timeout": 5000,
+  "exit": true,
+  "reporter": "spec"
+}

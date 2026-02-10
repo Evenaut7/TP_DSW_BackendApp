@@ -51,8 +51,4 @@ app.use((_,res) => {
   return;
 })
 
-await syncSchema()
-
-app.listen(config.server.port, () => {
-  console.log(`Server is running on http://localhost:${config.server.port}/`);
-})
+export default app
