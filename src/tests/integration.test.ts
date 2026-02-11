@@ -4,7 +4,7 @@ import app from '../app.js';
 import { orm } from '../shared/db/orm.js';
 import { Usuario } from '../usuario/usuario.entity.js';
 
-describe('Integracion: Puntos de Interés', () => {
+describe('Integration Test: Puntos de Interés', () => {
   
   it('debería retornar una lista de puntos de interés con status 200', async () => {
     const res = await request(app)
@@ -16,7 +16,7 @@ describe('Integracion: Puntos de Interés', () => {
   });
 });
 
-describe('Integracion: Gestion de Usuarios', () => {
+describe('Integration Test: Gestion de Usuarios', () => {
   const testUser = {
     nombre: 'Test UTN',
     tipo: 'admin',
@@ -33,7 +33,6 @@ describe('Integracion: Gestion de Usuarios', () => {
     
     if (usuarioABorrar) {
       await em.removeAndFlush(usuarioABorrar);
-      console.log(`Usuario ${testUser.gmail} eliminado satisfactoriamente.`);
     }
 
     await orm.close();
@@ -47,7 +46,7 @@ describe('Integracion: Gestion de Usuarios', () => {
     }
   });
 
-  it('debería registrar un nuevo usuario exitosamente (status 201)', async () => {
+  it('Registro: debería registrar un nuevo usuario exitosamente (status 201)', async () => {
     const res = await request(app)
       .post('/api/usuarios/register')
       .send(testUser);
@@ -56,7 +55,7 @@ describe('Integracion: Gestion de Usuarios', () => {
     expect(res.body.data).to.have.property('gmail', testUser.gmail);
   });
 
-  it('debería loguearse y recibir cookies de access y refresh (status 200)', async () => {
+  it('Login: debería loguearse y recibir cookies de access y refresh (status 200)', async () => {
     const res = await request(app)
       .post('/api/usuarios/login')
       .send({
@@ -71,7 +70,7 @@ describe('Integracion: Gestion de Usuarios', () => {
     expect(authCookies).to.have.lengthOf(2); 
   });
 
-  it('debería obtener los datos del usuario actual usando las cookies', async () => {
+  it('Obtener Usuario: debería obtener los datos del usuario actual usando las cookies', async () => {
     const res = await request(app)
       .get('/api/usuarios/currentUser') 
       .set('Cookie', authCookies);
@@ -81,7 +80,7 @@ describe('Integracion: Gestion de Usuarios', () => {
     expect(res.body.data).to.have.property('puntosDeInteres');
   });
 
-  it('debería limpiar las cookies al hacer logout', async () => {
+  it('Logout: debería limpiar las cookies al hacer logout', async () => {
     const res = await request(app).post('/api/usuarios/logout');
 
     expect(res.status).to.equal(200);

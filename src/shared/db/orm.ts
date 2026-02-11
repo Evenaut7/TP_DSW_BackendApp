@@ -8,7 +8,7 @@ export const orm = await MikroORM.init({
   type: 'mysql',
   clientUrl: 'mysql://dsw:dsw@localhost:3306/traveldb',
   highlighter: new SqlHighlighter(),
-  debug: true,
+  debug: false,
   schemaGenerator: {
     disableForeignKeys: true,
     createForeignKeyConstraints: true,

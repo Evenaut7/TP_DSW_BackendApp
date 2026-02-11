@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { UsuarioController } from './usuario.controler.js';
+import { UsuarioController } from './usuario.controller.js';
 import { schemaValidator } from '../shared/middleware/schemaValidator.js';
 import { usuarioSchema, usuarioUpdateSchema } from './usuario.schema.js';
 import { sessionData } from '../shared/middleware/sessionData.js';

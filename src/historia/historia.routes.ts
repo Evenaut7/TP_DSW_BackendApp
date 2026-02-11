@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { HistoriaControler } from "./historia.controler.js";
+import { HistoriaControler } from "./historia.controller.js";
 import { schemaValidator } from "../shared/middleware/schemaValidator.js";
 import { historiaSchema, historiaUpdateSchema } from "./historia.schema.js";
 import { adminOrHistoriaOwnerValidator } from "../shared/middleware/adminOrHistoriaOwnerValidator.js";

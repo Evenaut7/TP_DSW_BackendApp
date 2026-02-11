@@ -1,4 +1,4 @@
-import { ValoracionController } from "./valoracion.controler.js";
+import { ValoracionController } from "./valoracion.controller.js";
 import { Router } from "express";   
 import { sessionData } from "../shared/middleware/sessionData.js";
 import { adminOrValorationOwnerValidator } from "../shared/middleware/adminOrValorationOwnerValidator.js";
