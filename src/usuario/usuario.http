@@ -44,9 +44,9 @@ POST http://localhost:3000/api/usuarios/register
 Content-Type: application/json
 
 {
-  "nombre": "Satur2",
-  "gmail": "satur2@gmail.com",
-  "tipo": "usuario",
+  "nombre": "Satur3",
+  "gmail": "satur3@gmail.com",
+  "tipo": "creador",
   "password": "123456"
 }
 

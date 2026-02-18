@@ -17,7 +17,7 @@ export class PuntoDeInteres extends BaseEntity {
   @Property({ nullable: false, unique: false, type: 'string' })
   descripcion!: string
 
-  @Property({ nullable: false, unique: false, type: 'string'})
+  @Property({ nullable: false, unique: false, type: 'string' })
   imagen!: string
 
   @Property({ nullable: false, unique: false, type: 'string' })

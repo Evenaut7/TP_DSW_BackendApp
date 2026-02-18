@@ -7,10 +7,10 @@ import { Usuario } from "../usuario/usuario.entity.js"
 @Entity()
 export class Evento extends BaseEntity {
 
-  @Property({nullable: false, unique: false, type: 'string'})
+  @Property({nullable: false, unique: true, type: 'string'})
   titulo!: string
 
-  @Property({nullable: false, unique: false, type: 'string'})
+  @Property({nullable: false, unique: true, type: 'string'})
   descripcion!: string
 
   @Property({nullable: false, unique: false, type: 'date'})
@@ -19,7 +19,7 @@ export class Evento extends BaseEntity {
   @Property({nullable: false, unique: false, type: 'date'})
   horaHasta!: Date
 
-  @Property({nullable: false, unique: false, type: 'string'}) //“Disponible”, “Agotado”, “Cancelado”
+  @Property({nullable: false, unique: false, type: 'string'}) //“Disponible”, “Cancelado”
   estado!: string
 
   @ManyToMany( () => Tag, (tag) => tag.eventos, { nullable: true, owner: true})

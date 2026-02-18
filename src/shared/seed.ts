@@ -45,8 +45,6 @@ async function main() {
   l0.nombre = 'CABA';
   l0.provincia = p1;
   l0.imagen = 'caba.jpg';
-  l0.latitud = -34.6037;
-  l0.longitud = -58.3816;
   l0.descripcion =
     'Capital del país, puerta de entrada cultural y económica con atractivos históricos, parques y vida nocturna.';
   await em.persistAndFlush(l0);
@@ -55,8 +53,6 @@ async function main() {
   l1.nombre = 'Quilmes';
   l1.provincia = p1;
   l1.imagen = 'quilmes.png';
-  l1.latitud = -34.7333;
-  l1.longitud = -58.4167;
   l1.descripcion =
     'Ciudad del sur del Gran Buenos Aires, famosa por su cerveza, su río y su centro de convenciones.';
   await em.persistAndFlush(l1);
@@ -65,8 +61,6 @@ async function main() {
   l2.nombre = 'Rosario';
   l2.imagen = 'rosario.jpg';
   l2.provincia = p2;
-  l2.latitud = -32.9617;
-  l2.longitud = -60.6653;
   l2.descripcion =
     'Metrópolis del río Paraná con arquitectura patrimonial, playas urbanas y activa vida cultural.Y AGUANTE CENTRALITO';
   await em.persistAndFlush(l2);
@@ -75,8 +69,6 @@ async function main() {
   l3.nombre = 'Funes';
   l3.imagen = 'funes.jpg';
   l3.provincia = p2;
-  l3.latitud = -32.9731;
-  l3.longitud = -60.706;
   l3.descripcion =
     'Ciudad residencial junto a Rosario, ideal para descansar en entorno verde y practicar golf.';
   await em.persistAndFlush(l3);
@@ -85,8 +77,6 @@ async function main() {
   l4.nombre = 'Cordoba';
   l4.provincia = p3;
   l4.imagen = 'cordoba.png';
-  l4.latitud = -31.4201;
-  l4.longitud = -64.1888;
   l4.descripcion =
     'Segunda ciudad del país, centro universitario con sierras cercanas, historia jesuítica y vida estudiantil.';
   await em.persistAndFlush(l4);
@@ -95,8 +85,6 @@ async function main() {
   l5.nombre = 'Mendoza';
   l5.provincia = p4;
   l5.imagen = 'mendoza.png';
-  l5.latitud = -32.8894;
-  l5.longitud = -68.8272;
   l5.descripcion =
     'Capital del vino argentino, rodeada de viñedos y montañas; base para aventura y alta gastronomía.';
   await em.persistAndFlush(l5);
@@ -105,16 +93,12 @@ async function main() {
   l6.nombre = 'Ushuaia';
   l6.provincia = p5;
   l6.imagen = 'ushuaia.png';
-  l6.latitud = -54.8019;
-  l6.longitud = -68.303;
   l6.descripcion =
     'Ciudad más austral del mundo, punto de partida para navegaciones al Canal Beagle y a la Antártida.';
   await em.persistAndFlush(l6);
 
   const l7 = new Localidad();
   l7.nombre = 'Villa Carlos Paz';
-  l7.latitud = -31.424;
-  l7.longitud = -64.497;
   l7.provincia = p3;
   l7.imagen = 'villacarlospaz.jpg';
   l7.descripcion =
@@ -123,8 +107,6 @@ async function main() {
 
   const l8 = new Localidad();
   l8.nombre = 'Villa María';
-  l8.latitud = -32.408;
-  l8.longitud = -63.24;
   l8.provincia = p3;
   l8.imagen = 'villamaria.png';
   l8.descripcion =
@@ -133,8 +115,6 @@ async function main() {
 
   const l9 = new Localidad();
   l9.nombre = 'Godoy Cruz';
-  l9.latitud = -32.925;
-  l9.longitud = -68.844;
   l9.provincia = p4;
   l9.imagen = 'godoycruz.jpg';
   l9.descripcion =
@@ -143,8 +123,6 @@ async function main() {
 
   const l10 = new Localidad();
   l10.nombre = 'San Rafael';
-  l10.latitud = -34.617;
-  l10.longitud = -68.33;
   l10.provincia = p4;
   l10.imagen = 'sanrafael.jpg';
   l10.descripcion =
@@ -153,8 +131,6 @@ async function main() {
 
   const l11 = new Localidad();
   l11.nombre = 'Río Grande';
-  l11.latitud = -53.787;
-  l11.longitud = -67.708;
   l11.provincia = p5;
   l11.imagen = 'riogrande.png';
   l11.descripcion =
@@ -163,8 +139,6 @@ async function main() {
 
   const l12 = new Localidad();
   l12.nombre = 'Tolhuin';
-  l12.latitud = -54.504;
-  l12.longitud = -67.189;
   l12.provincia = p5;
   l12.imagen = 'tolhuin.jpg';
   l12.descripcion =
