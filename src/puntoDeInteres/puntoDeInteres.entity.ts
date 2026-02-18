@@ -38,22 +38,22 @@ export class PuntoDeInteres extends BaseEntity {
   @ManyToMany(() => Tag, (tag) => tag.puntosDeInteres, { nullable: true, owner: true})
   tags = new Collection<Tag>(this)
 
-  @OneToMany(() => Evento, (evento) => evento.puntoDeInteres, { nullable: true, cascade: [Cascade.ALL] })
+  @OneToMany(() => Evento, (evento) => evento.puntoDeInteres, { nullable: true, orphanRemoval: true })
   eventos = new Collection<Evento>(this)
 
-  @OneToMany(() => Valoracion, (valoracion) => valoracion.puntoDeInteres, { nullable: true, cascade: [Cascade.ALL] })
+  @OneToMany(() => Valoracion, (valoracion) => valoracion.puntoDeInteres, { nullable: true, orphanRemoval: true })
   valoraciones = new Collection<Valoracion>(this)
 
-  @ManyToOne(() => Usuario, { nullable: false, cascade: [Cascade.ALL] })
+  @ManyToOne(() => Usuario, { nullable: false})
   usuario!: Rel<Usuario>;
 
   @ManyToMany(() => Usuario, (usuario) => usuario.favoritos, { nullable: true })
   favoritoDe = new Collection<Usuario>(this);
 
-  @ManyToOne(() => Localidad, { nullable: false, cascade: [Cascade.ALL] })
+  @ManyToOne(() => Localidad, { nullable: false})
   localidad!: Rel<Localidad>;
 
-  @OneToMany(() => Historia, (historia) => historia.puntoDeInteres, { nullable: true, cascade: [Cascade.ALL] })
+  @OneToMany(() => Historia, (historia) => historia.puntoDeInteres, { nullable: true, orphanRemoval: true })
   historias = new Collection<Historia>(this);
 
   //Agregar agenda usuario
