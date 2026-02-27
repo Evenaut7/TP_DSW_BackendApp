@@ -32,8 +32,8 @@ export class Usuario extends BaseEntity{
   @ManyToMany(() => PuntoDeInteres, (puntoDeInteres) => puntoDeInteres.favoritoDe,  { nullable: true , owner: true})
   favoritos = new Collection<PuntoDeInteres>(this)
 
-  @OneToMany(() => Evento, (evento) => evento.usuario,  { nullable: true , cascade: [ Cascade.ALL ] })
-  agendaPDI = new Collection<Evento>(this)
+  @ManyToMany(() => Evento, (evento) => evento.usuarios,  { nullable: true , owner: true})
+  agendaEvento = new Collection<Evento>(this)
 
   @OneToMany(()=> Valoracion, (valoracion) => valoracion.usuario, { nullable: true})
   valoraciones = new Collection<Valoracion>(this)

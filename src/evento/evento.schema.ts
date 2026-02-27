@@ -8,8 +8,7 @@ export const eventoSchema = z.object({
     horaHasta: z.string().nonempty({ message: "La hora final no puede estar vacia" }).refine((date) => !isNaN(Date.parse(date)), { message: "Formato de fecha Invalido" }),
     estado: z.enum(["Disponible", "Cancelado"]),
     puntoDeInteres: z.number({ message: "El punto de interes es obligatorio" }).positive({ message: "El id del punto de interes debe ser un numero positivo" }),
-    tags: z.array(z.number().positive({ message: "El id del tag debe ser un numero positivo" })).optional(),
-    usuario: z.number().positive({ message: "El id del usuario debe ser un numero positivo" }).optional()
+    tags: z.array(z.number().positive({ message: "El id del tag debe ser un numero positivo" })).optional()
   })
 });
 

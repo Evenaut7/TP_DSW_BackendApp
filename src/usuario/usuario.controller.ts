@@ -20,7 +20,7 @@ export class UsuarioController {
             'localidad.provincia',
             'puntosDeInteres',
             'favoritos',
-            'agendaPDI',
+            'agendaEvento',
             'valoraciones',
           ],
         }
@@ -42,7 +42,7 @@ export class UsuarioController {
           'localidad.provincia',
           'puntosDeInteres',
           'favoritos',
-          'agendaPDI',
+          'agendaEvento',
           'valoraciones',
         ],
       });
@@ -275,7 +275,7 @@ export class UsuarioController {
           'localidad.provincia',
           'puntosDeInteres',
           'favoritos',
-          'agendaPDI',
+          'agendaEvento',
         ],
       });
       res.status(200).json({ message: 'Usuario Found', data: usuario });

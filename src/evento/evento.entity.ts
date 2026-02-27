@@ -1,4 +1,4 @@
-import { Entity, PrimaryKey, Property, Cascade, DecimalType, ManyToMany, ManyToOne, Rel } from "@mikro-orm/core"
+import { Entity, PrimaryKey, Property, Cascade, DecimalType, ManyToMany, ManyToOne, Rel, Collection } from "@mikro-orm/core"
 import { BaseEntity } from "../shared/db/baseEntity.entity.js"
 import { PuntoDeInteres } from "../puntoDeInteres/puntoDeInteres.entity.js"
 import { Tag } from "../tag/tag.entity.js"
@@ -28,6 +28,6 @@ export class Evento extends BaseEntity {
   @ManyToOne( () => PuntoDeInteres, {nullable: false, unique: false})
   puntoDeInteres!: Rel<PuntoDeInteres>
 
-  @ManyToOne(() => Usuario,  { nullable: true, unique: false})
-  usuario!: Rel<Usuario>
+  @ManyToMany(() => Usuario, (usuario) => usuario.agendaEvento, { nullable: true })
+  usuarios = new Collection<Usuario>(this);
 }

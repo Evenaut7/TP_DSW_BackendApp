@@ -55,6 +55,4 @@ export class PuntoDeInteres extends BaseEntity {
 
   @OneToMany(() => Historia, (historia) => historia.puntoDeInteres, { nullable: true, orphanRemoval: true })
   historias = new Collection<Historia>(this);
-
-  //Agregar agenda usuario
 }

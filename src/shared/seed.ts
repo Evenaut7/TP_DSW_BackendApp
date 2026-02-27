@@ -1057,7 +1057,6 @@ async function main() {
   e1.estado = 'Disponible';
   e1.tags = [tagTecnologia];
   e1.puntoDeInteres = pdiClubKentucky;
-  e1.usuario = usuarioMalaOnda;
 
   //VCP
   const eVcp1 = new Evento();
@@ -1068,7 +1067,6 @@ async function main() {
   eVcp1.estado = 'Disponible';
   eVcp1.tags = [tagMusica, tagAireLibre];
   eVcp1.puntoDeInteres = pdiCostaneraVCP;
-  eVcp1.usuario = muniCarlosPaz;
   await em.persistAndFlush(eVcp1);
 
   const eVcp2 = new Evento();
@@ -1079,7 +1077,6 @@ async function main() {
   eVcp2.estado = 'Disponible';
   eVcp2.tags = [tagCultura];
   eVcp2.puntoDeInteres = pdiRelojCucu;
-  eVcp2.usuario = muniCarlosPaz;
   await em.persistAndFlush(eVcp2);
 
   const eVcp3 = new Evento();
@@ -1090,7 +1087,6 @@ async function main() {
   eVcp3.estado = 'Disponible';
   eVcp3.tags = [tagDeporte, tagAireLibre];
   eVcp3.puntoDeInteres = pdiAerosilla;
-  eVcp3.usuario = muniCarlosPaz;
   await em.persistAndFlush(eVcp3);
 
   //VILLA MARIA
@@ -1102,7 +1098,6 @@ async function main() {
   eVm1.estado = 'Disponible';
   eVm1.tags = [tagMusica, tagCultura];
   eVm1.puntoDeInteres = pdiAnfiteatroVM;
-  eVm1.usuario = muniVillaMaria;
   await em.persistAndFlush(eVm1);
 
   const eVm2 = new Evento();
@@ -1113,7 +1108,6 @@ async function main() {
   eVm2.estado = 'Disponible';
   eVm2.tags = [tagDeporte, tagBienestar];
   eVm2.puntoDeInteres = pdiCostaneraVM;
-  eVm2.usuario = muniVillaMaria;
   await em.persistAndFlush(eVm2);
 
   const eVm3 = new Evento();
@@ -1124,7 +1118,6 @@ async function main() {
   eVm3.estado = 'Disponible';
   eVm3.tags = [tagEducacion, tagCultura];
   eVm3.puntoDeInteres = pdiPlazaIndVM;
-  eVm3.usuario = muniVillaMaria;
   await em.persistAndFlush(eVm3);
 
   //GODOY CRUZ
@@ -1136,7 +1129,6 @@ async function main() {
   eGc1.estado = 'Disponible';
   eGc1.tags = [tagCultura, tagMusica];
   eGc1.puntoDeInteres = pdiPlazaGC;
-  eGc1.usuario = muniGodoyCruz;
   await em.persistAndFlush(eGc1);
 
   const eGc2 = new Evento();
@@ -1147,7 +1139,6 @@ async function main() {
   eGc2.estado = 'Disponible';
   eGc2.tags = [tagCultura];
   eGc2.puntoDeInteres = pdiTeatroPlaza;
-  eGc2.usuario = muniGodoyCruz;
   await em.persistAndFlush(eGc2);
 
   const eGc3 = new Evento();
@@ -1158,7 +1149,6 @@ async function main() {
   eGc3.estado = 'Disponible';
   eGc3.tags = [tagTecnologia, tagEducacion];
   eGc3.puntoDeInteres = pdiPalmares;
-  eGc3.usuario = muniGodoyCruz;
   await em.persistAndFlush(eGc3);
 
   //SAN RAFAEL
@@ -1170,7 +1160,6 @@ async function main() {
   eSr1.estado = 'Disponible';
   eSr1.tags = [tagMusica, tagGastronomia];
   eSr1.puntoDeInteres = pdiParqueSR;
-  eSr1.usuario = muniSanRafael;
   await em.persistAndFlush(eSr1);
 
   const eSr2 = new Evento();
@@ -1181,7 +1170,6 @@ async function main() {
   eSr2.estado = 'Disponible';
   eSr2.tags = [tagDeporte, tagAireLibre];
   eSr2.puntoDeInteres = pdiValleGrande;
-  eSr2.usuario = muniSanRafael;
   await em.persistAndFlush(eSr2);
 
   const eSr3 = new Evento();
@@ -1192,7 +1180,6 @@ async function main() {
   eSr3.estado = 'Disponible';
   eSr3.tags = [tagCultura, tagEducacion];
   eSr3.puntoDeInteres = pdiMuseoSR;
-  eSr3.usuario = muniSanRafael;
   await em.persistAndFlush(eSr3);
 
   //RIO GRANDE
@@ -1204,7 +1191,6 @@ async function main() {
   eRg1.estado = 'Disponible';
   eRg1.tags = [tagCultura];
   eRg1.puntoDeInteres = pdiMalvinasRG;
-  eRg1.usuario = muniRioGrande;
   await em.persistAndFlush(eRg1);
 
   const eRg2 = new Evento();
@@ -1215,7 +1201,6 @@ async function main() {
   eRg2.estado = 'Disponible';
   eRg2.tags = [tagAireLibre, tagDeporte];
   eRg2.puntoDeInteres = pdiCaboDomingo;
-  eRg2.usuario = muniRioGrande;
   await em.persistAndFlush(eRg2);
 
   const eRg3 = new Evento();
@@ -1226,7 +1211,6 @@ async function main() {
   eRg3.estado = 'Disponible';
   eRg3.tags = [tagEducacion, tagBienestar];
   eRg3.puntoDeInteres = pdiReservaRG;
-  eRg3.usuario = muniRioGrande;
   await em.persistAndFlush(eRg3);
 
   //TOLHUIN
@@ -1238,7 +1222,6 @@ async function main() {
   eTol1.estado = 'Disponible';
   eTol1.tags = [tagDeporte, tagAireLibre];
   eTol1.puntoDeInteres = pdiLagoFagnano;
-  eTol1.usuario = muniTolhuin;
   await em.persistAndFlush(eTol1);
 
   const eTol2 = new Evento();
@@ -1249,7 +1232,6 @@ async function main() {
   eTol2.estado = 'Disponible';
   eTol2.tags = [tagGastronomia, tagCultura];
   eTol2.puntoDeInteres = pdiPanaderiaUnion;
-  eTol2.usuario = muniTolhuin;
   await em.persistAndFlush(eTol2);
 
   const eTol3 = new Evento();
@@ -1260,7 +1242,6 @@ async function main() {
   eTol3.estado = 'Disponible';
   eTol3.tags = [tagBienestar, tagAireLibre];
   eTol3.puntoDeInteres = pdiPaseoLagoTol;
-  eTol3.usuario = muniTolhuin;
   await em.persistAndFlush(eTol3);
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------

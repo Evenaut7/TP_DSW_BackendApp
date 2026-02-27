@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { orm } from '../shared/db/orm.js'
 import { Evento } from './evento.entity.js'
 import { PuntoDeInteres } from '../puntoDeInteres/puntoDeInteres.entity.js'
+import { Usuario } from '../usuario/usuario.entity.js'
 
 const em = orm.em
 
@@ -96,4 +97,103 @@ export class EventoController {
       res.status(500).json({message: error.message})
     }
   }
+
+  async estaAgendado(req: Request, res: Response) {
+    try {
+      const usuarioId = req.user?.id;
+      const eventoId = Number.parseInt(req.params.id);
+      if (!usuarioId) {
+        res.status(401).json({ message: "Usuario no autenticado" });
+        return; 
+      }
+      const evento = await em.findOneOrFail(Evento, { id: eventoId }, { populate: ['usuarios'] });
+      const estaAgendado = evento.usuarios.getItems().some(user => user.id === usuarioId);
+      res.status(200).json({ message: "Chequeo de agenda realizado", data: { estaAgendado } });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  async addEventoToUsuarioAgenda(req: Request, res: Response) {
+    try {
+      const usuarioId = req.user?.id;
+      const eventoId = req.body.id;
+      if (!usuarioId) {
+        res.status(401).json({ message: "Usuario no autenticado" });
+        return; 
+      }
+      const evento = await em.findOneOrFail(Evento, { id: eventoId }, { populate: ['usuarios'] });
+      const yaEstaAgendado = evento.usuarios.getItems().some(user => user.id === usuarioId);
+      if (yaEstaAgendado) {
+        res.status(400).json({ message: "El evento ya está en la agenda del usuario" });
+        return
+      } 
+      const usuario = await em.findOneOrFail(Usuario, usuarioId)
+      evento.usuarios.add(usuario);
+      await em.flush();
+      res.status(200).json({ message: "Evento añadido a la agenda del usuario", data: evento });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  async sacarDeAgenda(req: Request, res: Response) {
+      try {
+        const usuarioId = req.user?.id;
+        const eventoId = req.body.id;
+  
+        if (!usuarioId) {
+          res.status(401).json({ message: "Usuario no autenticado" });
+          return
+        }
+  
+        const usuario = await em.findOneOrFail(
+          Usuario,
+          { id: usuarioId },
+          { populate: ['agendaEvento'] }
+        );
+  
+        const evento = await em.findOneOrFail(Evento, { id: eventoId });
+  
+        if (!usuario.agendaEvento.contains(evento)) {
+          res.status(400).json({ message: "El evento no está en la agenda del usuario" });
+          return
+        }
+        usuario.agendaEvento.remove(evento);
+        await em.flush();
+  
+        res.status(200).json({
+          message: "Evento eliminado de la agenda del usuario",
+          data: evento.id 
+        });
+  
+      } catch (error: any) {
+        res.status(500).json({ message: error.message });
+      }
+    }
+
+    async getAgenda(req: Request, res: Response) {
+      try {
+        const usuarioId = req.user?.id;
+  
+        if (!usuarioId) {
+          res.status(401).json({ message: "Usuario no autenticado" });
+          return;
+        }
+  
+        const usuario = await em.findOneOrFail(
+          Usuario,
+          { id: usuarioId },
+          { populate: ['agendaEvento', 'agendaEvento.tags'] }
+        );
+  
+        res.status(200).json({
+          message: "Eventos en la agenda del usuario",
+          data: usuario.agendaEvento.getItems(),
+        });
+      } catch (error: any) {
+        res.status(500).json({ message: error.message });
+      }
+    }
+
 }

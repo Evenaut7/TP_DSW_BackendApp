@@ -10,12 +10,18 @@ const eventoController = new EventoController()
 
 export const eventoRouter = Router()
 
-//CRUD BÁSICO
-eventoRouter.get('/', eventoController.findAll)
-eventoRouter.get('/:id', eventoController.findOne)
-
 // Rutas Protegidas
+eventoRouter.get('/canEdit/:id', sessionData, adminOrEventoOwnerValidator, eventoController.findOne) 
+eventoRouter.get('/estaAgendado/:id', sessionData, eventoController.estaAgendado) 
+eventoRouter.post('/addToAgenda', sessionData, eventoController.addEventoToUsuarioAgenda)
+eventoRouter.post('/sacarDeAgenda', sessionData, eventoController.sacarDeAgenda)
+eventoRouter.get('/getAgenda', sessionData, eventoController.getAgenda)
+
 eventoRouter.post('/', sessionData, schemaValidator(eventoSchema), eventoController.add) // El control de permisos se hace en el controlador
 eventoRouter.put('/:id', sessionData, adminOrEventoOwnerValidator, schemaValidator(eventoUpdateSchema), eventoController.update)
 eventoRouter.patch('/:id', sessionData, adminOrEventoOwnerValidator, schemaValidator(eventoUpdateSchema), eventoController.update)
 eventoRouter.delete('/:id', sessionData, adminOrEventoOwnerValidator, eventoController.remove)
+
+//CRUD BÁSICO
+eventoRouter.get('/', eventoController.findAll)
+eventoRouter.get('/:id', eventoController.findOne)
