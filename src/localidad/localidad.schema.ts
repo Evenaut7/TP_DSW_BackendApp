@@ -1,13 +1,38 @@
-import {z} from 'zod';
+import { z } from 'zod';
 
 export const localidadSchema = z.object({
   body: z.object({
-    titulo: z.string().min(1, {message: "titulo no puede estar vacío"}).max(255, {message: "titulo no puede superar los 255 caracteres"}),
-    descripcion: z.string().min(1, {message: "descripcion no puede estar vacía"}).max(1024, {message: "descripcion no puede superar los 1024 caracteres"}),
-    fechaDesde: z.string().nonempty({message: "La fecha desde no puede estar vacia"}).refine((date) => !isNaN(Date.parse(date)), { message: "Formato de fecha Invalido" }),
-    fechaHasta: z.string().nonempty({message: "La fecha hasta no puede estar vacia"}).refine((date) => !isNaN(Date.parse(date)), { message: "Formato de fecha Invalido" }),
-    puntoDeInteres: z.array(z.number().int().positive().refine(() => true, { message: "El punto de interes debe ser un número positivo" })),
-    imagen: z.string().min(1, {message: "imagen no puede estar vacío"}).max(255, {message: "imagen no puede superar los 255 caracteres"}),
+    nombre: z
+      .string()
+      .min(1, { message: "El nombre no puede estar vacío" })
+      .max(255, { message: "El nombre no puede superar los 255 caracteres" }),
+    
+    provincia: z
+      .number()
+      .int()
+      .positive({ message: "Debe seleccionar una provincia válida" }),
+
+    descripcion: z
+      .string()
+      .max(1024, { message: "La descripción no puede superar los 1024 caracteres" })
+      .optional(),
+    
+    imagen: z
+      .string()
+      .max(255, { message: "El nombre de imagen no puede superar los 255 caracteres" })
+      .optional(),
+
+    latitud: z
+      .number()
+      .min(-90)
+      .max(90)
+      .optional(),
+
+    longitud: z
+      .number()
+      .min(-180)
+      .max(180)
+      .optional(),
   })
 });
 
