@@ -37,7 +37,7 @@ export class PuntoDeInteresController {
       const pdi = await em.findOneOrFail(
         PuntoDeInteres,
         { id },
-        { populate: ['eventos', 'eventos.tags', 'tags', 'valoraciones'] }
+        { populate: ['eventos', 'eventos.tags', 'tags', 'valoraciones', 'localidad', 'localidad.provincia'] }
       );
 
       const promedioVal = await em

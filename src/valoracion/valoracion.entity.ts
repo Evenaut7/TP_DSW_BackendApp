@@ -17,7 +17,7 @@ export class Valoracion extends BaseEntity {
   @Property({nullable: false, unique: false, type: 'date'})
   fechaHora!: Date
 
-  @ManyToOne( () => PuntoDeInteres, {nullable: false, unique: false})
+  @ManyToOne( () => PuntoDeInteres, {nullable: false, unique: false, onDelete: 'CASCADE'})
   puntoDeInteres!: Rel<PuntoDeInteres>
 
   @ManyToOne(()=> Usuario, { nullable: false, unique: false})

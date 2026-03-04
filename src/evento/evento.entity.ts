@@ -25,7 +25,7 @@ export class Evento extends BaseEntity {
   @ManyToMany( () => Tag, (tag) => tag.eventos, { nullable: true, owner: true})
   tags!: Tag[]
 
-  @ManyToOne( () => PuntoDeInteres, {nullable: false, unique: false})
+  @ManyToOne(() => PuntoDeInteres, { nullable: false, onDelete: 'CASCADE' })
   puntoDeInteres!: Rel<PuntoDeInteres>
 
   @ManyToMany(() => Usuario, (usuario) => usuario.agendaEvento, { nullable: true })
