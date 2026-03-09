@@ -1,10 +1,11 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import { orm } from '../shared/db/orm.js'
+import { EntityManager } from '@mikro-orm/mysql'
 import { Evento } from './evento.entity.js'
 import { PuntoDeInteres } from '../puntoDeInteres/puntoDeInteres.entity.js'
 import { Usuario } from '../usuario/usuario.entity.js'
 
-const em = orm.em
+const em = orm.em as EntityManager
 
 export class EventoController {
   async findAll(req: Request, res: Response) {
@@ -138,62 +139,100 @@ export class EventoController {
   }
 
   async sacarDeAgenda(req: Request, res: Response) {
-      try {
-        const usuarioId = req.user?.id;
-        const eventoId = req.body.id;
-  
-        if (!usuarioId) {
-          res.status(401).json({ message: "Usuario no autenticado" });
-          return
-        }
-  
-        const usuario = await em.findOneOrFail(
-          Usuario,
-          { id: usuarioId },
-          { populate: ['agendaEvento'] }
-        );
-  
-        const evento = await em.findOneOrFail(Evento, { id: eventoId });
-  
-        if (!usuario.agendaEvento.contains(evento)) {
-          res.status(400).json({ message: "El evento no está en la agenda del usuario" });
-          return
-        }
-        usuario.agendaEvento.remove(evento);
-        await em.flush();
-  
-        res.status(200).json({
-          message: "Evento eliminado de la agenda del usuario",
-          data: evento.id 
-        });
-  
-      } catch (error: any) {
-        res.status(500).json({ message: error.message });
-      }
-    }
+    try {
+      const usuarioId = req.user?.id;
+      const eventoId = req.body.id;
 
-    async getAgenda(req: Request, res: Response) {
-      try {
-        const usuarioId = req.user?.id;
-  
-        if (!usuarioId) {
-          res.status(401).json({ message: "Usuario no autenticado" });
-          return;
-        }
-  
-        const usuario = await em.findOneOrFail(
-          Usuario,
-          { id: usuarioId },
-          { populate: ['agendaEvento', 'agendaEvento.tags'] }
-        );
-  
-        res.status(200).json({
-          message: "Eventos en la agenda del usuario",
-          data: usuario.agendaEvento.getItems(),
-        });
-      } catch (error: any) {
-        res.status(500).json({ message: error.message });
+      if (!usuarioId) {
+        res.status(401).json({ message: "Usuario no autenticado" });
+        return
       }
-    }
 
+      const usuario = await em.findOneOrFail(
+        Usuario,
+        { id: usuarioId },
+        { populate: ['agendaEvento'] }
+      );
+
+      const evento = await em.findOneOrFail(Evento, { id: eventoId });
+
+      if (!usuario.agendaEvento.contains(evento)) {
+        res.status(400).json({ message: "El evento no está en la agenda del usuario" });
+        return
+      }
+      usuario.agendaEvento.remove(evento);
+      await em.flush();
+
+      res.status(200).json({
+        message: "Evento eliminado de la agenda del usuario",
+        data: evento.id 
+      });
+  
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  async getAgenda(req: Request, res: Response) {
+    try {
+      const usuarioId = req.user?.id;
+
+      if (!usuarioId) {
+        res.status(401).json({ message: "Usuario no autenticado" });
+        return;
+      }
+
+      const usuario = await em.findOneOrFail(
+        Usuario,
+        { id: usuarioId },
+        { populate: ['agendaEvento', 'agendaEvento.tags'] }
+      );
+
+      res.status(200).json({
+        message: "Eventos en la agenda del usuario",
+        data: usuario.agendaEvento.getItems(),
+      });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+  
+  async filtro(req: Request, res: Response) {
+    try {
+
+      const { pdi, tags, busqueda } = req.body;
+
+      if (!tags || tags.length === 0) {
+        const eventosFiltrados = await em.createQueryBuilder(Evento, 'evento')
+          .select('evento.*')
+          .leftJoinAndSelect('evento.tags', 'tag')
+          .where({ puntoDeInteres: pdi })
+          .andWhere({ titulo: { $like: `%${busqueda}%` } })
+          .getResultList()
+
+        res.status(200).json({ message: 'Filtered Eventos', data: eventosFiltrados });
+        return;
+      }
+
+      const eventosFiltrados = await em.createQueryBuilder(Evento, 'evento')
+        .select('evento.*')
+        .leftJoin('evento.tags', 'tag')
+        .where({ 'evento.puntoDeInteres': pdi})
+        .andWhere({ 'evento.titulo': { $like: `%${busqueda}%` } })
+        .andWhere({ 'tag.id': { $in: tags } })
+        .groupBy('evento.id')
+        .having(`COUNT(DISTINCT tag.id) = ${tags.length}`)
+        .getResultList()
+
+      await em.populate(eventosFiltrados, ['tags'])
+
+      res.status(200).json({ message: 'Filtered Eventos', data: eventosFiltrados });
+      return;
+
+    } catch (error: any) {
+      res.status(500).json({ message: error.message })
+    }
+  }
 }
+
+

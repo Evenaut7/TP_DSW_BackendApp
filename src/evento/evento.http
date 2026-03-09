@@ -2,7 +2,14 @@
 GET http://localhost:3000/api/eventos
 
 ### Find One
-GET http://localhost:3000/api/eventos/1
+POST http://localhost:3000/api/eventos/filtro
+Content-Type: application/json
+
+{
+  "pdi": 7,
+  "tags": [],
+  "busqueda": ""
+}
 
 ### Add
 POST http://localhost:3000/api/eventos

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { orm } from '../shared/db/orm.js'
-import { PuntoDeInteres} from './puntoDeInteres.entity.js'
+import { PuntoDeInteres } from './puntoDeInteres.entity.js'
 import { Usuario } from '../usuario/usuario.entity.js'
 import { EntityManager } from '@mikro-orm/mysql'
 import { wrap } from '@mikro-orm/core';

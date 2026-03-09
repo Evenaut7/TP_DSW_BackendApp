@@ -22,6 +22,7 @@ eventoRouter.put('/:id', sessionData, adminOrEventoOwnerValidator, schemaValidat
 eventoRouter.patch('/:id', sessionData, adminOrEventoOwnerValidator, schemaValidator(eventoUpdateSchema), eventoController.update)
 eventoRouter.delete('/:id', sessionData, adminOrEventoOwnerValidator, eventoController.remove)
 
-//CRUD BÁSICO
+// No Protegidas
 eventoRouter.get('/', eventoController.findAll)
+eventoRouter.post('/filtro', eventoController.filtro)
 eventoRouter.get('/:id', eventoController.findOne)

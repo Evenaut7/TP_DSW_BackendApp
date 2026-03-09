@@ -22,17 +22,15 @@ export const localidadSchema = z.object({
       .max(255, { message: "El nombre de imagen no puede superar los 255 caracteres" })
       .optional(),
 
-    latitud: z
+    lat: z
       .number()
       .min(-90)
-      .max(90)
-      .optional(),
+      .max(90),
 
-    longitud: z
+    lng: z
       .number()
       .min(-180)
       .max(180)
-      .optional(),
   })
 });
 

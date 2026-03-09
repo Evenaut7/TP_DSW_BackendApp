@@ -4,9 +4,9 @@ import { BaseEntity } from "../shared/db/baseEntity.entity.js";
 
 @Entity()
 export class Provincia extends BaseEntity {
-    @Property({nullable: false, unique: true, type: 'string'})
+    @Property({ nullable: false, unique: true, type: 'string' })
     nombre!: string
-    
-    @OneToMany(() => Localidad, Localidad => Localidad.provincia, {nullable: true, cascade: [Cascade.ALL]})
+
+    @OneToMany(() => Localidad, Localidad => Localidad.provincia, { nullable: true, cascade: [Cascade.ALL] })
     localidades = new Collection<Localidad>(this)
 }
