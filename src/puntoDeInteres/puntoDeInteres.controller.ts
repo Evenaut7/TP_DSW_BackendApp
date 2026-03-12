@@ -103,34 +103,30 @@ export class PuntoDeInteresController {
     try {
       const { localidad, tags, busqueda } = req.body;
 
-      if (!tags || tags.length === 0) {
-        const puntosFiltrados = await em
-          .createQueryBuilder(PuntoDeInteres, 'pdi')
-          .select('pdi.*')
-          .leftJoinAndSelect('pdi.tags', 'tag')
-          .where({ localidad: localidad })
-          .andWhere({ nombre: { $like: `%${busqueda}%` } })
-          .getResultList();
-
-        res.status(200).json({ message: 'Filtered Puntos De Interes', data: puntosFiltrados });
-        return;
-      }
-
-      const puntosFiltrados = await em
+      const qb = em
         .createQueryBuilder(PuntoDeInteres, 'pdi')
         .select('pdi.*')
-        .leftJoin('pdi.tags', 'tag')
-        .where({ 'pdi.localidad': localidad })
-        .andWhere({ 'pdi.nombre': { $like: `%${busqueda}%` } })
-        .andWhere({ 'tag.id': { $in: tags } })
-        .groupBy('pdi.id')
-        .having(`COUNT(DISTINCT tag.id) = ${tags.length}`)
-        .getResultList();
+        .leftJoinAndSelect('pdi.tags', 'tag');
 
+      if (localidad) {
+        qb.where({ 'pdi.localidad': localidad });
+      }
+
+      if (busqueda) {
+        qb.andWhere({ 'pdi.nombre': { $like: `%${busqueda}%` } });
+      }
+
+      if (tags && tags.length > 0) {
+        qb.leftJoin('pdi.tags', 'tag_filter')
+          .andWhere({ 'tag_filter.id': { $in: tags } })
+          .groupBy('pdi.id')
+          .having(`COUNT(DISTINCT tag_filter.id) = ${tags.length}`);
+      }
+
+      const puntosFiltrados = await qb.getResultList();
       await em.populate(puntosFiltrados, ['tags']);
 
       res.status(200).json({ message: 'Filtered Puntos De Interes', data: puntosFiltrados });
-      return;
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }

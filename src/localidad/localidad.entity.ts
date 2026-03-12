@@ -26,11 +26,11 @@ export class Localidad extends BaseEntity {
   @Property({ nullable: true, unique: false, type: 'string' })
   descripcion?: string;
 
-  @Property({ nullable: false, type: DecimalType, columnType: 'double' })
-  lat!: number;
+  @Property({ nullable: true, type: DecimalType, columnType: 'double' })
+  lat?: number;
 
-  @Property({ nullable: false, type: DecimalType, columnType: 'double' })
-  lng!: number;
+  @Property({ nullable: true, type: DecimalType, columnType: 'double' })
+  lng?: number;
 
   @ManyToOne(() => Provincia, { nullable: false })
   provincia!: Rel<Provincia>;
