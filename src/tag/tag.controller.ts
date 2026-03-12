@@ -1,60 +1,83 @@
-import { NextFunction, Request, Response } from "express";
-import { orm } from "../shared/db/orm.js";
-import { Tag } from "./tag.entity.js";
+import { Request, Response } from 'express';
+import { UniqueConstraintViolationException } from '@mikro-orm/core';
+import { orm } from '../shared/db/orm.js';
+import { Tag } from './tag.entity.js';
 
 const em = orm.em;
 
 export class TagController {
-  async findAll(req: Request, res: Response) {
+  findAll = async (req: Request, res: Response) => {
     try {
       const tags = await em.find(Tag, {});
-      res.status(200).json({ message: "finded all tags", data: tags });
+      res.status(200).json({ message: 'Tags found', data: tags });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
-  }
+  };
 
-  async findOne(req: Request, res: Response) {
+  findOne = async (req: Request, res: Response) => {
     try {
       const id = Number.parseInt(req.params.id);
-      const findedTag = await em.findOneOrFail(Tag, { id });
-      res.status(200).json({ message: "tag finded", data: findedTag });
+      const tag = await em.findOneOrFail(Tag, { id });
+      res.status(200).json({ message: 'Tag found', data: tag });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
-  }
+  };
 
-  async add(req: Request, res: Response) {
+  add = async (req: Request, res: Response) => {
     try {
+      const existe = await em.findOne(Tag, { nombre: req.body.nombre });
+      if (existe) {
+        res.status(409).json({ message: `Ya existe un tag con el nombre '${req.body.nombre}'` });
+        return;
+      }
+
       const newTag = em.create(Tag, req.body);
       await em.flush();
-      res.status(201).json({ message: "Tag created", data: newTag });
+      res.status(201).json({ message: 'Tag created', data: newTag });
     } catch (error: any) {
+      if (error instanceof UniqueConstraintViolationException) {
+        res.status(409).json({ message: `Ya existe un tag con el nombre '${req.body.nombre}'` });
+        return;
+      }
       res.status(500).json({ message: error.message });
     }
-  }
+  };
 
-  // Nota: Si el id no existe, la api devuelve un mensaje de exito y no de error
-  async update(req: Request, res: Response) {
+  update = async (req: Request, res: Response) => {
     try {
       const id = Number.parseInt(req.params.id);
-      const tagToUpdate = em.getReference(Tag, id);
-      em.assign(tagToUpdate, req.body);
+
+      if (req.body.nombre) {
+        const existe = await em.findOne(Tag, { nombre: req.body.nombre });
+        if (existe && existe.id !== id) {
+          res.status(409).json({ message: `Ya existe un tag con el nombre '${req.body.nombre}'` });
+          return;
+        }
+      }
+
+      const tag = await em.findOneOrFail(Tag, id);
+      em.assign(tag, req.body);
       await em.flush();
-      res.status(201).json({ message: "tag updated successfully if it exists" });
+      res.status(200).json({ message: 'Tag updated successfully', data: tag });
     } catch (error: any) {
+      if (error instanceof UniqueConstraintViolationException) {
+        res.status(409).json({ message: `Ya existe un tag con el nombre '${req.body.nombre}'` });
+        return;
+      }
       res.status(500).json({ message: error.message });
     }
-  }
+  };
 
-  async remove(req: Request, res: Response) {
+  remove = async (req: Request, res: Response) => {
     try {
       const id = Number.parseInt(req.params.id);
-      const tagToDelete = em.getReference(Tag, id);
-      await em.removeAndFlush(tagToDelete);
-      res.status(200).json({ message: "tag deleted successfully if it existed" });
+      const tag = em.getReference(Tag, id);
+      await em.removeAndFlush(tag);
+      res.status(200).json({ message: 'Tag deleted successfully' });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
-  }
+  };
 }

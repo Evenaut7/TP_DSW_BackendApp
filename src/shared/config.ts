@@ -5,12 +5,12 @@ dotenv.config();
 
 // Validar que existan las variables necesarias
 const requiredEnvVars = ['JWT_ACCESS_SECRET', 'JWT_REFRESH_SECRET'];
-const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
 
 if (missingEnvVars.length > 0) {
   throw new Error(
     `Variables de entorno faltantes: ${missingEnvVars.join(', ')}\n` +
-    `Asegúrate de crear un archivo .env con estas variables.`
+      `Asegúrate de crear un archivo .env con estas variables.`
   );
 }
 

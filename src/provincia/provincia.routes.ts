@@ -13,6 +13,18 @@ provinciaRouter.get('/', provinciaController.findAll);
 provinciaRouter.get('/:id', provinciaController.findOne);
 
 // Rutas Protegidas - Solo para admin
-provinciaRouter.post('/', sessionData, adminValidator, schemaValidator(provinciaSchema), provinciaController.add);
-provinciaRouter.put('/:id', sessionData, adminValidator, schemaValidator(provinciaUpdateSchema), provinciaController.update);
+provinciaRouter.post(
+  '/',
+  sessionData,
+  adminValidator,
+  schemaValidator(provinciaSchema),
+  provinciaController.add
+);
+provinciaRouter.put(
+  '/:id',
+  sessionData,
+  adminValidator,
+  schemaValidator(provinciaUpdateSchema),
+  provinciaController.update
+);
 provinciaRouter.delete('/:id', sessionData, adminValidator, provinciaController.delete);

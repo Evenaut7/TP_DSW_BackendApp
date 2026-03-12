@@ -5,11 +5,8 @@ import { orm } from '../shared/db/orm.js';
 import { Usuario } from '../usuario/usuario.entity.js';
 
 describe('Integration Test: Puntos de Interés', () => {
-  
   it('debería retornar una lista de puntos de interés con status 200', async () => {
-    const res = await request(app)
-      .get('/api/puntosDeInteres')
-      .expect('Content-Type', /json/);
+    const res = await request(app).get('/api/puntosDeInteres').expect('Content-Type', /json/);
 
     expect(res.status).to.equal(200);
     expect(res.body.data).to.be.an('array');
@@ -21,16 +18,16 @@ describe('Integration Test: Gestion de Usuarios', () => {
     nombre: 'Test UTN',
     tipo: 'admin',
     gmail: 'tester@utn.edu.ar',
-    password: 'Password123!'
+    password: 'Password123!',
   };
 
   let authCookies: any;
 
   after(async () => {
     const em = orm.em.fork();
-    
+
     const usuarioABorrar = await em.findOne(Usuario, { gmail: testUser.gmail });
-    
+
     if (usuarioABorrar) {
       await em.removeAndFlush(usuarioABorrar);
     }
@@ -47,33 +44,27 @@ describe('Integration Test: Gestion de Usuarios', () => {
   });
 
   it('Registro: debería registrar un nuevo usuario exitosamente (status 201)', async () => {
-    const res = await request(app)
-      .post('/api/usuarios/register')
-      .send(testUser);
+    const res = await request(app).post('/api/usuarios/register').send(testUser);
 
     expect(res.status).to.equal(201);
     expect(res.body.data).to.have.property('gmail', testUser.gmail);
   });
 
   it('Login: debería loguearse y recibir cookies de access y refresh (status 200)', async () => {
-    const res = await request(app)
-      .post('/api/usuarios/login')
-      .send({
-        gmail: testUser.gmail,
-        password: testUser.password
-      });
+    const res = await request(app).post('/api/usuarios/login').send({
+      gmail: testUser.gmail,
+      password: testUser.password,
+    });
 
     expect(res.status).to.equal(200);
     expect(res.body.message).to.equal('Login successful');
-    
+
     authCookies = res.header['set-cookie'];
-    expect(authCookies).to.have.lengthOf(2); 
+    expect(authCookies).to.have.lengthOf(2);
   });
 
   it('Obtener Usuario: debería obtener los datos del usuario actual usando las cookies', async () => {
-    const res = await request(app)
-      .get('/api/usuarios/currentUser') 
-      .set('Cookie', authCookies);
+    const res = await request(app).get('/api/usuarios/currentUser').set('Cookie', authCookies);
 
     expect(res.status).to.equal(200);
     expect(res.body.data).to.have.property('nombre', testUser.nombre);
@@ -85,7 +76,7 @@ describe('Integration Test: Gestion de Usuarios', () => {
 
     expect(res.status).to.equal(200);
     const rawCookies = res.header['set-cookie'];
-    const cookies = Array.isArray(rawCookies) ? rawCookies.join('; ') : (rawCookies || '');
+    const cookies = Array.isArray(rawCookies) ? rawCookies.join('; ') : rawCookies || '';
     expect(cookies).to.contain('access_token=;');
     expect(cookies).to.contain('refresh_token=;');
   });

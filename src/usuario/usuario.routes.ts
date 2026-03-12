@@ -15,7 +15,7 @@ usuarioRouter.get('/is-admin', sessionData, usuarioController.isAdmin);
 usuarioRouter.get('/is-creator', sessionData, usuarioController.isCreator);
 usuarioRouter.get('/is-pdiOwner/:pdi', sessionData, usuarioController.isPdiOwner);
 usuarioRouter.get('/currentUser', sessionData, usuarioController.getCurrentUser); // Esto nose si es correcto tenerlo en terminos de seguridad
-usuarioRouter.post('/refresh-token', usuarioController.refreshToken); 
+usuarioRouter.post('/refresh-token', usuarioController.refreshToken);
 
 //CRUD BÁSICO
 usuarioRouter.get('/', usuarioController.findAll);

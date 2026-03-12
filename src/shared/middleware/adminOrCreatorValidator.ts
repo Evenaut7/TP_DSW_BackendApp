@@ -7,9 +7,7 @@ export const adminOrCreatorValidator = async (req: Request, res: Response, next:
       return;
     }
   } catch (error: any) {
-    res
-      .status(500)
-      .json({ message: 'Error in the authorization', error: error.message });
+    res.status(500).json({ message: 'Error in the authorization', error: error.message });
     return;
   }
   next();

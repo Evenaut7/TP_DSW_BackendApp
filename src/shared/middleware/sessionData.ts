@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response, RequestHandler } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
-import { config } from "../config.js";
+import { NextFunction, Request, Response, RequestHandler } from 'express';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { config } from '../config.js';
 
 declare global {
   namespace Express {
@@ -13,7 +13,7 @@ declare global {
 export const sessionData: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
   const accessToken = req.cookies?.access_token;
   const refreshToken = req.cookies?.refresh_token;
-  
+
   if (accessToken) {
     try {
       const data = jwt.verify(accessToken, config.jwt.accessSecret) as JwtPayload;
@@ -22,7 +22,7 @@ export const sessionData: RequestHandler = (req: Request, res: Response, next: N
       return;
     } catch (err: any) {
       if (err.name !== 'TokenExpiredError') {
-        res.status(401).json({ message: "Token Invalido" });
+        res.status(401).json({ message: 'Token Invalido' });
         return;
       }
     }
@@ -49,13 +49,12 @@ export const sessionData: RequestHandler = (req: Request, res: Response, next: N
       req.user = decoded;
       next();
       return;
-
     } catch (refreshErr: any) {
-      res.status(401).json({ message: "Token expirado - Por favor inicia sesión nuevamente" });
+      res.status(401).json({ message: 'Token expirado - Por favor inicia sesión nuevamente' });
       return;
     }
   }
 
-  res.status(401).json({ message: "Token requerido" });
+  res.status(401).json({ message: 'Token requerido' });
   return;
 };

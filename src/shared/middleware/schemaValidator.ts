@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response, RequestHandler } from "express";
-import { ZodObject, ZodError, ZodRawShape } from "zod";
+import { NextFunction, Request, Response, RequestHandler } from 'express';
+import { ZodObject, ZodError, ZodRawShape } from 'zod';
 
 export const schemaValidator =
   (schema: ZodObject<ZodRawShape>): RequestHandler =>
@@ -19,8 +19,8 @@ export const schemaValidator =
             message: issue.message,
           }))
         );
-        return; 
+        return;
       }
-      res.status(500).json({ message: "internal server error" });
+      res.status(500).json({ message: 'internal server error' });
     }
   };

@@ -1,8 +1,8 @@
-import { PrimaryKey, DateTimeType } from "@mikro-orm/core"
+import { PrimaryKey, DateTimeType } from '@mikro-orm/core';
 
 export abstract class BaseEntity {
-  @PrimaryKey({type: 'number'})
-  id?: number
+  @PrimaryKey({ type: 'number' })
+  id?: number;
 
   /*
 
@@ -16,5 +16,4 @@ export abstract class BaseEntity {
   updatedAt? = new Date()
 
   */
-
 }

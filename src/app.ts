@@ -1,54 +1,52 @@
-import 'reflect-metadata'
+import 'reflect-metadata';
 import cookieParser from 'cookie-parser';
-import express, { NextFunction, Request, Response } from 'express'
-import cors from 'cors'
-import { config } from './shared/config.js'
-import { tagRouter } from './tag/tag.routes.js'
-import { puntoDeInteresRouter } from './puntoDeInteres/puntoDeInteres.routes.js'
-import { orm, syncSchema } from './shared/db/orm.js'
-import { RequestContext } from '@mikro-orm/core'
-import { eventoRouter } from './evento/evento.routes.js'
-import { provinciaRouter } from './provincia/provincia.routes.js'
-import { localidadRouter } from './localidad/localidad.routes.js'
-import { usuarioRouter } from './usuario/usuario.routes.js'
-import { valoracionRouter } from './valoracion/valoracion.routes.js'
-import { historiaRouter } from './historia/historia.routes.js' 
-import { imagenRouter } from './imagen/imagen.routes.js'
+import express, { NextFunction, Request, Response } from 'express';
+import cors from 'cors';
+import { config } from './shared/config.js';
+import { tagRouter } from './tag/tag.routes.js';
+import { puntoDeInteresRouter } from './puntoDeInteres/puntoDeInteres.routes.js';
+import { orm, syncSchema } from './shared/db/orm.js';
+import { RequestContext } from '@mikro-orm/core';
+import { eventoRouter } from './evento/evento.routes.js';
+import { provinciaRouter } from './provincia/provincia.routes.js';
+import { localidadRouter } from './localidad/localidad.routes.js';
+import { usuarioRouter } from './usuario/usuario.routes.js';
+import { valoracionRouter } from './valoracion/valoracion.routes.js';
+import { historiaRouter } from './historia/historia.routes.js';
+import { imagenRouter } from './imagen/imagen.routes.js';
 
-
-const app = express()
+const app = express();
 
 //Middlewares
-app.use(express.json())
-app.use(cookieParser())
+app.use(express.json());
+app.use(cookieParser());
 
 app.use(
   cors({
     origin: config.cors.origin,
-    credentials: true
+    credentials: true,
   })
 );
 
 app.use((req, res, next) => {
-  RequestContext.create(orm.em, next)
-})
+  RequestContext.create(orm.em, next);
+});
 
 //Routes
-app.use('/public', express.static('./uploads'))
-app.use('/api/imagenes', imagenRouter)
-app.use('/api/tags', tagRouter)
-app.use('/api/puntosDeInteres', puntoDeInteresRouter)
-app.use('/api/eventos', eventoRouter)
-app.use('/api/provincias', provinciaRouter)
-app.use('/api/localidades', localidadRouter)
-app.use('/api/usuarios', usuarioRouter)
-app.use('/api/valoraciones', valoracionRouter)
-app.use('/api/historias', historiaRouter)
+app.use('/public', express.static('./uploads'));
+app.use('/api/imagenes', imagenRouter);
+app.use('/api/tags', tagRouter);
+app.use('/api/puntosDeInteres', puntoDeInteresRouter);
+app.use('/api/eventos', eventoRouter);
+app.use('/api/provincias', provinciaRouter);
+app.use('/api/localidades', localidadRouter);
+app.use('/api/usuarios', usuarioRouter);
+app.use('/api/valoraciones', valoracionRouter);
+app.use('/api/historias', historiaRouter);
 
-
-app.use((_,res) => {
-  res.status(404).send({message: 'Resource not found'});
+app.use((_, res) => {
+  res.status(404).send({ message: 'Resource not found' });
   return;
-})
+});
 
-export default app
+export default app;

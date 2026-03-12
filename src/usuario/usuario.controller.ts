@@ -1,6 +1,7 @@
 import { Response, Request } from 'express';
 import { orm } from '../shared/db/orm.js';
 import { Usuario } from './usuario.entity.js';
+import { UniqueConstraintViolationException } from '@mikro-orm/core';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { config } from '../shared/config.js';
@@ -9,6 +10,31 @@ import { PuntoDeInteres } from '../puntoDeInteres/puntoDeInteres.entity.js';
 const em = orm.em;
 
 export class UsuarioController {
+  private async validarCamposUnicos(
+    { nombre, gmail, cuit }: { nombre?: string; gmail?: string; cuit?: string },
+    excludeId?: number
+  ): Promise<string[]> {
+    const errores: string[] = [];
+
+    if (nombre) {
+      const existe = await em.findOne(Usuario, { nombre });
+      if (existe && existe.id !== excludeId)
+        errores.push(`Ya existe un usuario con el nombre '${nombre}'`);
+    }
+    if (gmail) {
+      const existe = await em.findOne(Usuario, { gmail });
+      if (existe && existe.id !== excludeId)
+        errores.push(`Ya existe un usuario con el gmail '${gmail}'`);
+    }
+    if (cuit) {
+      const existe = await em.findOne(Usuario, { cuit });
+      if (existe && existe.id !== excludeId)
+        errores.push(`Ya existe un usuario con el CUIT '${cuit}'`);
+    }
+
+    return errores;
+  }
+
   findAll = async (req: Request, res: Response): Promise<void> => {
     try {
       const usuarios = await em.find(
@@ -27,9 +53,7 @@ export class UsuarioController {
       );
       res.status(200).json({ message: 'Usuarios found', data: usuarios });
     } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: 'Error fetching usuarios', error: error.message });
+      res.status(500).json({ message: 'Error fetching usuarios', error: error.message });
     }
   };
 
@@ -48,41 +72,62 @@ export class UsuarioController {
       });
       res.status(200).json({ message: 'Usuario found', data: usuario });
     } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: 'Error fetching usuario', error: error.message });
+      res.status(500).json({ message: 'Error fetching usuario', error: error.message });
     }
   };
 
   register = async (req: Request, res: Response) => {
     try {
-      const { nombre, tipo, gmail, password } = req.body;
+      const { nombre, tipo, gmail, password, cuit } = req.body;
 
-      // Hasheo de Contraseña
-      const hashedPassword = await bcrypt.hashSync(password, config.jwt.saltRounds);
-      //const ok = await bcrypt.compare(password, hashedPassword);
+      const errores = await this.validarCamposUnicos({ nombre, gmail, cuit });
+      if (errores.length > 0) {
+        res.status(409).json({ message: 'Datos duplicados', errors: errores });
+        return;
+      }
 
-      const newUser = new Usuario();
-      newUser.nombre = nombre;
-      newUser.tipo = tipo;
-      newUser.gmail = gmail;
-      newUser.password = hashedPassword;
-
+      const hashedPassword = bcrypt.hashSync(password, config.jwt.saltRounds);
+      const newUser = em.create(Usuario, { nombre, tipo, gmail, cuit, password: hashedPassword });
       await em.persistAndFlush(newUser);
-      res
-        .status(201)
-        .json({ message: 'Usuario added successfully', data: newUser });
-      return;
+      res.status(201).json({ message: 'Usuario added successfully', data: newUser });
     } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: 'Error adding usuario', error: error.message });
-      return;
+      if (error instanceof UniqueConstraintViolationException) {
+        res.status(409).json({ message: 'Ya existe un usuario con esos datos' });
+        return;
+      }
+      res.status(500).json({ message: 'Error adding usuario', error: error.message });
+    }
+  };
+
+  update = async (req: Request, res: Response) => {
+    try {
+      const id = Number.parseInt(req.params.id);
+      const { nombre, gmail, cuit, password } = req.body;
+
+      const errores = await this.validarCamposUnicos({ nombre, gmail, cuit }, id);
+      if (errores.length > 0) {
+        res.status(409).json({ message: 'Datos duplicados', errors: errores });
+        return;
+      }
+
+      if (password) {
+        req.body.password = bcrypt.hashSync(password, config.jwt.saltRounds);
+      }
+
+      const usuario = await em.findOneOrFail(Usuario, id);
+      em.assign(usuario, req.body);
+      await em.flush();
+      res.status(200).json({ message: 'Usuario updated successfully', data: usuario });
+    } catch (error: any) {
+      if (error instanceof UniqueConstraintViolationException) {
+        res.status(409).json({ message: 'Ya existe un usuario con esos datos' });
+        return;
+      }
+      res.status(500).json({ message: 'Error updating usuario', error: error.message });
     }
   };
 
   login = async (req: Request, res: Response) => {
-
     try {
       const { gmail, password } = req.body;
       if (!gmail || !password) {
@@ -136,9 +181,7 @@ export class UsuarioController {
         .status(200)
         .json({ message: 'Login successful', user: publicUser });
     } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: 'Error logging in', error: error.message });
+      res.status(500).json({ message: 'Error logging in', error: error.message });
     }
   };
 
@@ -151,10 +194,7 @@ export class UsuarioController {
         return;
       }
 
-      const decoded = jwt.verify(
-        refreshToken,
-        config.jwt.refreshSecret
-      ) as jwt.JwtPayload;
+      const decoded = jwt.verify(refreshToken, config.jwt.refreshSecret) as jwt.JwtPayload;
 
       const newAccessToken = jwt.sign(
         { id: decoded.id, gmail: decoded.gmail, tipo: decoded.tipo },
@@ -172,9 +212,7 @@ export class UsuarioController {
         .status(200)
         .json({ message: 'Token refreshed successfully' });
     } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: 'Error refreshing token', error: error.message });
+      res.status(500).json({ message: 'Error refreshing token', error: error.message });
     }
   };
 
@@ -184,28 +222,6 @@ export class UsuarioController {
       .clearCookie('refresh_token')
       .status(200)
       .json({ message: 'Logout successful' });
-  };
-
-  update = async (req: Request, res: Response) => {
-    try {
-      const id = Number.parseInt(req.params.id);
-      const { password } = req.body;
-
-      if (password) {
-        req.body.password = await bcrypt.hashSync(password, config.jwt.saltRounds);
-      }
-
-      const usuario = await em.findOneOrFail(Usuario, id);
-      em.assign(usuario, req.body);
-      await em.flush();
-      res
-        .status(200)
-        .json({ message: 'Usuario updated successfully', data: usuario });
-    } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: 'Error updating usuario', error: error.message });
-    }
   };
 
   delete = async (req: Request, res: Response) => {
@@ -218,9 +234,7 @@ export class UsuarioController {
         data: usuarioToRemove,
       });
     } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: 'Error removing usuario', error: error.message });
+      res.status(500).json({ message: 'Error removing usuario', error: error.message });
     }
   };
 
@@ -233,32 +247,24 @@ export class UsuarioController {
       const isAdmin = req.user.tipo === 'admin';
       isAdmin
         ? res.status(200).json({ message: 'User is admin', isAdmin: true })
-        : res
-            .status(401)
-            .json({ message: 'User is not admin', isAdmin: false });
+        : res.status(401).json({ message: 'User is not admin', isAdmin: false });
     } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: 'Error checking admin status', error: error.message });
+      res.status(500).json({ message: 'Error checking admin status', error: error.message });
     }
   };
 
   isCreator = async (req: Request, res: Response) => {
     try {
-      if (!req.user || !req.user.tipo) {  
+      if (!req.user || !req.user.tipo) {
         res.status(401).json({ message: 'Unauthorized' });
         return;
       }
       const isCreator = req.user.tipo === 'creador';
       isCreator
         ? res.status(200).json({ message: 'User is creator', isCreator: true })
-        : res
-            .status(401)
-            .json({ message: 'User is not creator', isCreator: false });
+        : res.status(401).json({ message: 'User is not creator', isCreator: false });
     } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: 'Error checking creator status', error: error.message });
+      res.status(500).json({ message: 'Error checking creator status', error: error.message });
     }
   };
 
@@ -280,9 +286,7 @@ export class UsuarioController {
       });
       res.status(200).json({ message: 'Usuario Found', data: usuario });
     } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: 'Error fetching current user', error: error.message });
+      res.status(500).json({ message: 'Error fetching current user', error: error.message });
     }
   };
 
@@ -293,20 +297,15 @@ export class UsuarioController {
         return;
       }
 
-      const id = Number.parseInt(req.params.id)
-      const pdi = await em.findOneOrFail(PuntoDeInteres, { id }, { populate: ['usuario'] })
+      const id = Number.parseInt(req.params.id);
+      const pdi = await em.findOneOrFail(PuntoDeInteres, { id }, { populate: ['usuario'] });
 
-      const isOwner= req.user.id === pdi.usuario.id;
+      const isOwner = req.user.id === pdi.usuario.id;
       isOwner
         ? res.status(200).json({ message: 'User is owner of PDI', isOwner: true })
-        : res
-            .status(401)
-            .json({ message: 'User is not owner of PDI', isOwner: false });
+        : res.status(401).json({ message: 'User is not owner of PDI', isOwner: false });
     } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: 'Error checking admin status', error: error.message });
+      res.status(500).json({ message: 'Error checking admin status', error: error.message });
     }
   };
-
 }

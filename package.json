@@ -5,6 +5,8 @@
   "type": "module",
   "main": "app.js",
   "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "mocha",
     "build": "tsc -p ./tsconfig.json",
     "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/server.js\"",
@@ -27,7 +29,9 @@
     "@types/sinon": "^21.0.0",
     "@types/supertest": "^6.0.3",
     "chai": "^6.2.2",
+    "eslint-config-prettier": "^10.1.8",
     "mocha": "^11.7.5",
+    "prettier": "^3.8.1",
     "sinon": "^21.0.1",
     "supertest": "^7.2.2",
     "tsc-watch": "6.0.4",

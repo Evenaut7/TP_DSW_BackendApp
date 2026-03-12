@@ -1,28 +1,45 @@
-import { Router } from 'express'
-import { EventoController } from "./evento.controller.js"
-import { schemaValidator } from '../shared/middleware/schemaValidator.js'
-import { eventoSchema, eventoUpdateSchema } from './evento.schema.js'
-import { sessionData } from '../shared/middleware/sessionData.js'
-import { adminValidator } from '../shared/middleware/adminValidator.js'
-import { adminOrEventoOwnerValidator } from '../shared/middleware/adminOrEventOwnerValidator.js'
+import { Router } from 'express';
+import { EventoController } from './evento.controller.js';
+import { schemaValidator } from '../shared/middleware/schemaValidator.js';
+import { eventoSchema, eventoUpdateSchema } from './evento.schema.js';
+import { sessionData } from '../shared/middleware/sessionData.js';
+import { adminValidator } from '../shared/middleware/adminValidator.js';
+import { adminOrEventoOwnerValidator } from '../shared/middleware/adminOrEventOwnerValidator.js';
 
-const eventoController = new EventoController()
+const eventoController = new EventoController();
 
-export const eventoRouter = Router()
+export const eventoRouter = Router();
 
 // Rutas Protegidas
-eventoRouter.get('/canEdit/:id', sessionData, adminOrEventoOwnerValidator, eventoController.findOne) 
-eventoRouter.get('/estaAgendado/:id', sessionData, eventoController.estaAgendado) 
-eventoRouter.post('/addToAgenda', sessionData, eventoController.addEventoToUsuarioAgenda)
-eventoRouter.post('/sacarDeAgenda', sessionData, eventoController.sacarDeAgenda)
-eventoRouter.get('/getAgenda', sessionData, eventoController.getAgenda)
+eventoRouter.get(
+  '/canEdit/:id',
+  sessionData,
+  adminOrEventoOwnerValidator,
+  eventoController.findOne
+);
+eventoRouter.get('/estaAgendado/:id', sessionData, eventoController.estaAgendado);
+eventoRouter.post('/addToAgenda', sessionData, eventoController.addEventoToUsuarioAgenda);
+eventoRouter.post('/sacarDeAgenda', sessionData, eventoController.sacarDeAgenda);
+eventoRouter.get('/getAgenda', sessionData, eventoController.getAgenda);
 
-eventoRouter.post('/', sessionData, schemaValidator(eventoSchema), eventoController.add) // El control de permisos se hace en el controlador
-eventoRouter.put('/:id', sessionData, adminOrEventoOwnerValidator, schemaValidator(eventoUpdateSchema), eventoController.update)
-eventoRouter.patch('/:id', sessionData, adminOrEventoOwnerValidator, schemaValidator(eventoUpdateSchema), eventoController.update)
-eventoRouter.delete('/:id', sessionData, adminOrEventoOwnerValidator, eventoController.remove)
+eventoRouter.post('/', sessionData, schemaValidator(eventoSchema), eventoController.add); // El control de permisos se hace en el controlador
+eventoRouter.put(
+  '/:id',
+  sessionData,
+  adminOrEventoOwnerValidator,
+  schemaValidator(eventoUpdateSchema),
+  eventoController.update
+);
+eventoRouter.patch(
+  '/:id',
+  sessionData,
+  adminOrEventoOwnerValidator,
+  schemaValidator(eventoUpdateSchema),
+  eventoController.update
+);
+eventoRouter.delete('/:id', sessionData, adminOrEventoOwnerValidator, eventoController.remove);
 
 // No Protegidas
-eventoRouter.get('/', eventoController.findAll)
-eventoRouter.post('/filtro', eventoController.filtro)
-eventoRouter.get('/:id', eventoController.findOne)
+eventoRouter.get('/', eventoController.findAll);
+eventoRouter.post('/filtro', eventoController.filtro);
+eventoRouter.get('/:id', eventoController.findOne);
