@@ -50,6 +50,7 @@ export class PuntoDeInteres extends BaseEntity {
   @OneToMany(() => Evento, (evento) => evento.puntoDeInteres, {
     nullable: true,
     orphanRemoval: true,
+    cascade: [Cascade.ALL]
   })
   eventos = new Collection<Evento>(this);
 

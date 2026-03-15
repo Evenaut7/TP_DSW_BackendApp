@@ -227,16 +227,27 @@ export class UsuarioController {
   delete = async (req: Request, res: Response) => {
     try {
       const id = Number.parseInt(req.params.id);
-      const usuarioToRemove = em.getReference(Usuario, id);
-      await em.removeAndFlush(usuarioToRemove);
-      res.status(200).json({
-        message: 'Usuario removed successfully',
-        data: usuarioToRemove,
-      });
+      const usuario = await em.findOneOrFail(
+        Usuario,
+        { id },
+        { populate: ['favoritos', 'agendaEvento', 'valoraciones'] }
+      );
+
+      usuario.favoritos.removeAll();
+      usuario.agendaEvento.removeAll();
+
+      for (const valoracion of usuario.valoraciones) {
+        em.remove(valoracion);
+      }
+
+      await em.flush();
+      await em.removeAndFlush(usuario);
+
+      res.status(200).json({ message: 'Usuario removed successfully', data: id });
     } catch (error: any) {
-      res.status(500).json({ message: 'Error removing usuario', error: error.message });
+      res.status(500).json({ message: error.message });
     }
-  };
+  }
 
   isAdmin = async (req: Request, res: Response) => {
     try {
