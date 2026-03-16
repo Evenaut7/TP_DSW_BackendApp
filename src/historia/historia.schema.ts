@@ -16,15 +16,12 @@ export const historiaSchema = z.object({
       .refine((date) => !isNaN(Date.parse(date)), { message: 'Formato de fecha Invalido' }),
     fechaHasta: z
       .string()
-      .nonempty({ message: 'La fecha hasta no puede estar vacia' })
-      .refine((date) => !isNaN(Date.parse(date)), { message: 'Formato de fecha Invalido' }),
+      .refine((date) => !isNaN(Date.parse(date)), { message: 'Formato de fecha Invalido' })
+      .optional(),
+    imagen: z.string().min(1).max(255).optional(),
     puntoDeInteres: z
       .number({ message: 'El punto de interes es obligatorio' })
       .positive({ message: 'El id del punto de interes debe ser un numero positivo' }),
-    imagen: z
-      .string()
-      .min(1, { message: 'imagen no puede estar vacío' })
-      .max(255, { message: 'imagen no puede superar los 255 caracteres' }),
   }),
 });
 

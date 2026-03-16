@@ -247,7 +247,7 @@ export class UsuarioController {
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
-  }
+  };
 
   isAdmin = async (req: Request, res: Response) => {
     try {
@@ -308,7 +308,7 @@ export class UsuarioController {
         return;
       }
 
-      const id = Number.parseInt(req.params.id);
+      const id = Number.parseInt(req.params.pdi);
       const pdi = await em.findOneOrFail(PuntoDeInteres, { id }, { populate: ['usuario'] });
 
       const isOwner = req.user.id === pdi.usuario.id;

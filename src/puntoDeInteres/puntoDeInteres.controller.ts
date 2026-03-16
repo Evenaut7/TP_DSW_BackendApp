@@ -48,6 +48,7 @@ export class PuntoDeInteresController {
             'valoraciones',
             'localidad',
             'localidad.provincia',
+            'historias',
           ],
         }
       );

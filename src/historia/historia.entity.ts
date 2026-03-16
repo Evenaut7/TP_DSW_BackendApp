@@ -10,7 +10,7 @@ export class Historia extends BaseEntity {
   @Property({ nullable: false, unique: false, type: 'date' })
   fechaDesde!: Date;
 
-  @Property({ nullable: false, unique: false, type: 'date' })
+  @Property({ nullable: true, unique: false, type: 'date' })
   fechaHasta?: Date;
 
   @Property({ nullable: false, unique: false, type: 'string' })
