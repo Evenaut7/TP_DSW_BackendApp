@@ -9,6 +9,8 @@
     "format:check": "prettier --check .",
     "test": "mocha",
     "build": "tsc -p ./tsconfig.json",
+    "start": "node ./dist/server.js",
+    "migrate": "mikro-orm migration:up",
     "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/server.js\"",
     "seed": "tsx ./src/shared/seed.ts",
     "geocode": "tsx ./src/shared/geocode-pdis.ts"

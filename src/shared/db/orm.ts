@@ -1,14 +1,16 @@
 import { MikroORM } from '@mikro-orm/core';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
 
+const isProd = process.env.NODE_ENV === 'production';
+
 export const orm = await MikroORM.init({
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],
-  dbName: 'traveldb',
+  dbName: process.env.DB_NAME || 'traveldb',
   type: 'mysql',
-  clientUrl: 'mysql://dsw:dsw@localhost:3306/traveldb',
-  highlighter: new SqlHighlighter(),
-  debug: true,
+  clientUrl: process.env.DATABASE_URL || 'mysql://dsw:dsw@localhost:3306/traveldb',
+  highlighter: isProd ? undefined : new SqlHighlighter(),
+  debug: !isProd,
   schemaGenerator: {
     disableForeignKeys: true,
     createForeignKeyConstraints: true,
