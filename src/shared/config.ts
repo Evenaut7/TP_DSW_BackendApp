@@ -1,10 +1,19 @@
 import dotenv from 'dotenv';
 
-// Cargar variables de entorno
 dotenv.config();
 
-// Validar que existan las variables necesarias
+const isProd = process.env.NODE_ENV === 'production';
+
 const requiredEnvVars = ['JWT_ACCESS_SECRET', 'JWT_REFRESH_SECRET'];
+
+if (isProd) {
+  requiredEnvVars.push(
+    'CLOUDINARY_CLOUD_NAME',
+    'CLOUDINARY_API_KEY',
+    'CLOUDINARY_API_SECRET'
+  );
+}
+
 const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
 
 if (missingEnvVars.length > 0) {
@@ -14,7 +23,6 @@ if (missingEnvVars.length > 0) {
   );
 }
 
-// Exportar variables de forma tipada y segura
 export const config = {
   jwt: {
     accessSecret: process.env.JWT_ACCESS_SECRET as string,
@@ -27,6 +35,14 @@ export const config = {
   },
   cors: {
     origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  },
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME || '',
+    apiKey: process.env.CLOUDINARY_API_KEY || '',
+    apiSecret: process.env.CLOUDINARY_API_SECRET || '',
+  },
+  storage: {
+    backendUrl: process.env.BACKEND_URL || 'http://localhost:3000',
   },
 };
 

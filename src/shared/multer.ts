@@ -1,22 +1,41 @@
 import multer from 'multer';
-import { ParsedPath, extname } from 'path';
-import { v4 as uuidv4 } from 'uuid';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import { v2 as cloudinary } from 'cloudinary';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { config } from './config.js';
 
-const types = ['image/jpeg', 'image/png'];
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-export const uploadImages = multer({
-  storage: multer.diskStorage({
-    destination: './uploads',
-    filename: (req, file, cb) => {
-      cb(null, uuidv4() + extname(file.originalname));
-    },
-  }),
-  fileFilter: (req, file, cb) => {
-    if (types.includes(file.mimetype)) cb(null, true);
-    else cb(new Error(`Solo se permiten los tipos de dato: ${types.join(' ')}`));
-  },
-  limits: {
-    fieldSize: 1024 * 1024 * 10,
-    files: 20,
+const isProd = config.server.nodeEnv === 'production';
+
+if (isProd) {
+  cloudinary.config({
+    cloud_name: config.cloudinary.cloudName,
+    api_key: config.cloudinary.apiKey,
+    api_secret: config.cloudinary.apiSecret,
+  });
+}
+
+const storageLocal = multer.diskStorage({
+  destination: path.join(__dirname, '..', '..', 'uploads'),
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
   },
 });
+
+const storageCloud = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'traveldb',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+    public_id: (req: any, file: any) => file.originalname.replace(/\.[^.]+$/, ''),
+  } as any,
+});
+
+export const upload = multer({
+  storage: isProd ? storageCloud : storageLocal,
+});
+
+export { cloudinary };
