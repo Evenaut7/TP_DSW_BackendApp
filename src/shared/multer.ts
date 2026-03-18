@@ -34,7 +34,7 @@ const storageCloud = new CloudinaryStorage({
   } as any,
 });
 
-export const upload = multer({
+export const uploadImages = multer({
   storage: isProd ? storageCloud : storageLocal,
 });
 
