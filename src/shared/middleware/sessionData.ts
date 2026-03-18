@@ -38,10 +38,12 @@ export const sessionData: RequestHandler = (req: Request, res: Response, next: N
         { expiresIn: '15m' }
       );
 
+      const isProduction = process.env.NODE_ENV === 'production';
+
       res.cookie('access_token', newAccessToken, {
         httpOnly: true,
-        secure: config.server.nodeEnv === 'production',
-        sameSite: 'lax',
+        secure: isProduction,
+        sameSite: isProduction ? 'none' : 'lax',
         maxAge: 15 * 60 * 1000,
         path: '/',
       });

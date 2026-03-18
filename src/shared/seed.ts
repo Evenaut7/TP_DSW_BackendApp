@@ -8,17 +8,22 @@ import { Usuario } from '../usuario/usuario.entity.js';
 import { Historia } from '../historia/historia.entity.js';
 import { Valoracion } from '../valoracion/valoracion.entity.js';
 import { Evento } from '../evento/evento.entity.js';
+import bcrypt from 'bcryptjs';
 
 console.log('📄 seed file loaded:', new Date().toISOString());
 console.log('📄 running file URL:', import.meta.url);
 
+const SALT_ROUNDS = 10;
+const hashPassword = (plain: string) => bcrypt.hashSync(plain, SALT_ROUNDS);
+
 async function main() {
   console.log('▶️ seed: start');
-  const em = orm.em.fork(); // creamos EntityManager aislado
+  const em = orm.em.fork();
   console.time('⏱ seed');
-  //-------------------------------------------------------------------------------------------
-  // PROVINCIAS -------------------------------------------------------------------------------
-  //-------------------------------------------------------------------------------------------
+
+  //------------------------------------------------------------------------------------------------------------------------------------------------------------
+  // PROVINCIAS
+  //------------------------------------------------------------------------------------------------------------------------------------------------------------
   const p1 = new Provincia();
   p1.nombre = 'Buenos Aires';
   await em.persistAndFlush(p1);
@@ -38,8 +43,9 @@ async function main() {
   const p5 = new Provincia();
   p5.nombre = 'Tierra del Fuego';
   await em.persistAndFlush(p5);
+
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
-  // LOCALIDADES -----------------------------------------------------------------------------------------------------------------------------------------------
+  // LOCALIDADES
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
   const l0 = new Localidad();
   l0.nombre = 'CABA';
@@ -62,7 +68,7 @@ async function main() {
   l2.imagen = 'rosario.jpg';
   l2.provincia = p2;
   l2.descripcion =
-    'Metrópolis del río Paraná con arquitectura patrimonial, playas urbanas y activa vida cultural.Y AGUANTE CENTRALITO';
+    'Metrópolis del río Paraná con arquitectura patrimonial, playas urbanas y activa vida cultural. Y AGUANTE CENTRALITO';
   await em.persistAndFlush(l2);
 
   const l3 = new Localidad();
@@ -146,7 +152,7 @@ async function main() {
   await em.persistAndFlush(l12);
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
-  // TAGS ------------------------------------------------------------------------------------------------------------------------------------------------------
+  // TAGS
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
   const tag1 = new Tag();
   tag1.nombre = 'Familiar';
@@ -202,16 +208,31 @@ async function main() {
   tagTecnologia.nombre = 'Tecnología';
   tagTecnologia.tipo = 'Evento';
   await em.persistAndFlush(tagTecnologia);
-  //------------------------------------------------------------------------------------------------------------------------------------------------------------
-  // USUARIOS --------------------------------------------------------------------------------------------------------------------------------------------------
-  //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+  const tagNaturaleza = new Tag();
+  tagNaturaleza.nombre = 'Naturaleza';
+  tagNaturaleza.tipo = 'Punto de Interés';
+  await em.persistAndFlush(tagNaturaleza);
+
+  const tagArte = new Tag();
+  tagArte.nombre = 'Arte';
+  tagArte.tipo = 'Punto de Interés';
+  await em.persistAndFlush(tagArte);
+
+  const tagNocturno = new Tag();
+  tagNocturno.nombre = 'Vida Nocturna';
+  tagNocturno.tipo = 'Evento';
+  await em.persistAndFlush(tagNocturno);
+
+  //------------------------------------------------------------------------------------------------------------------------------------------------------------
+  // USUARIOS
+  //------------------------------------------------------------------------------------------------------------------------------------------------------------
   const usuarioAdmin = new Usuario();
   usuarioAdmin.nombre = 'admin';
   usuarioAdmin.tipo = 'admin';
   usuarioAdmin.cuit = '20123456789';
   usuarioAdmin.gmail = 'admin@gmail.com';
-  usuarioAdmin.password = '123456';
+  usuarioAdmin.password = hashPassword('123456');
   usuarioAdmin.localidad = l1;
   await em.persistAndFlush(usuarioAdmin);
 
@@ -220,7 +241,7 @@ async function main() {
   usuario4.tipo = 'usuario';
   usuario4.cuit = '20-11111111-1';
   usuario4.gmail = 'vl@gmail.com';
-  usuario4.password = '123456';
+  usuario4.password = hashPassword('123456');
   usuario4.localidad = l2;
   await em.persistAndFlush(usuario4);
 
@@ -229,7 +250,7 @@ async function main() {
   usuario5.tipo = 'usuario';
   usuario5.cuit = '20-22222222-2';
   usuario5.gmail = 'jm@gmail.com';
-  usuario5.password = '123456';
+  usuario5.password = hashPassword('123456');
   usuario5.localidad = l2;
   await em.persistAndFlush(usuario5);
 
@@ -238,7 +259,7 @@ async function main() {
   usuario6.tipo = 'usuario';
   usuario6.cuit = '20-33333333-3';
   usuario6.gmail = 'gt@gmail.com';
-  usuario6.password = '123456';
+  usuario6.password = hashPassword('123456');
   usuario6.localidad = l2;
   await em.persistAndFlush(usuario6);
 
@@ -247,7 +268,7 @@ async function main() {
   usuario7.tipo = 'usuario';
   usuario7.cuit = '20-44444444-4';
   usuario7.gmail = 'lm@gmail.com';
-  usuario7.password = '123456';
+  usuario7.password = hashPassword('123456');
   usuario7.localidad = l2;
   await em.persistAndFlush(usuario7);
 
@@ -256,7 +277,7 @@ async function main() {
   usuario8.tipo = 'usuario';
   usuario8.cuit = '10-11111111-1';
   usuario8.gmail = 'lp@gmail.com';
-  usuario8.password = '123456';
+  usuario8.password = hashPassword('123456');
   usuario8.localidad = l0;
   await em.persistAndFlush(usuario8);
 
@@ -265,7 +286,7 @@ async function main() {
   usuario9.tipo = 'usuario';
   usuario9.cuit = '10-22222222-2';
   usuario9.gmail = 'ef@gmail.com';
-  usuario9.password = '123456';
+  usuario9.password = hashPassword('123456');
   usuario9.localidad = l0;
   await em.persistAndFlush(usuario9);
 
@@ -274,7 +295,7 @@ async function main() {
   usuario10.tipo = 'usuario';
   usuario10.cuit = '40-11111111-1';
   usuario10.gmail = 'pd@gmail.com';
-  usuario10.password = '123456';
+  usuario10.password = hashPassword('123456');
   usuario10.localidad = l4;
   await em.persistAndFlush(usuario10);
 
@@ -283,7 +304,7 @@ async function main() {
   usuario11.tipo = 'usuario';
   usuario11.cuit = '27-55555555-5';
   usuario11.gmail = 'mariana.diaz@example.com';
-  usuario11.password = '123456';
+  usuario11.password = hashPassword('123456');
   usuario11.localidad = l7;
   await em.persistAndFlush(usuario11);
 
@@ -292,7 +313,7 @@ async function main() {
   usuario12.tipo = 'usuario';
   usuario12.cuit = '20-66666666-6';
   usuario12.gmail = 'santiago.perez@example.com';
-  usuario12.password = '123456';
+  usuario12.password = hashPassword('123456');
   usuario12.localidad = l9;
   await em.persistAndFlush(usuario12);
 
@@ -301,27 +322,63 @@ async function main() {
   usuario13.tipo = 'usuario';
   usuario13.cuit = '27-77777777-7';
   usuario13.gmail = 'lucia.fernandez@example.com';
-  usuario13.password = '123456';
+  usuario13.password = hashPassword('123456');
   usuario13.localidad = l11;
   await em.persistAndFlush(usuario13);
+
+  const usuario14 = new Usuario();
+  usuario14.nombre = 'Rodrigo Gómez';
+  usuario14.tipo = 'usuario';
+  usuario14.cuit = '20-88888888-8';
+  usuario14.gmail = 'rodrigo.gomez@example.com';
+  usuario14.password = hashPassword('123456');
+  usuario14.localidad = l4;
+  await em.persistAndFlush(usuario14);
+
+  const usuario15 = new Usuario();
+  usuario15.nombre = 'Camila Torres';
+  usuario15.tipo = 'usuario';
+  usuario15.cuit = '27-99999998-9';
+  usuario15.gmail = 'camila.torres@example.com';
+  usuario15.password = hashPassword('123456');
+  usuario15.localidad = l5;
+  await em.persistAndFlush(usuario15);
+
+  const usuario16 = new Usuario();
+  usuario16.nombre = 'Facundo Herrera';
+  usuario16.tipo = 'usuario';
+  usuario16.cuit = '20-11122233-3';
+  usuario16.gmail = 'facundo.herrera@example.com';
+  usuario16.password = hashPassword('123456');
+  usuario16.localidad = l0;
+  await em.persistAndFlush(usuario16);
+
+  const usuario17 = new Usuario();
+  usuario17.nombre = 'Sofía Ramos';
+  usuario17.tipo = 'usuario';
+  usuario17.cuit = '27-44455566-6';
+  usuario17.gmail = 'sofia.ramos@example.com';
+  usuario17.password = hashPassword('123456');
+  usuario17.localidad = l6;
+  await em.persistAndFlush(usuario17);
 
   const usuarioMalaOnda = new Usuario();
   usuarioMalaOnda.nombre = 'Pedro Malafama';
   usuarioMalaOnda.tipo = 'usuario';
   usuarioMalaOnda.cuit = '20-99999999-9';
   usuarioMalaOnda.gmail = 'pedro.malafama@gmail.com';
-  usuarioMalaOnda.password = '123456';
+  usuarioMalaOnda.password = hashPassword('123456');
   usuarioMalaOnda.localidad = l2;
   await em.persistAndFlush(usuarioMalaOnda);
-  // ----------------------------- USUARIOS (CREADOR) -----------------------------
 
+  // USUARIOS CREADORES
   const muniCaba = new Usuario();
   muniCaba.nombre = 'Gobierno de la Ciudad de Buenos Aires';
   muniCaba.tipo = 'creador';
   muniCaba.cuit = '30-90000001-7';
   muniCaba.gmail = 'gcba@buenosaires.gob.ar';
-  muniCaba.password = '123456';
-  muniCaba.localidad = l0; // CABA
+  muniCaba.password = hashPassword('123456');
+  muniCaba.localidad = l0;
   await em.persistAndFlush(muniCaba);
 
   const muniQuilmes = new Usuario();
@@ -329,8 +386,8 @@ async function main() {
   muniQuilmes.tipo = 'creador';
   muniQuilmes.cuit = '30-90000002-5';
   muniQuilmes.gmail = 'municipio@quilmes.gov.ar';
-  muniQuilmes.password = '123456';
-  muniQuilmes.localidad = l1; // Quilmes
+  muniQuilmes.password = hashPassword('123456');
+  muniQuilmes.localidad = l1;
   await em.persistAndFlush(muniQuilmes);
 
   const muniCordoba = new Usuario();
@@ -338,8 +395,8 @@ async function main() {
   muniCordoba.tipo = 'creador';
   muniCordoba.cuit = '30-90000003-3';
   muniCordoba.gmail = 'municipalidad@cordoba.gov.ar';
-  muniCordoba.password = '123456';
-  muniCordoba.localidad = l4; // Córdoba
+  muniCordoba.password = hashPassword('123456');
+  muniCordoba.localidad = l4;
   await em.persistAndFlush(muniCordoba);
 
   const muniMendoza = new Usuario();
@@ -347,8 +404,8 @@ async function main() {
   muniMendoza.tipo = 'creador';
   muniMendoza.cuit = '30-90000004-1';
   muniMendoza.gmail = 'municipalidad@mendoza.gov.ar';
-  muniMendoza.password = '123456';
-  muniMendoza.localidad = l5; // Mendoza
+  muniMendoza.password = hashPassword('123456');
+  muniMendoza.localidad = l5;
   await em.persistAndFlush(muniMendoza);
 
   const muniUshuaia = new Usuario();
@@ -356,8 +413,8 @@ async function main() {
   muniUshuaia.tipo = 'creador';
   muniUshuaia.cuit = '30-90000005-0';
   muniUshuaia.gmail = 'municipalidad@ushuaia.tdf.gov.ar';
-  muniUshuaia.password = '123456';
-  muniUshuaia.localidad = l6; // Ushuaia
+  muniUshuaia.password = hashPassword('123456');
+  muniUshuaia.localidad = l6;
   await em.persistAndFlush(muniUshuaia);
 
   const usuario2 = new Usuario();
@@ -365,7 +422,7 @@ async function main() {
   usuario2.tipo = 'creador';
   usuario2.cuit = '20-121578-9';
   usuario2.gmail = 'munirosario@gmail.com';
-  usuario2.password = '123456';
+  usuario2.password = hashPassword('123456');
   usuario2.localidad = l2;
   await em.persistAndFlush(usuario2);
 
@@ -374,7 +431,7 @@ async function main() {
   usuario3.tipo = 'creador';
   usuario3.cuit = '20-55545454-9';
   usuario3.gmail = 'munifunes@gmail.com';
-  usuario3.password = '123456';
+  usuario3.password = hashPassword('123456');
   usuario3.localidad = l3;
   await em.persistAndFlush(usuario3);
 
@@ -383,7 +440,7 @@ async function main() {
   muniCarlosPaz.tipo = 'creador';
   muniCarlosPaz.cuit = '30-10000001-0';
   muniCarlosPaz.gmail = 'muni.carlospaz@gmail.com';
-  muniCarlosPaz.password = '123456';
+  muniCarlosPaz.password = hashPassword('123456');
   muniCarlosPaz.localidad = l7;
   await em.persistAndFlush(muniCarlosPaz);
 
@@ -392,7 +449,7 @@ async function main() {
   muniVillaMaria.tipo = 'creador';
   muniVillaMaria.cuit = '30-10000002-0';
   muniVillaMaria.gmail = 'muni.villamaria@gmail.com';
-  muniVillaMaria.password = '123456';
+  muniVillaMaria.password = hashPassword('123456');
   muniVillaMaria.localidad = l8;
   await em.persistAndFlush(muniVillaMaria);
 
@@ -401,7 +458,7 @@ async function main() {
   muniGodoyCruz.tipo = 'creador';
   muniGodoyCruz.cuit = '30-10000003-0';
   muniGodoyCruz.gmail = 'muni.godoycruz@gmail.com';
-  muniGodoyCruz.password = '123456';
+  muniGodoyCruz.password = hashPassword('123456');
   muniGodoyCruz.localidad = l9;
   await em.persistAndFlush(muniGodoyCruz);
 
@@ -410,7 +467,7 @@ async function main() {
   muniSanRafael.tipo = 'creador';
   muniSanRafael.cuit = '30-10000004-0';
   muniSanRafael.gmail = 'muni.sanrafael@gmail.com';
-  muniSanRafael.password = '123456';
+  muniSanRafael.password = hashPassword('123456');
   muniSanRafael.localidad = l10;
   await em.persistAndFlush(muniSanRafael);
 
@@ -419,7 +476,7 @@ async function main() {
   muniRioGrande.tipo = 'creador';
   muniRioGrande.cuit = '30-10000005-0';
   muniRioGrande.gmail = 'muni.riogrande@gmail.com';
-  muniRioGrande.password = '123456';
+  muniRioGrande.password = hashPassword('123456');
   muniRioGrande.localidad = l11;
   await em.persistAndFlush(muniRioGrande);
 
@@ -428,31 +485,22 @@ async function main() {
   muniTolhuin.tipo = 'creador';
   muniTolhuin.cuit = '30-10000006-0';
   muniTolhuin.gmail = 'muni.tolhuin@gmail.com';
-  muniTolhuin.password = '123456';
+  muniTolhuin.password = hashPassword('123456');
   muniTolhuin.localidad = l12;
   await em.persistAndFlush(muniTolhuin);
 
-  // -------------------------------------------------------------------------------------------
-  // UTILIDAD: pool de usuarios “Usuario” para valoraciones (existentes + nuevos)
-  // -------------------------------------------------------------------------------------------
   const poolUsuariosValoracion: Usuario[] = [
-    usuario4,
-    usuario5,
-    usuario6,
-    usuario7,
-    usuario8,
-    usuario9,
-    usuario10,
-    usuario11,
-    usuario12,
-    usuario13,
+    usuario4, usuario5, usuario6, usuario7, usuario8,
+    usuario9, usuario10, usuario11, usuario12, usuario13,
+    usuario14, usuario15, usuario16, usuario17,
   ];
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
-  // PUNTO DE INTERES ------------------------------------------------------------------------------------------------------------------------------------------
+  // PUNTOS DE INTERÉS
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
+
   // ROSARIO
-  const pdiParqueIndependencia = new PuntoDeInteres(); // 1. Parque de la Independencia
+  const pdiParqueIndependencia = new PuntoDeInteres();
   pdiParqueIndependencia.nombre = 'Parque de la Independencia';
   pdiParqueIndependencia.descripcion =
     "Uno de los parques urbanos más grandes y antiguos de Rosario, hogar de museos, el Rosedal, el Laguito y el estadio del club Newell's Old Boys.";
@@ -462,6 +510,7 @@ async function main() {
   pdiParqueIndependencia.privado = false;
   pdiParqueIndependencia.usuario = usuario2;
   pdiParqueIndependencia.localidad = l2;
+  pdiParqueIndependencia.tags.add(tagAireLibre, tagCultura);
   await em.persistAndFlush(pdiParqueIndependencia);
 
   const pdiRioMio = new PuntoDeInteres();
@@ -474,9 +523,10 @@ async function main() {
   pdiRioMio.privado = false;
   pdiRioMio.usuario = usuario2;
   pdiRioMio.localidad = l2;
+  pdiRioMio.tags.add(tagAireLibre, tagBienestar);
   await em.persistAndFlush(pdiRioMio);
 
-  const pdiMonumentoBandera = new PuntoDeInteres(); // 3. Monumento Nacional a la Bandera
+  const pdiMonumentoBandera = new PuntoDeInteres();
   pdiMonumentoBandera.nombre = 'Monumento Nacional a la Bandera';
   pdiMonumentoBandera.descripcion =
     'El ícono de Rosario y uno de los monumentos más importantes de Argentina, dedicado a la creación de la bandera.';
@@ -486,9 +536,10 @@ async function main() {
   pdiMonumentoBandera.privado = false;
   pdiMonumentoBandera.usuario = usuario2;
   pdiMonumentoBandera.localidad = l2;
+  pdiMonumentoBandera.tags.add(tagHistorico, tagCultura);
   await em.persistAndFlush(pdiMonumentoBandera);
 
-  const pdiCCPE = new PuntoDeInteres(); // 4. Centro Cultural Parque de España
+  const pdiCCPE = new PuntoDeInteres();
   pdiCCPE.nombre = 'Centro Cultural Parque de España';
   pdiCCPE.descripcion =
     'Un complejo arquitectónico y cultural a orillas del Paraná con teatros, exposiciones y espacios de encuentro.';
@@ -498,9 +549,10 @@ async function main() {
   pdiCCPE.privado = false;
   pdiCCPE.usuario = usuario2;
   pdiCCPE.localidad = l2;
+  pdiCCPE.tags.add(tagCultura, tagArte);
   await em.persistAndFlush(pdiCCPE);
 
-  const pdiJardinNinos = new PuntoDeInteres(); // 5. El Jardín de los Niños
+  const pdiJardinNinos = new PuntoDeInteres();
   pdiJardinNinos.nombre = 'El Jardín de los Niños';
   pdiJardinNinos.descripcion =
     'Un espacio lúdico y educativo dentro del Parque Independencia, con juegos, laberintos y propuestas interactivas para los más pequeños.';
@@ -510,34 +562,77 @@ async function main() {
   pdiJardinNinos.privado = false;
   pdiJardinNinos.usuario = usuario2;
   pdiJardinNinos.localidad = l2;
+  pdiJardinNinos.tags.add(tag1, tagBienestar);
   await em.persistAndFlush(pdiJardinNinos);
 
-  //FUNES
-  const pdiPaseoEstacionFunes = new PuntoDeInteres(); // 1. Paseo de la Estación (Funes)
+  // ROSARIO — PDIs nuevos
+  const pdiLagunaPark = new PuntoDeInteres();
+  pdiLagunaPark.nombre = 'Complejo Astronómico Municipal';
+  pdiLagunaPark.descripcion =
+    'Observatorio y planetario al servicio de la educación científica, con charlas abiertas al público.';
+  pdiLagunaPark.imagen = 'parque-independencia.jpg'; // reutiliza imagen
+  pdiLagunaPark.calle = 'Av. Carlos Pellegrini';
+  pdiLagunaPark.altura = 2600;
+  pdiLagunaPark.privado = false;
+  pdiLagunaPark.usuario = usuario2;
+  pdiLagunaPark.localidad = l2;
+  pdiLagunaPark.tags.add(tagEducacion, tagCultura);
+  await em.persistAndFlush(pdiLagunaPark);
+
+  const pdiMercadoPasaje = new PuntoDeInteres();
+  pdiMercadoPasaje.nombre = 'Mercado del Patio';
+  pdiMercadoPasaje.descripcion =
+    'Mercado gastronómico y de diseño en el corazón de Rosario, con propuestas de cocina local e internacional.';
+  pdiMercadoPasaje.imagen = 'ccpe.jpg'; // reutiliza imagen
+  pdiMercadoPasaje.calle = 'Corrientes';
+  pdiMercadoPasaje.altura = 850;
+  pdiMercadoPasaje.privado = false;
+  pdiMercadoPasaje.usuario = usuario2;
+  pdiMercadoPasaje.localidad = l2;
+  pdiMercadoPasaje.tags.add(tagGastronomia, tagCompras);
+  await em.persistAndFlush(pdiMercadoPasaje);
+
+  // FUNES
+  const pdiPaseoEstacionFunes = new PuntoDeInteres();
   pdiPaseoEstacionFunes.nombre = 'Paseo de la Estación';
   pdiPaseoEstacionFunes.descripcion =
     'Antigua estación de tren convertida en espacio recreativo y cultural, con ferias y eventos.';
   pdiPaseoEstacionFunes.imagen = 'paseo-estacion-funes.jpg';
   pdiPaseoEstacionFunes.calle = 'Pedro Ríos';
-  pdiPaseoEstacionFunes.altura = 1400; // Un número de altura aproximado o representativo
+  pdiPaseoEstacionFunes.altura = 1400;
   pdiPaseoEstacionFunes.privado = false;
-  pdiPaseoEstacionFunes.usuario = usuario3; // Asignar el usuario correspondiente
-  pdiPaseoEstacionFunes.localidad = l3; // Asignar la localidad de Funes
+  pdiPaseoEstacionFunes.usuario = usuario3;
+  pdiPaseoEstacionFunes.localidad = l3;
+  pdiPaseoEstacionFunes.tags.add(tagCultura, tagAireLibre);
   await em.persistAndFlush(pdiPaseoEstacionFunes);
 
-  const pdiClubKentucky = new PuntoDeInteres(); // 2. Club de Campo Kentucky (Funes) - Si es un punto de interés conocido, aunque sea privado
+  const pdiClubKentucky = new PuntoDeInteres();
   pdiClubKentucky.nombre = 'Club de Campo Kentucky';
   pdiClubKentucky.descripcion =
     'Reconocido club de campo con campos de golf, instalaciones deportivas y áreas verdes en Funes.';
   pdiClubKentucky.imagen = 'club-kentucky-funes.png';
-  pdiClubKentucky.calle = 'Ruta Nacional A012'; // O una calle interna si es relevante
+  pdiClubKentucky.calle = 'Ruta Nacional A012';
   pdiClubKentucky.altura = 500;
-  pdiClubKentucky.privado = true; // Este es un ejemplo de un punto de interés privado
-  pdiClubKentucky.usuario = usuario3; // Asignar el usuario correspondiente
-  pdiClubKentucky.localidad = l3; // Asignar la localidad de Funes
+  pdiClubKentucky.privado = true;
+  pdiClubKentucky.usuario = usuario3;
+  pdiClubKentucky.localidad = l3;
+  pdiClubKentucky.tags.add(tagDeporte, tagBienestar);
   await em.persistAndFlush(pdiClubKentucky);
 
-  // CABA (l0)
+  const pdiFunesPlaza = new PuntoDeInteres();
+  pdiFunesPlaza.nombre = 'Plaza General San Martín (Funes)';
+  pdiFunesPlaza.descripcion =
+    'Corazón del casco histórico de Funes, con glorieta, vegetación añosa y actividades recreativas los fines de semana.';
+  pdiFunesPlaza.imagen = 'funes.jpg'; // reutiliza imagen localidad
+  pdiFunesPlaza.calle = 'Bv. Roca';
+  pdiFunesPlaza.altura = 300;
+  pdiFunesPlaza.privado = false;
+  pdiFunesPlaza.usuario = usuario3;
+  pdiFunesPlaza.localidad = l3;
+  pdiFunesPlaza.tags.add(tagAireLibre, tagBienestar);
+  await em.persistAndFlush(pdiFunesPlaza);
+
+  // CABA
   const pdiObelisco = new PuntoDeInteres();
   pdiObelisco.nombre = 'Obelisco';
   pdiObelisco.descripcion = 'Monumento emblemático sobre Av. 9 de Julio.';
@@ -559,10 +654,23 @@ async function main() {
   pdiTeatroColon.privado = false;
   pdiTeatroColon.usuario = muniCaba;
   pdiTeatroColon.localidad = l0;
-  pdiTeatroColon.tags.add(tagCultura, tagHistorico);
+  pdiTeatroColon.tags.add(tagCultura, tagHistorico, tagArte);
   await em.persistAndFlush(pdiTeatroColon);
 
-  // Quilmes (l1)
+  const pdiRecoleta = new PuntoDeInteres();
+  pdiRecoleta.nombre = 'Cementerio de la Recoleta';
+  pdiRecoleta.descripcion =
+    'Uno de los cementerios más famosos del mundo, con mausoleos históricos y esculturas notables.';
+  pdiRecoleta.imagen = 'caba.jpg'; // reutiliza imagen
+  pdiRecoleta.calle = 'Junín';
+  pdiRecoleta.altura = 1760;
+  pdiRecoleta.privado = false;
+  pdiRecoleta.usuario = muniCaba;
+  pdiRecoleta.localidad = l0;
+  pdiRecoleta.tags.add(tagHistorico, tagCultura);
+  await em.persistAndFlush(pdiRecoleta);
+
+  // QUILMES
   const pdiRiberaQuilmes = new PuntoDeInteres();
   pdiRiberaQuilmes.nombre = 'Ribera de Quilmes';
   pdiRiberaQuilmes.descripcion = 'Costanera sobre el Río de la Plata con espacios verdes.';
@@ -587,7 +695,20 @@ async function main() {
   pdiCatedralQuilmes.tags.add(tagHistorico, tagCultura);
   await em.persistAndFlush(pdiCatedralQuilmes);
 
-  // Córdoba (l4)
+  const pdiMuseoQuilmes = new PuntoDeInteres();
+  pdiMuseoQuilmes.nombre = 'Museo Histórico Regional de Quilmes';
+  pdiMuseoQuilmes.descripcion =
+    'Colecciones sobre la historia local desde las comunidades originarias hasta el siglo XX.';
+  pdiMuseoQuilmes.imagen = 'quilmes.png'; // reutiliza imagen
+  pdiMuseoQuilmes.calle = 'Rivadavia';
+  pdiMuseoQuilmes.altura = 450;
+  pdiMuseoQuilmes.privado = false;
+  pdiMuseoQuilmes.usuario = muniQuilmes;
+  pdiMuseoQuilmes.localidad = l1;
+  pdiMuseoQuilmes.tags.add(tagHistorico, tagEducacion);
+  await em.persistAndFlush(pdiMuseoQuilmes);
+
+  // CÓRDOBA
   const pdiParqueSarmientoCba = new PuntoDeInteres();
   pdiParqueSarmientoCba.nombre = 'Parque Sarmiento';
   pdiParqueSarmientoCba.descripcion = 'Pulmón verde de Córdoba con laguna y senderos.';
@@ -612,7 +733,20 @@ async function main() {
   pdiBuenPastor.tags.add(tagCultura, tagGastronomia, tagCompras);
   await em.persistAndFlush(pdiBuenPastor);
 
-  // Mendoza (l5)
+  const pdiCatedralCba = new PuntoDeInteres();
+  pdiCatedralCba.nombre = 'Catedral de Córdoba';
+  pdiCatedralCba.descripcion =
+    'Catedral metropolitana de estilo barroco, una de las más antiguas de América del Sur.';
+  pdiCatedralCba.imagen = 'cordoba.png'; // reutiliza imagen
+  pdiCatedralCba.calle = 'Independencia';
+  pdiCatedralCba.altura = 80;
+  pdiCatedralCba.privado = false;
+  pdiCatedralCba.usuario = muniCordoba;
+  pdiCatedralCba.localidad = l4;
+  pdiCatedralCba.tags.add(tagHistorico, tagCultura);
+  await em.persistAndFlush(pdiCatedralCba);
+
+  // MENDOZA
   const pdiPlazaIndMza = new PuntoDeInteres();
   pdiPlazaIndMza.nombre = 'Plaza Independencia';
   pdiPlazaIndMza.descripcion = 'Plaza central con ferias y actividades culturales.';
@@ -637,7 +771,20 @@ async function main() {
   pdiParqueSanMartinMza.tags.add(tagAireLibre, tagBienestar);
   await em.persistAndFlush(pdiParqueSanMartinMza);
 
-  // Ushuaia (l6)
+  const pdiBodegaMza = new PuntoDeInteres();
+  pdiBodegaMza.nombre = 'Bodega Trapiche';
+  pdiBodegaMza.descripcion =
+    'Una de las bodegas más emblemáticas de Argentina, con visitas guiadas y degustaciones.';
+  pdiBodegaMza.imagen = 'mendoza.png'; // reutiliza imagen
+  pdiBodegaMza.calle = 'Nueva Mayorga';
+  pdiBodegaMza.altura = 7000;
+  pdiBodegaMza.privado = true;
+  pdiBodegaMza.usuario = muniMendoza;
+  pdiBodegaMza.localidad = l5;
+  pdiBodegaMza.tags.add(tagGastronomia, tagHistorico);
+  await em.persistAndFlush(pdiBodegaMza);
+
+  // USHUAIA
   const pdiFaroFinDelMundo = new PuntoDeInteres();
   pdiFaroFinDelMundo.nombre = 'Faro del fin del mundo';
   pdiFaroFinDelMundo.descripcion = 'Faro emblemático del extremo austral, en el Canal Beagle.';
@@ -662,7 +809,20 @@ async function main() {
   pdiMuseoFinDelMundo.tags.add(tagCultura, tagHistorico);
   await em.persistAndFlush(pdiMuseoFinDelMundo);
 
-  //VILLA CARLOS PAZ
+  const pdiParqueNacionalTDF = new PuntoDeInteres();
+  pdiParqueNacionalTDF.nombre = 'Parque Nacional Tierra del Fuego';
+  pdiParqueNacionalTDF.descripcion =
+    'El único parque nacional costero de Argentina, con selva subantártica, lagos y senderos.';
+  pdiParqueNacionalTDF.imagen = 'ushuaia.png'; // reutiliza imagen
+  pdiParqueNacionalTDF.calle = 'RN3 Km 3024';
+  pdiParqueNacionalTDF.altura = 1;
+  pdiParqueNacionalTDF.privado = false;
+  pdiParqueNacionalTDF.usuario = muniUshuaia;
+  pdiParqueNacionalTDF.localidad = l6;
+  pdiParqueNacionalTDF.tags.add(tagNaturaleza, tagAireLibre, tagBienestar);
+  await em.persistAndFlush(pdiParqueNacionalTDF);
+
+  // VILLA CARLOS PAZ
   const pdiRelojCucu = new PuntoDeInteres();
   pdiRelojCucu.nombre = 'Reloj Cucú (VCP)';
   pdiRelojCucu.descripcion = 'Emblema turístico de Villa Carlos Paz. Punto de encuentro clásico.';
@@ -672,6 +832,7 @@ async function main() {
   pdiRelojCucu.privado = false;
   pdiRelojCucu.usuario = muniCarlosPaz;
   pdiRelojCucu.localidad = l7;
+  pdiRelojCucu.tags.add(tagHistorico, tagCultura);
   await em.persistAndFlush(pdiRelojCucu);
 
   const pdiCostaneraVCP = new PuntoDeInteres();
@@ -684,6 +845,7 @@ async function main() {
   pdiCostaneraVCP.privado = false;
   pdiCostaneraVCP.usuario = muniCarlosPaz;
   pdiCostaneraVCP.localidad = l7;
+  pdiCostaneraVCP.tags.add(tagAireLibre, tagBienestar);
   await em.persistAndFlush(pdiCostaneraVCP);
 
   const pdiAerosilla = new PuntoDeInteres();
@@ -695,9 +857,23 @@ async function main() {
   pdiAerosilla.privado = true;
   pdiAerosilla.usuario = muniCarlosPaz;
   pdiAerosilla.localidad = l7;
+  pdiAerosilla.tags.add(tagDeporte, tagAireLibre);
   await em.persistAndFlush(pdiAerosilla);
 
-  //VILLA MARIA
+  const pdiSierrasVCP = new PuntoDeInteres();
+  pdiSierrasVCP.nombre = 'Sendero Camino de los Artesanos (VCP)';
+  pdiSierrasVCP.descripcion =
+    'Recorrido pintoresco entre talleres y galerías de artistas locales en las sierras cordobesas.';
+  pdiSierrasVCP.imagen = 'villacarlospaz.jpg'; // reutiliza imagen
+  pdiSierrasVCP.calle = 'Ruta E-55';
+  pdiSierrasVCP.altura = 1200;
+  pdiSierrasVCP.privado = false;
+  pdiSierrasVCP.usuario = muniCarlosPaz;
+  pdiSierrasVCP.localidad = l7;
+  pdiSierrasVCP.tags.add(tagArte, tagCompras);
+  await em.persistAndFlush(pdiSierrasVCP);
+
+  // VILLA MARÍA
   const pdiAnfiteatroVM = new PuntoDeInteres();
   pdiAnfiteatroVM.nombre = 'Anfiteatro Municipal (Villa María)';
   pdiAnfiteatroVM.descripcion = 'Sede del Festival Internacional de Peñas.';
@@ -707,6 +883,7 @@ async function main() {
   pdiAnfiteatroVM.privado = false;
   pdiAnfiteatroVM.usuario = muniVillaMaria;
   pdiAnfiteatroVM.localidad = l8;
+  pdiAnfiteatroVM.tags.add(tagMusica, tagCultura);
   await em.persistAndFlush(pdiAnfiteatroVM);
 
   const pdiCostaneraVM = new PuntoDeInteres();
@@ -718,6 +895,7 @@ async function main() {
   pdiCostaneraVM.privado = false;
   pdiCostaneraVM.usuario = muniVillaMaria;
   pdiCostaneraVM.localidad = l8;
+  pdiCostaneraVM.tags.add(tagAireLibre, tagBienestar);
   await em.persistAndFlush(pdiCostaneraVM);
 
   const pdiPlazaIndVM = new PuntoDeInteres();
@@ -729,9 +907,10 @@ async function main() {
   pdiPlazaIndVM.privado = false;
   pdiPlazaIndVM.usuario = muniVillaMaria;
   pdiPlazaIndVM.localidad = l8;
+  pdiPlazaIndVM.tags.add(tagCultura, tagAireLibre);
   await em.persistAndFlush(pdiPlazaIndVM);
 
-  //MENDOZA
+  // GODOY CRUZ
   const pdiPlazaGC = new PuntoDeInteres();
   pdiPlazaGC.nombre = 'Plaza Godoy Cruz';
   pdiPlazaGC.descripcion = 'Espacio verde central con propuestas culturales.';
@@ -741,6 +920,7 @@ async function main() {
   pdiPlazaGC.privado = false;
   pdiPlazaGC.usuario = muniGodoyCruz;
   pdiPlazaGC.localidad = l9;
+  pdiPlazaGC.tags.add(tagAireLibre, tagCultura);
   await em.persistAndFlush(pdiPlazaGC);
 
   const pdiTeatroPlaza = new PuntoDeInteres();
@@ -752,6 +932,7 @@ async function main() {
   pdiTeatroPlaza.privado = false;
   pdiTeatroPlaza.usuario = muniGodoyCruz;
   pdiTeatroPlaza.localidad = l9;
+  pdiTeatroPlaza.tags.add(tagCultura, tagArte);
   await em.persistAndFlush(pdiTeatroPlaza);
 
   const pdiPalmares = new PuntoDeInteres();
@@ -763,9 +944,10 @@ async function main() {
   pdiPalmares.privado = true;
   pdiPalmares.usuario = muniGodoyCruz;
   pdiPalmares.localidad = l9;
+  pdiPalmares.tags.add(tagCompras);
   await em.persistAndFlush(pdiPalmares);
 
-  //SAN RAFAEL
+  // SAN RAFAEL
   const pdiParqueSR = new PuntoDeInteres();
   pdiParqueSR.nombre = 'Parque Hipólito Yrigoyen (San Rafael)';
   pdiParqueSR.descripcion = 'Parque urbano con lago, monumentos y actividades.';
@@ -775,6 +957,7 @@ async function main() {
   pdiParqueSR.privado = false;
   pdiParqueSR.usuario = muniSanRafael;
   pdiParqueSR.localidad = l10;
+  pdiParqueSR.tags.add(tagAireLibre, tagBienestar);
   await em.persistAndFlush(pdiParqueSR);
 
   const pdiValleGrande = new PuntoDeInteres();
@@ -786,6 +969,7 @@ async function main() {
   pdiValleGrande.privado = false;
   pdiValleGrande.usuario = muniSanRafael;
   pdiValleGrande.localidad = l10;
+  pdiValleGrande.tags.add(tagDeporte, tagNaturaleza);
   await em.persistAndFlush(pdiValleGrande);
 
   const pdiMuseoSR = new PuntoDeInteres();
@@ -797,9 +981,23 @@ async function main() {
   pdiMuseoSR.privado = false;
   pdiMuseoSR.usuario = muniSanRafael;
   pdiMuseoSR.localidad = l10;
+  pdiMuseoSR.tags.add(tagHistorico, tagEducacion);
   await em.persistAndFlush(pdiMuseoSR);
 
-  //RIO GRANDE
+  const pdiBodegaSR = new PuntoDeInteres();
+  pdiBodegaSR.nombre = 'Bodega Jean Rivier (San Rafael)';
+  pdiBodegaSR.descripcion =
+    'Bodega familiar con más de un siglo de historia, visitas guiadas y degustaciones del sur mendocino.';
+  pdiBodegaSR.imagen = 'sanrafael.jpg'; // reutiliza imagen
+  pdiBodegaSR.calle = 'Ruta 143';
+  pdiBodegaSR.altura = 200;
+  pdiBodegaSR.privado = true;
+  pdiBodegaSR.usuario = muniSanRafael;
+  pdiBodegaSR.localidad = l10;
+  pdiBodegaSR.tags.add(tagGastronomia, tagHistorico);
+  await em.persistAndFlush(pdiBodegaSR);
+
+  // RÍO GRANDE
   const pdiMalvinasRG = new PuntoDeInteres();
   pdiMalvinasRG.nombre = 'Monumento a los Héroes de Malvinas (Río Grande)';
   pdiMalvinasRG.descripcion = 'Espacio de memoria y reconocimiento.';
@@ -809,6 +1007,7 @@ async function main() {
   pdiMalvinasRG.privado = false;
   pdiMalvinasRG.usuario = muniRioGrande;
   pdiMalvinasRG.localidad = l11;
+  pdiMalvinasRG.tags.add(tagHistorico, tagCultura);
   await em.persistAndFlush(pdiMalvinasRG);
 
   const pdiReservaRG = new PuntoDeInteres();
@@ -820,6 +1019,7 @@ async function main() {
   pdiReservaRG.privado = false;
   pdiReservaRG.usuario = muniRioGrande;
   pdiReservaRG.localidad = l11;
+  pdiReservaRG.tags.add(tagNaturaleza, tagAireLibre);
   await em.persistAndFlush(pdiReservaRG);
 
   const pdiCaboDomingo = new PuntoDeInteres();
@@ -831,9 +1031,10 @@ async function main() {
   pdiCaboDomingo.privado = false;
   pdiCaboDomingo.usuario = muniRioGrande;
   pdiCaboDomingo.localidad = l11;
+  pdiCaboDomingo.tags.add(tagNaturaleza, tagAireLibre);
   await em.persistAndFlush(pdiCaboDomingo);
 
-  //TOLHUIN
+  // TOLHUIN
   const pdiLagoFagnano = new PuntoDeInteres();
   pdiLagoFagnano.nombre = 'Lago Fagnano (Tolhuin)';
   pdiLagoFagnano.descripcion = 'Lago compartido con Chile, ideal para contemplación y pesca.';
@@ -843,6 +1044,7 @@ async function main() {
   pdiLagoFagnano.privado = false;
   pdiLagoFagnano.usuario = muniTolhuin;
   pdiLagoFagnano.localidad = l12;
+  pdiLagoFagnano.tags.add(tagNaturaleza, tagBienestar);
   await em.persistAndFlush(pdiLagoFagnano);
 
   const pdiPaseoLagoTol = new PuntoDeInteres();
@@ -854,6 +1056,7 @@ async function main() {
   pdiPaseoLagoTol.privado = false;
   pdiPaseoLagoTol.usuario = muniTolhuin;
   pdiPaseoLagoTol.localidad = l12;
+  pdiPaseoLagoTol.tags.add(tagAireLibre, tagNaturaleza);
   await em.persistAndFlush(pdiPaseoLagoTol);
 
   const pdiPanaderiaUnion = new PuntoDeInteres();
@@ -865,10 +1068,24 @@ async function main() {
   pdiPanaderiaUnion.privado = true;
   pdiPanaderiaUnion.usuario = muniTolhuin;
   pdiPanaderiaUnion.localidad = l12;
+  pdiPanaderiaUnion.tags.add(tagGastronomia);
   await em.persistAndFlush(pdiPanaderiaUnion);
 
+  const pdiSenderoTolhuin = new PuntoDeInteres();
+  pdiSenderoTolhuin.nombre = 'Sendero Hito XXIV (Tolhuin)';
+  pdiSenderoTolhuin.descripcion =
+    'Trekking de media jornada entre bosques de lenga y vistas al lago Fagnano.';
+  pdiSenderoTolhuin.imagen = 'tolhuin.jpg'; // reutiliza imagen
+  pdiSenderoTolhuin.calle = 'Acceso PNTF';
+  pdiSenderoTolhuin.altura = 1;
+  pdiSenderoTolhuin.privado = false;
+  pdiSenderoTolhuin.usuario = muniTolhuin;
+  pdiSenderoTolhuin.localidad = l12;
+  pdiSenderoTolhuin.tags.add(tagDeporte, tagNaturaleza);
+  await em.persistAndFlush(pdiSenderoTolhuin);
+
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
-  //HISTORIA-----------------------------------------------------------------------------------------------------------------------------------------------
+  // HISTORIAS
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
   const hObelisco = new Historia();
   hObelisco.titulo = 'Iluminación especial del Obelisco';
@@ -878,6 +1095,15 @@ async function main() {
   hObelisco.imagen = 'historia-obelisco.jpg';
   hObelisco.puntoDeInteres = pdiObelisco;
   await em.persistAndFlush(hObelisco);
+
+  const hObelisco2 = new Historia();
+  hObelisco2.titulo = 'Festejo del Bicentenario en 9 de Julio';
+  hObelisco2.fechaDesde = new Date('2026-05-25 18:00:00');
+  hObelisco2.fechaHasta = new Date('2026-05-25 23:59:00');
+  hObelisco2.descripcion = 'Gran desfile y espectáculo de drones sobre el Obelisco.';
+  hObelisco2.imagen = 'historia-obelisco.jpg'; // reutiliza
+  hObelisco2.puntoDeInteres = pdiObelisco;
+  await em.persistAndFlush(hObelisco2);
 
   const hColon = new Historia();
   hColon.titulo = 'Temporada lírica 2026';
@@ -959,17 +1185,17 @@ async function main() {
   hMuseoFdm.imagen = 'historia-museo-del-fin-del-mundo.jpg';
   hMuseoFdm.puntoDeInteres = pdiMuseoFinDelMundo;
   await em.persistAndFlush(hMuseoFdm);
-  //FUNES
+
   const h1 = new Historia();
   h1.titulo = 'Inauguración del Paseo de la Estación en Funes';
-  h1.fechaDesde = new Date('2024-01-15 08:01:54'); // Fecha de inicio de esta historia
-  h1.fechaHasta = new Date('2024-03-30 08:02:26'); // Fecha de fin de esta historia (opcional, pero aquí la incluyo)
+  h1.fechaDesde = new Date('2024-01-15 08:01:54');
+  h1.fechaHasta = new Date('2024-03-30 08:02:26');
   h1.descripcion =
-    'Inauguración de la serie de eventos culturales "Verano en la Estación", con música en vivo y ferias de artesanos locales. Gran afluencia de público y excelente repercusión.';
-  h1.imagen = 'historia-paseo-estacion-verano.jpg'; // Sustituir con una URL/ruta real
-  h1.puntoDeInteres = pdiPaseoEstacionFunes; // Asignar el punto de interés "Paseo de la Estación"
+    'Inauguración de la serie de eventos culturales "Verano en la Estación", con música en vivo y ferias de artesanos locales.';
+  h1.imagen = 'historia-paseo-estacion-verano.jpg';
+  h1.puntoDeInteres = pdiPaseoEstacionFunes;
   await em.persistAndFlush(h1);
-  //VCP
+
   const hVcp1 = new Historia();
   hVcp1.titulo = 'Restauración del Reloj Cucú';
   hVcp1.fechaDesde = new Date('2025-04-10 09:00:00');
@@ -985,7 +1211,7 @@ async function main() {
   hVcp2.descripcion = 'Se habilita una ciclovía recreativa los fines de semana.';
   hVcp2.puntoDeInteres = pdiCostaneraVCP;
   await em.persistAndFlush(hVcp2);
-  //VILLA MARIA
+
   const hVm1 = new Historia();
   hVm1.titulo = 'Edición 2026 del Festival de Peñas';
   hVm1.fechaDesde = new Date('2026-02-03 18:00:00');
@@ -993,7 +1219,7 @@ async function main() {
   hVm1.descripcion = 'Programación ampliada con artistas nacionales e internacionales.';
   hVm1.puntoDeInteres = pdiAnfiteatroVM;
   await em.persistAndFlush(hVm1);
-  //GODOY CRUZ
+
   const hGc1 = new Historia();
   hGc1.titulo = 'Temporada de Teatro Independiente';
   hGc1.fechaDesde = new Date('2025-08-01 18:00:00');
@@ -1001,7 +1227,7 @@ async function main() {
   hGc1.descripcion = 'Ciclo con compañías locales en el Teatro Plaza.';
   hGc1.puntoDeInteres = pdiTeatroPlaza;
   await em.persistAndFlush(hGc1);
-  //SAN RAFAEL
+
   const hSr1 = new Historia();
   hSr1.titulo = 'Temporada de Aventura en Valle Grande';
   hSr1.fechaDesde = new Date('2025-12-01 08:00:00');
@@ -1009,7 +1235,7 @@ async function main() {
   hSr1.descripcion = 'Kayak, rafting y senderismo con guías locales.';
   hSr1.puntoDeInteres = pdiValleGrande;
   await em.persistAndFlush(hSr1);
-  //RG
+
   const hRg1 = new Historia();
   hRg1.titulo = 'Jornada de Avistaje en la Reserva';
   hRg1.fechaDesde = new Date('2025-12-08 10:00:00');
@@ -1017,7 +1243,7 @@ async function main() {
   hRg1.descripcion = 'Guiada por especialistas en fauna patagónica.';
   hRg1.puntoDeInteres = pdiReservaRG;
   await em.persistAndFlush(hRg1);
-  //TOLHUIN
+
   const hTol1 = new Historia();
   hTol1.titulo = 'Fiesta del Lago';
   hTol1.fechaDesde = new Date('2026-01-25 12:00:00');
@@ -1025,19 +1251,80 @@ async function main() {
   hTol1.descripcion = 'Actividades náuticas y espectáculos familiares.';
   hTol1.puntoDeInteres = pdiPaseoLagoTol;
   await em.persistAndFlush(hTol1);
+
+  // Historias nuevas
+  const hMonumentoBandera = new Historia();
+  hMonumentoBandera.titulo = 'Izado histórico por el Día de la Bandera';
+  hMonumentoBandera.fechaDesde = new Date('2026-06-20 09:00:00');
+  hMonumentoBandera.fechaHasta = new Date('2026-06-20 12:00:00');
+  hMonumentoBandera.descripcion = 'Ceremonia oficial con bandas militares y discursos.';
+  hMonumentoBandera.imagen = 'monumento-bandera.jpg';
+  hMonumentoBandera.puntoDeInteres = pdiMonumentoBandera;
+  await em.persistAndFlush(hMonumentoBandera);
+
+  const hCCPE = new Historia();
+  hCCPE.titulo = 'Bienal de Arte Urbano';
+  hCCPE.fechaDesde = new Date('2026-04-01 10:00:00');
+  hCCPE.fechaHasta = new Date('2026-04-30 20:00:00');
+  hCCPE.descripcion = 'Intervenciones artísticas en espacios públicos del Centro Cultural.';
+  hCCPE.imagen = 'ccpe.jpg';
+  hCCPE.puntoDeInteres = pdiCCPE;
+  await em.persistAndFlush(hCCPE);
+
+  const hParqueTDF = new Historia();
+  hParqueTDF.titulo = 'Campaña de limpieza de senderos';
+  hParqueTDF.fechaDesde = new Date('2026-03-15 09:00:00');
+  hParqueTDF.fechaHasta = new Date('2026-03-15 14:00:00');
+  hParqueTDF.descripcion = 'Voluntarios y rangers del parque recorrieron los principales senderos.';
+  hParqueTDF.imagen = 'ushuaia.png';
+  hParqueTDF.puntoDeInteres = pdiParqueNacionalTDF;
+  await em.persistAndFlush(hParqueTDF);
+
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
-  //EVENTOS -------------------------------------------------------------------------------------------------------------------------------------------------
+  // EVENTOS
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
   const e1 = new Evento();
   e1.titulo = 'El cumple de Pedro';
-  e1.descripcion = 'Tengo casa sola, apta para maraton de Harry Potter';
+  e1.descripcion = 'Tengo casa sola, apta para maratón de Harry Potter';
   e1.horaDesde = new Date('2025-08-15 20:00:00');
-  e1.horaHasta = new Date('2024-08-16 06:00:00');
+  e1.horaHasta = new Date('2025-08-16 06:00:00');
   e1.estado = 'Disponible';
   e1.tags = [tagTecnologia];
   e1.puntoDeInteres = pdiClubKentucky;
+  await em.persistAndFlush(e1);
 
-  //VCP
+  // ROSARIO eventos nuevos
+  const eRos1 = new Evento();
+  eRos1.titulo = 'Feria de Diseño Rosario';
+  eRos1.descripcion = 'Emprendedores locales de moda, objetos y gráfica.';
+  eRos1.horaDesde = new Date('2026-04-18 11:00:00');
+  eRos1.horaHasta = new Date('2026-04-18 20:00:00');
+  eRos1.estado = 'Disponible';
+  eRos1.tags = [tagCompras, tagCultura];
+  eRos1.puntoDeInteres = pdiParqueIndependencia;
+  await em.persistAndFlush(eRos1);
+
+  const eRos2 = new Evento();
+  eRos2.titulo = 'Noche del Paraná';
+  eRos2.descripcion = 'Espectáculo audiovisual sobre el río con música en vivo.';
+  eRos2.horaDesde = new Date('2026-05-10 20:00:00');
+  eRos2.horaHasta = new Date('2026-05-10 23:30:00');
+  eRos2.estado = 'Disponible';
+  eRos2.tags = [tagMusica, tagNocturno];
+  eRos2.puntoDeInteres = pdiRioMio;
+  await em.persistAndFlush(eRos2);
+
+  const eRos3 = new Evento();
+  eRos3.titulo = 'Maratón Solidaria Rosario';
+  eRos3.descripcion = 'Carrera popular con fines benéficos por las arterias centrales.';
+  eRos3.horaDesde = new Date('2026-06-07 08:00:00');
+  eRos3.horaHasta = new Date('2026-06-07 12:00:00');
+  eRos3.estado = 'Disponible';
+  eRos3.tags = [tagDeporte, tagBienestar];
+  eRos3.puntoDeInteres = pdiMonumentoBandera;
+  await em.persistAndFlush(eRos3);
+
+  // VCP
   const eVcp1 = new Evento();
   eVcp1.titulo = 'Festival de Música del Lago';
   eVcp1.descripcion = 'Bandas locales al aire libre.';
@@ -1068,7 +1355,17 @@ async function main() {
   eVcp3.puntoDeInteres = pdiAerosilla;
   await em.persistAndFlush(eVcp3);
 
-  //VILLA MARIA
+  const eVcp4 = new Evento();
+  eVcp4.titulo = 'Paseo de Artesanos Sierras';
+  eVcp4.descripcion = 'Feria de artesanías y souvenirs serranos con música folclórica.';
+  eVcp4.horaDesde = new Date('2026-07-12 10:00:00');
+  eVcp4.horaHasta = new Date('2026-07-12 18:00:00');
+  eVcp4.estado = 'Disponible';
+  eVcp4.tags = [tagArte, tagCompras];
+  eVcp4.puntoDeInteres = pdiSierrasVCP;
+  await em.persistAndFlush(eVcp4);
+
+  // VILLA MARÍA
   const eVm1 = new Evento();
   eVm1.titulo = 'Peñas Juveniles';
   eVm1.descripcion = 'Encuentro musical emergente.';
@@ -1099,7 +1396,7 @@ async function main() {
   eVm3.puntoDeInteres = pdiPlazaIndVM;
   await em.persistAndFlush(eVm3);
 
-  //GODOY CRUZ
+  // GODOY CRUZ
   const eGc1 = new Evento();
   eGc1.titulo = 'Milonga en la Plaza';
   eGc1.descripcion = 'Clases abiertas y música en vivo.';
@@ -1130,7 +1427,17 @@ async function main() {
   eGc3.puntoDeInteres = pdiPalmares;
   await em.persistAndFlush(eGc3);
 
-  //SAN RAFAEL
+  const eGc4 = new Evento();
+  eGc4.titulo = 'Noche de Bodegas';
+  eGc4.descripcion = 'Degustaciones y maridajes en el corazón vitivinícola de Godoy Cruz.';
+  eGc4.horaDesde = new Date('2026-08-14 19:00:00');
+  eGc4.horaHasta = new Date('2026-08-14 23:00:00');
+  eGc4.estado = 'Disponible';
+  eGc4.tags = [tagGastronomia, tagNocturno];
+  eGc4.puntoDeInteres = pdiPlazaGC;
+  await em.persistAndFlush(eGc4);
+
+  // SAN RAFAEL
   const eSr1 = new Evento();
   eSr1.titulo = 'Festival del Parque';
   eSr1.descripcion = 'Música en vivo y gastronomía regional.';
@@ -1161,7 +1468,17 @@ async function main() {
   eSr3.puntoDeInteres = pdiMuseoSR;
   await em.persistAndFlush(eSr3);
 
-  //RIO GRANDE
+  const eSr4 = new Evento();
+  eSr4.titulo = 'Vendimia Sur 2026';
+  eSr4.descripcion = 'Celebración de la cosecha con espectáculos, desfiles y degustaciones.';
+  eSr4.horaDesde = new Date('2026-03-20 18:00:00');
+  eSr4.horaHasta = new Date('2026-03-20 23:59:00');
+  eSr4.estado = 'Disponible';
+  eSr4.tags = [tagGastronomia, tagCultura, tagMusica];
+  eSr4.puntoDeInteres = pdiBodegaSR;
+  await em.persistAndFlush(eSr4);
+
+  // RÍO GRANDE
   const eRg1 = new Evento();
   eRg1.titulo = 'Vigilia por Malvinas';
   eRg1.descripcion = 'Acto conmemorativo y muestras fotográficas.';
@@ -1192,7 +1509,7 @@ async function main() {
   eRg3.puntoDeInteres = pdiReservaRG;
   await em.persistAndFlush(eRg3);
 
-  //TOLHUIN
+  // TOLHUIN
   const eTol1 = new Evento();
   eTol1.titulo = 'Regata del Fagnano';
   eTol1.descripcion = 'Competencia de embarcaciones menores.';
@@ -1223,219 +1540,309 @@ async function main() {
   eTol3.puntoDeInteres = pdiPaseoLagoTol;
   await em.persistAndFlush(eTol3);
 
+  const eTol4 = new Evento();
+  eTol4.titulo = 'Trekking Sendero Hito XXIV';
+  eTol4.descripcion = 'Excursión guiada por el sendero con paradas en miradores al Fagnano.';
+  eTol4.horaDesde = new Date('2026-01-08 09:00:00');
+  eTol4.horaHasta = new Date('2026-01-08 14:00:00');
+  eTol4.estado = 'Disponible';
+  eTol4.tags = [tagDeporte, tagNaturaleza];
+  eTol4.puntoDeInteres = pdiSenderoTolhuin;
+  await em.persistAndFlush(eTol4);
+
+  // CABA nuevos
+  const eCaba1 = new Evento();
+  eCaba1.titulo = 'Concierto de Gala en el Colón';
+  eCaba1.descripcion = 'Función especial de la Orquesta Filarmónica de Buenos Aires.';
+  eCaba1.horaDesde = new Date('2026-04-25 20:00:00');
+  eCaba1.horaHasta = new Date('2026-04-25 23:00:00');
+  eCaba1.estado = 'Disponible';
+  eCaba1.tags = [tagMusica, tagCultura];
+  eCaba1.puntoDeInteres = pdiTeatroColon;
+  await em.persistAndFlush(eCaba1);
+
+  const eCaba2 = new Evento();
+  eCaba2.titulo = 'Visita nocturna a la Recoleta';
+  eCaba2.descripcion = 'Recorrido guiado nocturno con historias y leyendas del cementerio.';
+  eCaba2.horaDesde = new Date('2026-05-02 20:00:00');
+  eCaba2.horaHasta = new Date('2026-05-02 22:30:00');
+  eCaba2.estado = 'Disponible';
+  eCaba2.tags = [tagHistorico, tagNocturno];
+  eCaba2.puntoDeInteres = pdiRecoleta;
+  await em.persistAndFlush(eCaba2);
+
+  // CÓRDOBA nuevos
+  const eCba1 = new Evento();
+  eCba1.titulo = 'Noche de Arte en Buen Pastor';
+  eCba1.descripcion = 'Intervenciones artísticas y performance en vivo.';
+  eCba1.horaDesde = new Date('2026-06-19 19:00:00');
+  eCba1.horaHasta = new Date('2026-06-19 23:00:00');
+  eCba1.estado = 'Disponible';
+  eCba1.tags = [tagArte, tagNocturno];
+  eCba1.puntoDeInteres = pdiBuenPastor;
+  await em.persistAndFlush(eCba1);
+
+  const eCba2 = new Evento();
+  eCba2.titulo = 'Maratón Universitaria Parque Sarmiento';
+  eCba2.descripcion = 'Carrera estudiantil solidaria con premios y actividades.';
+  eCba2.horaDesde = new Date('2026-09-20 08:00:00');
+  eCba2.horaHasta = new Date('2026-09-20 12:00:00');
+  eCba2.estado = 'Disponible';
+  eCba2.tags = [tagDeporte, tagEducacion];
+  eCba2.puntoDeInteres = pdiParqueSarmientoCba;
+  await em.persistAndFlush(eCba2);
+
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
-  // VALORACIONES----------------------------------------------------------------------------------------------------------------------------------------------
+  // FAVORITOS
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
-  async function addValoraciones3(pdi: PuntoDeInteres) {
-    const triples = [
-      { u: usuario4, estrellas: 5, txt: 'Hermoso lugar, super recomendable.' }, // Valentino
-      { u: usuario5, estrellas: 4, txt: 'Buena experiencia, volvería.' }, // Joaquín
-      { u: usuario6, estrellas: 5, txt: 'Excelente, muy bien cuidado.' }, // Gabriel
-    ];
-    for (let i = 0; i < 3; i++) {
+  usuario4.favoritos.add(pdiParqueIndependencia, pdiMonumentoBandera, pdiRioMio);
+  usuario5.favoritos.add(pdiMonumentoBandera, pdiCCPE, pdiParqueIndependencia);
+  usuario6.favoritos.add(pdiJardinNinos, pdiRioMio, pdiBuenPastor);
+  usuario7.favoritos.add(pdiObelisco, pdiTeatroColon, pdiParqueSanMartinMza);
+  usuario8.favoritos.add(pdiObelisco, pdiRecoleta, pdiTeatroColon);
+  usuario9.favoritos.add(pdiRecoleta, pdiTeatroColon, pdiCCPE);
+  usuario10.favoritos.add(pdiParqueSarmientoCba, pdiBuenPastor, pdiCatedralCba);
+  usuario11.favoritos.add(pdiRelojCucu, pdiCostaneraVCP, pdiAerosilla);
+  usuario12.favoritos.add(pdiPalmares, pdiTeatroPlaza, pdiPlazaGC);
+  usuario13.favoritos.add(pdiFaroFinDelMundo, pdiMuseoFinDelMundo, pdiParqueNacionalTDF);
+  usuario14.favoritos.add(pdiParqueSarmientoCba, pdiAnfiteatroVM, pdiPlazaIndVM);
+  usuario15.favoritos.add(pdiPlazaIndMza, pdiParqueSanMartinMza, pdiBodegaMza);
+  usuario16.favoritos.add(pdiObelisco, pdiRecoleta, pdiMonumentoBandera);
+  usuario17.favoritos.add(pdiFaroFinDelMundo, pdiLagoFagnano, pdiPaseoLagoTol);
+  await em.flush();
+
+  //------------------------------------------------------------------------------------------------------------------------------------------------------------
+  // VALORACIONES
+  //------------------------------------------------------------------------------------------------------------------------------------------------------------
+  async function addValoraciones(
+    pdi: PuntoDeInteres,
+    datos: { u: Usuario; estrellas: number; comentario: string; fecha: string }[]
+  ) {
+    for (const d of datos) {
       const v = new Valoracion();
-      v.comentario = triples[i].txt;
-      v.cantEstrellas = triples[i].estrellas;
-      v.fechaHora = new Date(`2025-0${9 + i}-1${i} 15:0${i}:00`); // fechas cercanas y válidas
+      v.comentario = d.comentario;
+      v.cantEstrellas = d.estrellas;
+      v.fechaHora = new Date(d.fecha);
       v.puntoDeInteres = pdi;
-      v.usuario = triples[i].u;
+      v.usuario = d.u;
       await em.persistAndFlush(v);
     }
-    // cuarta alterna con Messi si querés sumar variedad; pero pediste 3 por PDI
   }
 
   // CABA
-  await addValoraciones3(pdiObelisco);
-  await addValoraciones3(pdiTeatroColon);
+  await addValoraciones(pdiObelisco, [
+    { u: usuario4, estrellas: 5, comentario: 'Icónico, una visita obligada.', fecha: '2025-09-11 10:00:00' },
+    { u: usuario5, estrellas: 4, comentario: 'Muy concurrido pero impresionante.', fecha: '2025-09-12 11:00:00' },
+    { u: usuario8, estrellas: 5, comentario: 'Emotivo verlo de cerca.', fecha: '2025-09-13 12:00:00' },
+  ]);
+  await addValoraciones(pdiTeatroColon, [
+    { u: usuario6, estrellas: 5, comentario: 'Una experiencia única en el mundo.', fecha: '2025-10-01 20:00:00' },
+    { u: usuario9, estrellas: 5, comentario: 'Arquitectura y acústica impecable.', fecha: '2025-10-02 21:00:00' },
+    { u: usuario7, estrellas: 4, comentario: 'Vale cada peso de la entrada.', fecha: '2025-10-03 22:00:00' },
+  ]);
+  await addValoraciones(pdiRecoleta, [
+    { u: usuario16, estrellas: 5, comentario: 'Historia viva de Argentina.', fecha: '2025-11-01 15:00:00' },
+    { u: usuario8, estrellas: 4, comentario: 'Muy interesante y tranquilo.', fecha: '2025-11-02 16:00:00' },
+    { u: usuario9, estrellas: 5, comentario: 'El tour nocturno es increíble.', fecha: '2025-11-03 20:00:00' },
+  ]);
 
-  // Quilmes
-  await addValoraciones3(pdiRiberaQuilmes);
-  await addValoraciones3(pdiCatedralQuilmes);
+  // QUILMES
+  await addValoraciones(pdiRiberaQuilmes, [
+    { u: usuario4, estrellas: 4, comentario: 'Lindo paseo, buen mantenimiento.', fecha: '2025-08-05 09:00:00' },
+    { u: usuario5, estrellas: 5, comentario: 'Ideal para la familia.', fecha: '2025-08-06 10:00:00' },
+    { u: usuario6, estrellas: 4, comentario: 'Tranquilo y con buena vista.', fecha: '2025-08-07 11:00:00' },
+  ]);
+  await addValoraciones(pdiCatedralQuilmes, [
+    { u: usuario7, estrellas: 5, comentario: 'Hermosa arquitectura colonial.', fecha: '2025-07-15 18:00:00' },
+    { u: usuario4, estrellas: 4, comentario: 'Ambiente de paz y recogimiento.', fecha: '2025-07-16 19:00:00' },
+    { u: usuario10, estrellas: 4, comentario: 'Vale la visita.', fecha: '2025-07-17 18:30:00' },
+  ]);
 
-  // Córdoba
-  await addValoraciones3(pdiParqueSarmientoCba);
-  await addValoraciones3(pdiBuenPastor);
-
-  // Mendoza
-  await addValoraciones3(pdiPlazaIndMza);
-  await addValoraciones3(pdiParqueSanMartinMza);
-
-  // Ushuaia
-  await addValoraciones3(pdiFaroFinDelMundo);
-  await addValoraciones3(pdiMuseoFinDelMundo);
-  // Valoraciones Rosario
-  for (const pdi of [
-    pdiParqueIndependencia,
-    pdiRioMio,
-    pdiMonumentoBandera,
-    pdiCCPE,
-    pdiJardinNinos,
-  ]) {
-    const valoracion1 = new Valoracion();
-    valoracion1.comentario = 'Hermoso lugar para visitar en familia.';
-    valoracion1.cantEstrellas = 5;
-    valoracion1.fechaHora = new Date('2025-03-15 15:00:00');
-    valoracion1.puntoDeInteres = pdi;
-    valoracion1.usuario = usuario4;
-    await em.persistAndFlush(valoracion1);
-
-    const valoracion2 = new Valoracion();
-    valoracion2.comentario = 'Muy concurrido pero bien cuidado.';
-    valoracion2.cantEstrellas = 4;
-    valoracion2.fechaHora = new Date('2025-04-10 16:30:00');
-    valoracion2.puntoDeInteres = pdi;
-    valoracion2.usuario = usuario5;
-    await em.persistAndFlush(valoracion2);
-
-    const valoracion3 = new Valoracion();
-    valoracion3.comentario = 'Me encantó la experiencia, volvería sin dudas.';
-    valoracion3.cantEstrellas = 5;
-    valoracion3.fechaHora = new Date('2025-05-20 18:00:00');
-    valoracion3.puntoDeInteres = pdi;
-    valoracion3.usuario = usuario7;
-    await em.persistAndFlush(valoracion3);
+  // ROSARIO
+  for (const pdi of [pdiParqueIndependencia, pdiRioMio, pdiMonumentoBandera, pdiCCPE, pdiJardinNinos]) {
+    await addValoraciones(pdi, [
+      { u: usuario4, estrellas: 5, comentario: 'Hermoso lugar para visitar en familia.', fecha: '2025-03-15 15:00:00' },
+      { u: usuario5, estrellas: 4, comentario: 'Muy concurrido pero bien cuidado.', fecha: '2025-04-10 16:30:00' },
+      { u: usuario7, estrellas: 5, comentario: 'Me encantó la experiencia, volvería sin dudas.', fecha: '2025-05-20 18:00:00' },
+    ]);
   }
+  await addValoraciones(pdiMercadoPasaje, [
+    { u: usuario6, estrellas: 5, comentario: 'Muy rico todo, buena variedad.', fecha: '2025-06-01 13:00:00' },
+    { u: usuario14, estrellas: 4, comentario: 'Ambiente agradable y precios razonables.', fecha: '2025-06-02 14:00:00' },
+    { u: usuario5, estrellas: 4, comentario: 'Gran opción para el almuerzo.', fecha: '2025-06-03 13:30:00' },
+  ]);
 
-  // Valoraciones Funes
+  // FUNES
   for (const pdi of [pdiPaseoEstacionFunes, pdiClubKentucky]) {
-    const valoracion1 = new Valoracion();
-    valoracion1.comentario = 'Buen ambiente y actividades entretenidas.';
-    valoracion1.cantEstrellas = 4;
-    valoracion1.fechaHora = new Date('2025-06-05 14:00:00');
-    valoracion1.puntoDeInteres = pdi;
-    valoracion1.usuario = usuario6; // Gabriel
-    await em.persistAndFlush(valoracion1);
+    await addValoraciones(pdi, [
+      { u: usuario6, estrellas: 4, comentario: 'Buen ambiente y actividades entretenidas.', fecha: '2025-06-05 14:00:00' },
+      { u: usuario4, estrellas: 5, comentario: 'Ideal para pasar la tarde con amigos.', fecha: '2025-07-02 17:00:00' },
+      { u: usuario5, estrellas: 4, comentario: 'Muy lindo, aunque podría mejorar la señalización.', fecha: '2025-07-18 12:00:00' },
+    ]);
+  }
+  await addValoraciones(pdiFunesPlaza, [
+    { u: usuario4, estrellas: 4, comentario: 'Tranquila y verde, ideal para descansar.', fecha: '2025-08-10 10:00:00' },
+    { u: usuario6, estrellas: 5, comentario: 'Mi favorita para el fin de semana.', fecha: '2025-08-11 11:00:00' },
+    { u: usuario14, estrellas: 4, comentario: 'Linda glorieta, buen lugar.', fecha: '2025-08-12 12:00:00' },
+  ]);
 
-    const valoracion2 = new Valoracion();
-    valoracion2.comentario = 'Ideal para pasar la tarde con amigos.';
-    valoracion2.cantEstrellas = 5;
-    valoracion2.fechaHora = new Date('2025-07-02 17:00:00');
-    valoracion2.puntoDeInteres = pdi;
-    valoracion2.usuario = usuario4; // Valentino
-    await em.persistAndFlush(valoracion2);
+  // CÓRDOBA
+  await addValoraciones(pdiParqueSarmientoCba, [
+    { u: usuario4, estrellas: 5, comentario: 'Hermoso lugar para visitar en familia.', fecha: '2025-09-01 09:00:00' },
+    { u: usuario5, estrellas: 4, comentario: 'Buena experiencia, volvería.', fecha: '2025-09-02 10:00:00' },
+    { u: usuario6, estrellas: 5, comentario: 'Excelente, muy bien cuidado.', fecha: '2025-09-03 11:00:00' },
+  ]);
+  await addValoraciones(pdiBuenPastor, [
+    { u: usuario7, estrellas: 5, comentario: 'Hermoso lugar para visitar en familia.', fecha: '2025-09-04 12:00:00' },
+    { u: usuario8, estrellas: 4, comentario: 'Buena experiencia, volvería.', fecha: '2025-09-05 13:00:00' },
+    { u: usuario9, estrellas: 5, comentario: 'Excelente, muy bien cuidado.', fecha: '2025-09-06 14:00:00' },
+  ]);
+  await addValoraciones(pdiCatedralCba, [
+    { u: usuario10, estrellas: 5, comentario: 'Impresionante arquitectura barroca.', fecha: '2025-09-07 15:00:00' },
+    { u: usuario11, estrellas: 4, comentario: 'Vale la visita con guía.', fecha: '2025-09-08 16:00:00' },
+    { u: usuario12, estrellas: 4, comentario: 'La más antigua de Sudamérica, increíble.', fecha: '2025-09-09 17:00:00' },
+  ]);
 
-    const valoracion3 = new Valoracion();
-    valoracion3.comentario = 'Muy lindo, aunque podría mejorar la señalización.';
-    valoracion3.cantEstrellas = 4;
-    valoracion3.fechaHora = new Date('2025-07-18 12:00:00');
-    valoracion3.puntoDeInteres = pdi;
-    valoracion3.usuario = usuario5; // Joaquín
-    await em.persistAndFlush(valoracion3);
+  // MENDOZA
+  await addValoraciones(pdiPlazaIndMza, [
+    { u: usuario4, estrellas: 5, comentario: 'Hermoso lugar para visitar en familia.', fecha: '2025-09-12 09:00:00' },
+    { u: usuario5, estrellas: 4, comentario: 'Buena experiencia, volvería.', fecha: '2025-09-13 10:00:00' },
+    { u: usuario6, estrellas: 5, comentario: 'Excelente, muy bien cuidado.', fecha: '2025-09-14 11:00:00' },
+  ]);
+  await addValoraciones(pdiParqueSanMartinMza, [
+    { u: usuario7, estrellas: 5, comentario: 'Hermoso lugar para visitar en familia.', fecha: '2025-09-15 12:00:00' },
+    { u: usuario8, estrellas: 4, comentario: 'Buena experiencia, volvería.', fecha: '2025-09-16 13:00:00' },
+    { u: usuario9, estrellas: 5, comentario: 'Excelente, muy bien cuidado.', fecha: '2025-09-17 14:00:00' },
+  ]);
+  await addValoraciones(pdiBodegaMza, [
+    { u: usuario15, estrellas: 5, comentario: 'El mejor vino que probé en mi vida.', fecha: '2025-10-01 15:00:00' },
+    { u: usuario12, estrellas: 5, comentario: 'La visita guiada fue excelente.', fecha: '2025-10-02 16:00:00' },
+    { u: usuario6, estrellas: 4, comentario: 'Muy buena degustación, algo caro.', fecha: '2025-10-03 17:00:00' },
+  ]);
+
+  // USHUAIA
+  await addValoraciones(pdiFaroFinDelMundo, [
+    { u: usuario4, estrellas: 5, comentario: 'Hermoso lugar para visitar en familia.', fecha: '2025-10-10 09:00:00' },
+    { u: usuario5, estrellas: 4, comentario: 'Buena experiencia, volvería.', fecha: '2025-10-11 10:00:00' },
+    { u: usuario6, estrellas: 5, comentario: 'Excelente, muy bien cuidado.', fecha: '2025-10-12 11:00:00' },
+  ]);
+  await addValoraciones(pdiMuseoFinDelMundo, [
+    { u: usuario7, estrellas: 5, comentario: 'Hermoso lugar para visitar en familia.', fecha: '2025-10-13 12:00:00' },
+    { u: usuario8, estrellas: 4, comentario: 'Buena experiencia, volvería.', fecha: '2025-10-14 13:00:00' },
+    { u: usuario9, estrellas: 5, comentario: 'Excelente, muy bien cuidado.', fecha: '2025-10-15 14:00:00' },
+  ]);
+  await addValoraciones(pdiParqueNacionalTDF, [
+    { u: usuario17, estrellas: 5, comentario: 'El fin del mundo en todo su esplendor.', fecha: '2025-11-01 09:00:00' },
+    { u: usuario13, estrellas: 5, comentario: 'Senderos impecables y naturaleza única.', fecha: '2025-11-02 10:00:00' },
+    { u: usuario4, estrellas: 4, comentario: 'Imprescindible si vas a Ushuaia.', fecha: '2025-11-03 11:00:00' },
+  ]);
+
+  // VCP
+  for (const pdi of [pdiRelojCucu, pdiCostaneraVCP, pdiAerosilla]) {
+    await addValoraciones(pdi, [
+      { u: poolUsuariosValoracion[3 % poolUsuariosValoracion.length], estrellas: 5, comentario: 'Excelente lugar', fecha: '2025-05-01 12:00:00' },
+      { u: poolUsuariosValoracion[4 % poolUsuariosValoracion.length], estrellas: 4, comentario: 'Muy lindo paseo', fecha: '2025-05-02 12:00:00' },
+      { u: poolUsuariosValoracion[5 % poolUsuariosValoracion.length], estrellas: 4, comentario: 'Buena experiencia', fecha: '2025-05-03 12:00:00' },
+    ]);
   }
 
+  // VILLA MARÍA
+  for (const pdi of [pdiAnfiteatroVM, pdiCostaneraVM, pdiPlazaIndVM]) {
+    await addValoraciones(pdi, [
+      { u: poolUsuariosValoracion[5 % poolUsuariosValoracion.length], estrellas: 5, comentario: 'Muy buen ambiente', fecha: '2025-06-01 13:00:00' },
+      { u: poolUsuariosValoracion[6 % poolUsuariosValoracion.length], estrellas: 4, comentario: 'Linda organización', fecha: '2025-06-03 13:00:00' },
+      { u: poolUsuariosValoracion[7 % poolUsuariosValoracion.length], estrellas: 4, comentario: 'Volvería', fecha: '2025-06-05 13:00:00' },
+    ]);
+  }
+
+  // GODOY CRUZ
+  for (const pdi of [pdiPlazaGC, pdiTeatroPlaza, pdiPalmares]) {
+    await addValoraciones(pdi, [
+      { u: poolUsuariosValoracion[7 % poolUsuariosValoracion.length], estrellas: 5, comentario: 'Hermoso lugar', fecha: '2025-07-10 16:00:00' },
+      { u: poolUsuariosValoracion[8 % poolUsuariosValoracion.length], estrellas: 4, comentario: 'Buenas propuestas', fecha: '2025-07-12 16:00:00' },
+      { u: poolUsuariosValoracion[9 % poolUsuariosValoracion.length], estrellas: 4, comentario: 'Limpio y seguro', fecha: '2025-07-14 16:00:00' },
+    ]);
+  }
+
+  // SAN RAFAEL
+  for (const pdi of [pdiParqueSR, pdiValleGrande, pdiMuseoSR]) {
+    await addValoraciones(pdi, [
+      { u: poolUsuariosValoracion[9 % poolUsuariosValoracion.length], estrellas: 5, comentario: 'Recomendado', fecha: '2025-10-01 15:00:00' },
+      { u: poolUsuariosValoracion[10 % poolUsuariosValoracion.length], estrellas: 5, comentario: 'Hermosos paisajes', fecha: '2025-10-02 15:00:00' },
+      { u: poolUsuariosValoracion[11 % poolUsuariosValoracion.length], estrellas: 4, comentario: 'Ideal en familia', fecha: '2025-10-03 15:00:00' },
+    ]);
+  }
+
+  // RÍO GRANDE
+  for (const pdi of [pdiMalvinasRG, pdiReservaRG, pdiCaboDomingo]) {
+    await addValoraciones(pdi, [
+      { u: poolUsuariosValoracion[2 % poolUsuariosValoracion.length], estrellas: 5, comentario: 'Emotivo', fecha: '2025-10-01 11:30:00' },
+      { u: poolUsuariosValoracion[3 % poolUsuariosValoracion.length], estrellas: 5, comentario: 'Excelente guía', fecha: '2025-10-02 11:30:00' },
+      { u: poolUsuariosValoracion[4 % poolUsuariosValoracion.length], estrellas: 4, comentario: 'Paisajes únicos', fecha: '2025-10-03 11:30:00' },
+    ]);
+  }
+
+  // TOLHUIN
+  for (const pdi of [pdiLagoFagnano, pdiPaseoLagoTol, pdiPanaderiaUnion]) {
+    await addValoraciones(pdi, [
+      { u: poolUsuariosValoracion[1 % poolUsuariosValoracion.length], estrellas: 5, comentario: 'Tranquilo y lindo', fecha: '2025-02-10 14:30:00' },
+      { u: poolUsuariosValoracion[2 % poolUsuariosValoracion.length], estrellas: 4, comentario: 'Buena propuesta', fecha: '2025-03-10 14:30:00' },
+      { u: poolUsuariosValoracion[3 % poolUsuariosValoracion.length], estrellas: 4, comentario: 'Rico y atención amable', fecha: '2025-04-10 14:30:00' },
+    ]);
+  }
+
+  // Valoraciones negativas de Pedro Malafama
   const v1 = new Valoracion();
-  ((v1.comentario = 'Pésimo lugar, muy sucio, descuidado y hace mucho frio. No lo recomiendo.'),
-    (v1.cantEstrellas = 1));
+  v1.comentario = 'Pésimo lugar, muy sucio, descuidado y hace mucho frío. No lo recomiendo.';
+  v1.cantEstrellas = 1;
   v1.fechaHora = new Date('2024-01-10 10:00:00');
-  v1.puntoDeInteres = pdiParqueIndependencia; // Asignar el punto de interés "Parque de la Independencia"
-  v1.usuario = usuarioMalaOnda; // Asignar el usuario "Pedro Mal
+  v1.puntoDeInteres = pdiParqueIndependencia;
+  v1.usuario = usuarioMalaOnda;
+  await em.persistAndFlush(v1);
+
   const v2 = new Valoracion();
-  v2.comentario =
-    'Nada agradable, el lugar está en muy mal estado y no hay mantenimiento. Lo unico que tiene es forma de barco.';
+  v2.comentario = 'Nada agradable, el lugar está en muy mal estado. Lo único que tiene es forma de barco.';
   v2.cantEstrellas = 1;
   v2.fechaHora = new Date('2024-01-10 10:00:00');
-  v2.puntoDeInteres = pdiMonumentoBandera; // Asignar el punto de interés "Parque de la Independencia"
-  v2.usuario = usuarioMalaOnda; // Asignar el usuario "Pedro Mal
+  v2.puntoDeInteres = pdiMonumentoBandera;
+  v2.usuario = usuarioMalaOnda;
+  await em.persistAndFlush(v2);
+
   const v3 = new Valoracion();
-  v3.comentario =
-    'Uno va para despejarse y relajarse, pero el lugar está sucio y descuidado. No lo recomiendo. Fui porque me gusta el rio y lo unico que vi fue una playa llena de basura.';
+  v3.comentario = 'Fui porque me gusta el río y lo único que vi fue una playa llena de basura. No lo recomiendo.';
   v3.cantEstrellas = 1;
   v3.fechaHora = new Date('2024-01-10 10:00:00');
-  v3.puntoDeInteres = pdiRioMio; // Asignar el punto de interés "Parque de la Independencia"
-  v3.usuario = usuarioMalaOnda; // Asignar el usuario "Pedro Mal
+  v3.puntoDeInteres = pdiRioMio;
+  v3.usuario = usuarioMalaOnda;
+  await em.persistAndFlush(v3);
 
-  // Valoraciones (VCP)
-  for (const pdi of [pdiRelojCucu, pdiCostaneraVCP, pdiAerosilla]) {
-    for (let i = 0; i < 3; i++) {
-      const v = new Valoracion();
-      v.comentario = ['Excelente lugar', 'Muy lindo paseo', 'Buena experiencia'][i];
-      v.cantEstrellas = [5, 4, 4][i];
-      v.fechaHora = new Date(`2025-0${5 + i}-0${i + 1} 12:00:00`);
-      v.puntoDeInteres = pdi;
-      v.usuario = poolUsuariosValoracion[(i + 3) % poolUsuariosValoracion.length];
-      await em.persistAndFlush(v);
-    }
-  }
+  const v4 = new Valoracion();
+  v4.comentario = 'Un asco, esperaba más de una bodega tan famosa.';
+  v4.cantEstrellas = 1;
+  v4.fechaHora = new Date('2024-02-14 10:00:00');
+  v4.puntoDeInteres = pdiBodegaMza;
+  v4.usuario = usuarioMalaOnda;
+  await em.persistAndFlush(v4);
 
-  //Valoraciones VILLA MARIA
-  for (const pdi of [pdiAnfiteatroVM, pdiCostaneraVM, pdiPlazaIndVM]) {
-    for (let i = 0; i < 3; i++) {
-      const v = new Valoracion();
-      v.comentario = ['Muy buen ambiente', 'Linda organización', 'Volvería'][i];
-      v.cantEstrellas = [5, 4, 4][i];
-      v.fechaHora = new Date(`2025-0${6 + i}-0${i + 2} 13:00:00`);
-      v.puntoDeInteres = pdi;
-      v.usuario = poolUsuariosValoracion[(i + 5) % poolUsuariosValoracion.length];
-      await em.persistAndFlush(v);
-    }
-  }
+  const v5 = new Valoracion();
+  v5.comentario = 'El frío patagónico arruinó todo. No lo recomiendo para nada.';
+  v5.cantEstrellas = 1;
+  v5.fechaHora = new Date('2024-03-01 10:00:00');
+  v5.puntoDeInteres = pdiParqueNacionalTDF;
+  v5.usuario = usuarioMalaOnda;
+  await em.persistAndFlush(v5);
 
-  // Valoraciones GODOY CRUZ
-  for (const pdi of [pdiPlazaGC, pdiTeatroPlaza, pdiPalmares]) {
-    for (let i = 0; i < 3; i++) {
-      const v = new Valoracion();
-      v.comentario = ['Hermoso lugar', 'Buenas propuestas', 'Limpio y seguro'][i];
-      v.cantEstrellas = [5, 4, 4][i];
-      v.fechaHora = new Date(`2025-0${7 + i}-1${i} 16:00:00`);
-      v.puntoDeInteres = pdi;
-      v.usuario = poolUsuariosValoracion[(i + 7) % poolUsuariosValoracion.length];
-      await em.persistAndFlush(v);
-    }
-  }
-
-  //Valoraciones SAN RAFAEL
-  for (const pdi of [pdiParqueSR, pdiValleGrande, pdiMuseoSR]) {
-    for (let i = 0; i < 3; i++) {
-      const v = new Valoracion();
-      v.comentario = ['Recomendado', 'Hermosos paisajes', 'Ideal en familia'][i];
-      v.cantEstrellas = [5, 5, 4][i];
-      v.fechaHora = new Date(`2025-1${0 + i}-0${i + 1} 15:00:00`);
-      v.puntoDeInteres = pdi;
-      v.usuario = poolUsuariosValoracion[(i + 9) % poolUsuariosValoracion.length];
-      await em.persistAndFlush(v);
-    }
-  }
-
-  //Valoraciones RIO GRANDE
-  for (const pdi of [pdiMalvinasRG, pdiReservaRG, pdiCaboDomingo]) {
-    for (let i = 0; i < 3; i++) {
-      const v = new Valoracion();
-      v.comentario = ['Emotivo', 'Excelente guía', 'Paisajes únicos'][i];
-      v.cantEstrellas = [5, 5, 4][i];
-      v.fechaHora = new Date(`2025-1${0 + i}-0${i + 1} 11:30:00`);
-      v.puntoDeInteres = pdi;
-      v.usuario = poolUsuariosValoracion[(i + 2) % poolUsuariosValoracion.length];
-      await em.persistAndFlush(v);
-    }
-  }
-
-  //Valoraciones TOLHUIN
-  for (const pdi of [pdiLagoFagnano, pdiPaseoLagoTol, pdiPanaderiaUnion]) {
-    for (let i = 0; i < 3; i++) {
-      const v = new Valoracion();
-      v.comentario = ['Tranquilo y lindo', 'Buena propuesta', 'Rico y atención amable'][i];
-      v.cantEstrellas = [5, 4, 4][i];
-      v.fechaHora = new Date(`2025-0${2 + i}-1${i} 14:30:00`);
-      v.puntoDeInteres = pdi;
-      v.usuario = poolUsuariosValoracion[(i + 1) % poolUsuariosValoracion.length];
-      await em.persistAndFlush(v);
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------------------------------------------------------------------
-  // -------------------------------------------------------------------------------------------------------------------------------------------------
-  //------------------------------------------------------------------------------------------------------------------------------------------------------------
   console.log('🟡 pre-flush');
-  em.flush(); // guardamos todos los cambios en la base de datos
+  await em.flush();
   console.log('🟢 post-flush');
   console.timeEnd('⏱ seed');
   console.log('✅ Base de datos poblada correctamente');
-  await orm.close(true); // <- cierra pool
-  process.exit(0); // terminamos el proceso
+  await orm.close(true);
+  process.exit(0);
 }
 
 main().catch(async (err) => {
   console.error('❌ Error al ejecutar el seed', err);
-  await orm.close(true); // <- cierra pool
+  await orm.close(true);
   process.exit(1);
 });
