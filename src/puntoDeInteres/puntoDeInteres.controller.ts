@@ -4,6 +4,7 @@ import { PuntoDeInteres } from './puntoDeInteres.entity.js';
 import { Usuario } from '../usuario/usuario.entity.js';
 import { EntityManager } from '@mikro-orm/mysql';
 import { wrap } from '@mikro-orm/core';
+import { Tag } from '../tag/tag.entity.js';
 
 const em = orm.em as EntityManager;
 
@@ -76,17 +77,29 @@ export class PuntoDeInteresController {
   async update(req: Request, res: Response) {
     try {
       const id = Number.parseInt(req.params.id);
-      const puntoDeInteresToUpdate = await em.findOneOrFail(PuntoDeInteres, id);
-      em.assign(puntoDeInteresToUpdate, req.body);
+      const puntoDeInteresToUpdate = await em.findOneOrFail(
+        PuntoDeInteres,
+        id,
+        { populate: ['tags'] } // necesario para que MikroORM sepa el estado actual
+      );
+
+      const { tags, ...rest } = req.body;
+      em.assign(puntoDeInteresToUpdate, rest);
+
+      // Sincronizar ManyToMany manualmente — em.assign no toca colecciones
+      if (Array.isArray(tags)) {
+        puntoDeInteresToUpdate.tags.set(tags.map((tagId: number) => em.getReference(Tag, tagId)));
+      }
+
       await em.flush();
-      res
-        .status(200)
-        .json({ message: 'Punto De Ineteres Updated successfully', data: puntoDeInteresToUpdate });
+      res.status(200).json({
+        message: 'Punto De Interes Updated successfully',
+        data: puntoDeInteresToUpdate,
+      });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
   }
-
   async remove(req: Request, res: Response) {
     try {
       const id = Number.parseInt(req.params.id);
