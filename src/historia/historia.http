@@ -8,7 +8,7 @@ Content-Type: application/json
 {
     "titulo": "Historia de prueba",
     "fechaDesde": "2023-01-01T00:00:00.000Z",
-    "fechaHasta": "2023-12-31T23:59:59.999Z",
+    "fechaHasta": "2022-12-31T23:59:59.999Z",
     "descripcion": "Historia de prueba",  
     "puntoDeInteres": 2
 }

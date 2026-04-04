@@ -27,7 +27,8 @@ export class HistoriaControler {
 
   add = async (req: Request, res: Response) => {
     try {
-      const pdi = await em.findOneOrFail(PuntoDeInteres, { id: req.body.puntoDeInteres });
+      const { fechaDesde, fechaHasta, puntoDeInteres } = req.body;
+      const pdi = await em.findOneOrFail(PuntoDeInteres, { id: puntoDeInteres });
       const owner = pdi.usuario;
       if (!owner) {
         res.status(400).json({ message: 'El Punto De Interes no tiene un dueño asignado' });
@@ -37,6 +38,12 @@ export class HistoriaControler {
         res
           .status(403)
           .json({ message: 'No autorizado: debe ser dueño del PDI o admin para crear un evento' });
+        return;
+      }
+      if (fechaDesde >= fechaHasta) {
+        res.status(400).json({
+          message: 'La fecha de inicio no puede ser superior a la fecha de finalización',
+        });
         return;
       }
       const newHistoria = em.create(Historia, req.body);
@@ -51,6 +58,16 @@ export class HistoriaControler {
     try {
       const id = Number.parseInt(req.params.id);
       const historia = await em.findOneOrFail(Historia, id);
+
+      const fechaDesde = req.body.fechaDesde ?? historia.fechaDesde;
+      const fechaHasta = req.body.fechaHasta ?? historia.fechaHasta;
+      if (fechaDesde >= fechaHasta) {
+        res.status(400).json({
+          message: 'La fecha de inicio no puede ser superior a la fecha de finalización',
+        });
+        return;
+      }
+
       em.assign(historia, req.body);
       await em.flush();
       res.status(200).json({ message: 'Historia updated successfully', data: historia });
