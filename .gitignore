@@ -28,6 +28,12 @@ dist/**/*
 ## built vscode extensions
 *.vsix
 
-## Ignoro contenido carpeta uploads 
+## Ignoro contenido carpeta uploads
 uploads/**
 !.gitkeep
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
+
+# local AI agent tooling artifacts
+.atl/
