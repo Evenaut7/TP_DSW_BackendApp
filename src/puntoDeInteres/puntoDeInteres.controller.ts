@@ -117,10 +117,9 @@ export class PuntoDeInteresController {
     try {
       const { localidad, tags, busqueda } = req.body;
 
-      const qb = em
-        .createQueryBuilder(PuntoDeInteres, 'pdi')
-        .select('pdi.*')
-        .leftJoinAndSelect('pdi.tags', 'tag');
+      // Only PDI columns are selected (tags are populated below): MySQL's only_full_group_by
+      // rejects joined tag columns next to the groupBy.
+      const qb = em.createQueryBuilder(PuntoDeInteres, 'pdi').select('pdi.*');
 
       if (localidad) {
         qb.where({ 'pdi.localidad': localidad });
@@ -131,10 +130,10 @@ export class PuntoDeInteresController {
       }
 
       if (tags && tags.length > 0) {
+        // A PDI matches when it has at least one of the tags; groupBy keeps one row per PDI.
         qb.leftJoin('pdi.tags', 'tag_filter')
           .andWhere({ 'tag_filter.id': { $in: tags } })
-          .groupBy('pdi.id')
-          .having(`COUNT(DISTINCT tag_filter.id) = ${tags.length}`);
+          .groupBy('pdi.id');
       }
 
       const puntosFiltrados = await qb.getResultList();
